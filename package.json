@@ -1,0 +1,35 @@
+{
+	"name": "loltaco",
+	"version": "0.0.1",
+    "author": "Phil Vollhardt <phil@nope.io>",
+    "contributors": [
+        {
+            "name": "Phil Vollhardt",
+            "email": "phil@nope.io"
+        },
+        {
+            "name": "Matt Bangen",
+            "email": "bangonson"
+        }
+    ],
+    "script": {
+        "test": "node test.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/thephilv/node-loltaco"
+    },
+    "main": "loltaco.js",
+	"private": true,
+    "keywords":[
+        "loltaco",
+        "league of legends",
+        "lol",
+        "riot",
+        "api"
+    ],
+    "dependencies": {},
+    "bugs": {
+        "url": "https://github.com/thephilv/node-loltaco/issues"
+    }
+}
