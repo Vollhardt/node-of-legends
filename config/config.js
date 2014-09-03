@@ -7,6 +7,7 @@ var config = {
 
 var setConfig = function(config){
     utils.extend(this.config, config);
+    return this.config;
 };
 
 exports.setLolTacoConfig = setConfig;
