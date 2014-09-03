@@ -1,3 +1,8 @@
+/**
+ * @desc contains server data for the riot servers
+ * @module serverdata
+ * @namespace serverdata
+ */
 var config = require('../config/config.js');
 var utils = require('./utils.js');
 var https = require('https');
@@ -16,7 +21,15 @@ HOST_BY_REGION = {
 	GLOBAL: "global.api.pvp.net"
 };
 
-REGION_URL_CODE = {
+/**
+ * Region
+ * @readonly
+ * @enum
+ * @static
+ * @memberof! serverdata
+ * @alias REGION
+ */
+REGION = {
 	BR: "br",
 	EUNE: "eune",
 	EUW: "euw",
@@ -81,7 +94,15 @@ URLS = {
     }
 };
 
-generateUrl = function(calltype, callmethod, options, id){
+/**
+ * Generates a URL based on paramters passed in
+ * @param {string} calltype the type of call to make
+ * @param {string} callmethod the method to call
+ * @param {options!} options to encode in the url
+ * @param {number} [id] the id to use
+ * @returns {string} url representing the call specified
+ */
+var generateUrl = function(calltype, callmethod, options, id){
     var url = null;
     var region = config.region;
     var apikey = config.apikey;
@@ -89,7 +110,7 @@ generateUrl = function(calltype, callmethod, options, id){
     if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && null !== apikey && 0 < apikey.length)
         if(-1 == callmethod.indexOf("ById") || id)
             if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod])
-                url = "https://" + HOST_BY_REGION[region] + URLS[calltype][callmethod].replace("{region}",REGION_URL_CODE[region]).replace("{id}", id) + "?api_key=" + apikey;
+                url = "https://" + HOST_BY_REGION[region] + URLS[calltype][callmethod].replace("{region}",REGION[region]).replace("{id}", id) + "?api_key=" + apikey;
 
     if(null != url && null != options && 0 < options.length)
         for(var key in options)
@@ -115,3 +136,4 @@ var makeAsyncHttpsCall = function(url, callback){
 
 exports.generateAPIUrl = generateUrl;
 exports.makeAsyncHttpsCall = makeAsyncHttpsCall;
+exports.REGION = REGION;

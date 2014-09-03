@@ -1,0 +1,33 @@
+{
+"tags": {
+    "allowUnknownTags": true
+},
+"source": {
+    "include": ["api", "./", "services","config"],
+    "exclude": ["node_modules","out","personal.test.js"],
+    "includePattern": ".+\\.js(doc)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+},
+"plugins": ["plugins/markdown"],
+"templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "outputSourceFiles": true,
+    "systemName"      : "LoL Taco",
+    "footer"          : "node.io",
+    "copyright"       : "LoL Taco Copyright © 2014 The contributors to the LoL Taco project.",
+    "navType"         : "vertical",
+    "theme"           : "cerulean",
+    "linenums"        : true,
+    "collapseSymbols" : false,
+    "inverseNav"      : true,
+    "syntaxTheme"     : "dark" //default or dark
+},
+"opts": {
+    "template": "./node_modules/ink-docstrap/template",
+    "encoding": "utf8",
+    "destination": "./out/",
+    "recurse": false,
+    "lenient": true
+}
+}

@@ -75,6 +75,16 @@ SUB_TYPE = {
 	NIGHTMARE_BOT: "NIGHTMARE_BOT" //Summoner's Rift games played against Nightmare AI
 };
 
+/**
+ * Queue type for ranked queries
+ * @type {rankedQueueType}
+ */
+RANKED_QUEUE = {
+    SOLO_5v5: "RANKED_SOLO_5x5",
+    TEAM_5v5: "RANKED_TEAM_5x5",
+    TEAM_3v3: "RANKED_TEAM_3x3"
+};
+
 PLAYER_STAT = {
 	Unranked: "Unranked", //Summoner's Rift unranked games
 	Unranked3x3: "Unranked3x3", //Twisted Treeline unranked games
