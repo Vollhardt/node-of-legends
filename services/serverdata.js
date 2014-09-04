@@ -1,7 +1,6 @@
 /**
  * @desc contains server data for the riot servers
  * @module serverdata
- * @namespace serverdata
  */
 var config = require('../config/config.js');
 var utils = require('./utils.js');
@@ -26,19 +25,27 @@ HOST_BY_REGION = {
  * @readonly
  * @enum
  * @static
- * @memberof! serverdata
- * @alias REGION
  */
 REGION = {
-	BR: "br",
-	EUNE: "eune",
-	EUW: "euw",
+    /** Brazil*/
+    BR: "br",
+	/**EU North and East **/
+    EUNE: "eune",
+	/**EU West*/
+    EUW: "euw",
+    /**Korea*/
 	KR: "kr",
+    /**Latin America South*/
 	LAS: "las",
+    /**Latin America North*/
 	LAN: "lan",
+    /**North America (DEFAULT)*/
 	NA: "na",
+    /**Oceania*/
 	OCE: "oce",
+    /**Turkey*/
 	TR: "tr",
+    /**Russia*/
 	RU: "ru"
 };
 
@@ -101,10 +108,11 @@ URLS = {
  * @param {options!} options to encode in the url
  * @param {number} [id] the id to use
  * @returns {string} url representing the call specified
+ * @static
  */
 var generateUrl = function(calltype, callmethod, options, id){
     var url = null;
-    var region = config.region;
+    var region = (options && options.region ? options.region : config.region);
     var apikey = config.apikey;
 
     if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && null !== apikey && 0 < apikey.length)
@@ -119,6 +127,12 @@ var generateUrl = function(calltype, callmethod, options, id){
     return url;
 };
 
+/**
+ * performs asynchronous https call to the specified URL
+ * @param (string) url
+ * @param {tacoAPICallback} callback
+ * @static
+ */
 var makeAsyncHttpsCall = function(url, callback){
     https.get(url, function(res){
         var body = '';
