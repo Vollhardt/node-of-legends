@@ -32,8 +32,8 @@ var extend = function() {
     return target;
 };
 
-var objOrArrayToCsv = function(obj){
-    return Array.isArray(obj) ? obj.join(",") : obj;
+var objOrArrayToCsv = function(obj, max){
+    return Array.isArray(obj) ? (max && max >= obj.length ? obj : obj.slice(0,max-1)).join(",") : obj;
 };
 
 var isJson = function(str){
