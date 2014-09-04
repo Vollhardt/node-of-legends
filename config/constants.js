@@ -1,3 +1,8 @@
+/**
+ * @desc constants for the project
+ * @module constants
+ */
+
 QUEUE_TYPE = {
 	CUSTOM: "CUSTOM", //Custom games
 	NORMAL_5x5_BLIND: "NORMAL_5x5_BLIND", //Normal 5v5 Blind Pick games
@@ -77,11 +82,16 @@ SUB_TYPE = {
 
 /**
  * Queue type for ranked queries
- * @type {rankedQueueType}
+ * @enum
+ * @readonly
+ * @static
  */
-RANKED_QUEUE = {
+RANKED_QUEUE_TYPE = {
+    /**Solo/Duo Summoner's Rift (5s)*/
     SOLO_5v5: "RANKED_SOLO_5x5",
+    /**Team Summoner's Rift (5s)*/
     TEAM_5v5: "RANKED_TEAM_5x5",
+    /**Team Twisted Treeline (3s)*/
     TEAM_3v3: "RANKED_TEAM_3x3"
 };
 
