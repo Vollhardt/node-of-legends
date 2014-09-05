@@ -1,8 +1,14 @@
-node-loltaco
-LoL API Wrapper
-Phil Vollhardt
-31 Aug 2014
+#Node-LoL
+----
+###League of Legends API Wrapper for Node.JS (https://developer.riotgames.com/api)
 
-https://github.com/thephilv/node-loltaco
-
-Node.js wrapper for the official Riot League of Legends API (https://developer.riotgames.com/api)
+----
+##usage
+Just require node-lol, set config and you're good to!
+```javascript
+lol = require('node-lol');
+lol.setConfig({
+    region: lol.REGION.NORTH_AMERICA,
+    apikey: '<my-api-key'>
+});
+```

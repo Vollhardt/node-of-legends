@@ -1,4 +1,4 @@
-var loltaco = require('./loltaco.js');
+var loltaco = require('./node-lol.js');
 var utils = require('./utils.js');
 
 function printCallback(error, data){

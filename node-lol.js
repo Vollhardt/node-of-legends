@@ -1,6 +1,6 @@
 /**
  * @desc Main module of loltaco
- * @module loltaco
+ * @module node-lol
  */
 var static = require('./api/static.js');
 var championFlags = require('./api/championFlags.js');
@@ -12,6 +12,7 @@ var match = require('./api/match.js');
 var matchHistory = require('./api/matchhistory.js');
 var league = require('./api/league.js');
 var config = require('./config/config.js');
+var serverdata = require('./services/serverdata.js');
 
 
 /**
@@ -67,6 +68,12 @@ module.exports.league = league;
  * @static
  */
 module.exports.setConfig = config.setConfig;
+
+/**
+ * region list
+ * @type {module:serverdata.REGION}
+ */
+modules.exports.REGION = serverdata.REGION;
 
 /**
  *  @desc callback signature of all api calls

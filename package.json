@@ -1,6 +1,6 @@
 {
-	"name": "loltaco",
-	"version": "0.0.1",
+	"name": "Node-LoL",
+	"version": "0.1.1",
     "author": "Phil Vollhardt <phil@nope.io>",
     "contributors": [
         {
@@ -17,19 +17,20 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/thephilv/node-loltaco"
+        "url": "https://github.com/sudphil/node-lol"
     },
-    "main": "loltaco.js",
+    "main": "node-lol.js",
 	"private": true,
     "keywords":[
-        "loltaco",
+        "node-lol",
         "league of legends",
         "lol",
         "riot",
-        "api"
+        "api",
+        "node"
     ],
     "dependencies": {},
     "bugs": {
-        "url": "https://github.com/thephilv/node-loltaco/issues"
+        "url": "https://github.com/sudphil/node-lol/issues"
     }
 }
