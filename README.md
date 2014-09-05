@@ -4,6 +4,11 @@
 > Find Riot's official API at:
 > https://developer.riotgames.com/api
 
+##Installation
+```
+    npm install node-lol
+```
+
 ##Usage
 Just require node-lol, set config and you're good to!
 ```javascript
@@ -33,3 +38,7 @@ lol.static.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, re
     console.log(data);
 });
 ```
+
+##API Reference
+A full API can be found at
+http://node-lol.nope.io/api
