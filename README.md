@@ -1,5 +1,5 @@
 #Node-LoL
-----
+
 ###League of Legends API Wrapper for Node.JS
 >https://developer.riotgames.com/api
 
