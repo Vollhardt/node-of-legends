@@ -22,7 +22,7 @@ var getLeagueUrl = function(callmethod, options, id){
 * gets all leagues for which the specified summoner or summoners are members
 * @param {number|number[]} summonerIds ids of the summoner or summoners to get league information for, **MAXIMUM 10**
 * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
-* @param {tacoAPICallback} callback function to call after request is complete
+* @param {lolAPICallback} callback function to call after request is complete
 * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
 * @static
 */
@@ -41,7 +41,7 @@ var getLeaguesBySummonerIds = function(summonerIds, region, callback){
  * gets all entries for which the specified summoner or summoners are members
  * @param {number|number[]} summonerIds id of the summoner or summoners to get entry information for, **MAXIMUM 10**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
@@ -60,7 +60,7 @@ var getEntryBySummonerIds = function(summonerIds, region, callback){
  * gets all team information for specified team or teams
  * @param {number|number[]} teamIds id(s) of the team or teams to get team information for, **MAXIMUM 10**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
@@ -79,7 +79,7 @@ var getTeamsByTeamIds = function(teamIds, region, callback){
  * gets all entry information for specified team or teams
  * @param {number|number[]} teamIds id(s) of the team or teams to get team information for **MAXIMUM 10**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
@@ -98,7 +98,7 @@ var getEntryByTeamIds = function(teamIds, region, callback){
  * gets all challenger league information for the specified region
  * @param {module:constants.RANKED_QUEUE_TYPE} queueType Ranked Queue type
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */

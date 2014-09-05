@@ -21,7 +21,7 @@ var getGameUrl = function(callmethod, options){
  * gets a match record for the specified match id
  * @param {number} summonerId id of the summoner to get game history for
  * @param {?module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */

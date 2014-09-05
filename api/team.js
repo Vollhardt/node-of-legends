@@ -22,7 +22,7 @@ var getTeamUrl = function(callmethod, options, id){
  * gets ranked teams to which the summoner belongs
  * @param {number|number[]}summonerIds summoner ID or IDs to get ranked teams for
  * @param {?module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 var getTeamsBySummonerIds = function(summonerIds, region, callback){
@@ -40,7 +40,7 @@ var getTeamsBySummonerIds = function(summonerIds, region, callback){
  * gets a list of teams from the supplied team ID or IDs
  * @param {number|number[]}teamIds team ID or IDs to get ranked teams for
  * @param {?module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 var getTeamsByTeamIds = function(teamIds, region, callback){

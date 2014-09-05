@@ -77,7 +77,7 @@ modules.exports.REGION = serverdata.REGION;
 
 /**
  *  @desc callback signature of all api calls
- *  @callback tacoAPICallback
+ *  @callback lolAPICallback
  *  @param {{status_code: number, message: string}} error
  *  @param {Object} data
  *  @global

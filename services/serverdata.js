@@ -151,7 +151,7 @@ var generateUrl = function(calltype, callmethod, options, id){
 /**
  * performs asynchronous https call to the specified URL
  * @param (string) url url to call
- * @param {tacoAPICallback} callback
+ * @param {lolAPICallback} callback
  * @static
  */
 var makeAsyncHttpsCall = function(url, callback){

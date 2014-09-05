@@ -26,7 +26,7 @@ var getStaticUrl = function(callmethod, options, id){
  * @param {string} locale local code to use for returned data
  * @param {string} version data version
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -43,7 +43,23 @@ var getChampionList = function(dataType, byId, locale, version, region, callback
     options.dataById = byId || false;
 
     var url = getStaticUrl("championList", options, null);
-serverdata.makeAsyncHttpsCall(url, callback);
+    serverdata.makeAsyncHttpsCall(url, callback);
+};
+
+/**
+ * Gets all data for all champions
+ * @param {number?} [id=null] ID of champion to get (null or do not supply for all champs)
+ * @param {lolAPICallback} callback function to call after request is complete
+ */
+var getAllChampData = function(id, callback){
+    if(utils.isFunction(id)) {
+        callback = id;
+        id = null;
+    }
+    if(id)
+        getChampionById(id,'all', false, null, null, null, callback);
+    else
+        getChampionList('all', false, null, null, null, callback);
 };
 
 /**
@@ -54,7 +70,7 @@ serverdata.makeAsyncHttpsCall(url, callback);
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -84,7 +100,7 @@ var getChampionById = function(champId, dataType, byId, locale, version, region,
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -110,7 +126,7 @@ var getItemList = function(dataType, locale, version, region, callback){
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -134,12 +150,28 @@ var getItemById = function(id, dataType, locale, version, region, callback){
 };
 
 /**
+ * Gets all data for all items
+ * @param {number?} [id=null] ID of item to get (null or do not supply for all items)
+ * @param {lolAPICallback} callback function to call after request is complete
+ */
+var getAllItemData = function(id, callback){
+    if(utils.isFunction(id)) {
+        callback = id;
+        id = null;
+    }
+    if(id)
+        getItemById(id,'all', false, null, null, null, callback);
+    else
+        getItemList('all', false, null, null, null, callback);
+};
+
+/**
  * gets a list of all the masteries available
  * @param {module:constants.MASTERY_DATA_TO_RETRIEVE|module:constants.MASTERY_DATA_TO_RETRIEVE[]?} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -165,7 +197,7 @@ var getMasteryList = function(dataType, locale, version, region, callback){
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -189,12 +221,28 @@ var getMasteryById = function(id, dataType, locale, version, region, callback){
 };
 
 /**
+ * Gets all data for all masteries
+ * @param {number?} [id=null] ID of item to get (null or do not supply for all masteries)
+ * @param {lolAPICallback} callback function to call after request is complete
+ */
+var getAllMasteryData = function(id, callback){
+    if(utils.isFunction(id)) {
+        callback = id;
+        id = null;
+    }
+    if(id)
+        getMasteryById(id, 'all', null, null, null, callback);
+    else
+        getMasteryList('all', null, null, null, callback);
+};
+
+/**
  * gets a list of all available runes
  * @param {module:constants.RUNE_DATA_TO_RETRIEVE|module:constants.RUNE_DATA_TO_RETRIEVE[]?} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -220,7 +268,7 @@ var getRuneList = function(dataType, locale, version, region, callback){
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -243,13 +291,29 @@ var getRuneById = function(id, dataType, locale, version, region,  callback){
 };
 
 /**
+ * Gets all data for all runes
+ * @param {number?} [id=null] ID of item to get (null or do not supply for all runes)
+ * @param {lolAPICallback} callback function to call after request is complete
+ */
+var getAllRuneData = function(id, callback){
+    if(utils.isFunction(id)) {
+        callback = id;
+        id = null;
+    }
+    if(id)
+        getRuneById(id, 'all', null, null, null, callback);
+    else
+        getRuneList('all', null, null, null, callback);
+};
+
+/**
  * gets all summoner spell objects
  * @param {module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE|module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE[]?} dataType
  * @param {boolean} byId=false if true, keys will be spell ids and not spell names
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -277,7 +341,7 @@ var getSummonerSpellList = function(dataType, byId, locale, version, region, cal
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -301,9 +365,25 @@ var getSummonerSpellById = function(id, dataType, byId, locale, version, region,
 };
 
 /**
+ * Gets all data for all summoner spells
+ * @param {number?} [id=null] ID of item to get (null or do not supply for all summoner spells)
+ * @param {lolAPICallback} callback function to call after request is complete
+ */
+var getAllSummonerSpellData = function(id, callback){
+    if(utils.isFunction(id)) {
+        callback = id;
+        id = null;
+    }
+    if(id)
+        getSummonerSpellById(id, 'all', false, null, null, null, callback);
+    else
+        getSummonerSpellList('all', false, null, null, null, callback);
+};
+
+/**
  * gets data about a realm
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -320,7 +400,7 @@ var getRealmData = function(region, callback){
 /**
  * gets array of versions
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -335,14 +415,19 @@ var getVersions = function(region, callback){
 };
 
 exports.getChampionList = getChampionList;
+exports.getAllChampData = getAllChampData;
 exports.getChampionById = getChampionById;
 exports.getItemList = getItemList;
+exports.getAllItemData = getAllItemData;
 exports.getItemById = getItemById;
 exports.getMasteryList = getMasteryList;
+exports.getAllMasteryData = getAllMasteryData;
 exports.getMasteryById = getMasteryById;
 exports.getRuneList = getRuneList;
+exports.getAllRuneData = getAllRuneData;
 exports.getRuneById = getRuneById;
 exports.getSummonerSpellList = getSummonerSpellList;
+exports.getAllSummonerSpellData = getAllSummonerSpellData;
 exports.getSummonerSpellById = getSummonerSpellById;
 exports.getRealmData = getRealmData;
 exports.getVersions = getVersions;

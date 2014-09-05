@@ -80,7 +80,7 @@ var isBoolean = function(obj){
 
 /**
  * performs callbacks for API
- * @param {tacoAPICallback} callback function to callback to
+ * @param {lolAPICallback} callback function to callback to
  * @param {number?} httpStatusCode HTTP result code 404,200 etc
  * @param {string} json JSON to attach to callback
  */

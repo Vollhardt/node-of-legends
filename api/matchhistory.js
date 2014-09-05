@@ -25,7 +25,7 @@ var getMatchHistoryUrl = function(callmethod, options, id){
  * @param {?number} beginIndex index at which to start pulling matches. **max** games which can be queried at once is **15**.  If range is larger than max end index will be changed.
  * @param {?number} endIndex index to stop pulling matched. **max** games which can be queried at once is **15**.  If range is larger than max end index will be changed. If end is not specified it will be generated as begin+15
  * @param {?module:serverdata.REGION!} [region] if no region is specified the configured region will be used **(Riot does not allow non-ranked match history to be retrieved)**
- * @param {tacoAPICallback} callback
+ * @param {lolAPICallback} callback
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */

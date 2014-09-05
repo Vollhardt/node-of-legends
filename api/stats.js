@@ -22,7 +22,7 @@ var getStatsUrl = function(callmethod, options, id){
  * @param {number} summonerId the summoner id
  * @param {module:constants.STATS_SEASON?} season the season to gets stats for. **DEFAULT: current season**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
@@ -46,7 +46,7 @@ var getRankedStatsBySummonerId = function(summonerId, season, region, callback){
  * @param {number} summonerId the summoner id
  * @param {module:constants.STATS_SEASON?} season the season to gets stats for. **DEFAULT: current season**
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */

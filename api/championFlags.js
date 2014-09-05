@@ -23,7 +23,7 @@ function getChampionFlagUrl(callmethod, options, id){
  * gets list of champions with their current flags set
  * @param {?boolean} [freeToPlay] true to only retrieve champions which are currently free to play.<br/>False retrieves all champions.**DEFAULT: FALSE**
  * @param {?module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback
+ * @param {lolAPICallback} callback
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 var getChampionFlagList = function(freeToPlay, region, callback){
@@ -43,7 +43,7 @@ var getChampionFlagList = function(freeToPlay, region, callback){
  * gets a specific champion's flag state
  * @param {number} id
  * @param {?module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback
+ * @param {lolAPICallback} callback
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 var getChampionFlagById = function(id, region, callback){

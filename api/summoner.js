@@ -24,7 +24,7 @@ var getSummonerUrl = function(callmethod, options, id){
  * gets summoner information by summoner name
  * @param {string|string[]} summonerNames name/names of the summoner/summoners to get league information for, **MAXIMUM 40**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
@@ -43,7 +43,7 @@ var getSummonerByName = function(summonerNames, region, callback){
  * gets summoner information by summoner id
  * @param {number|number[]} summonerIds ids of the summoner or summoners to get league information for, **MAXIMUM 40**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
@@ -62,7 +62,7 @@ var getSummonersByIds = function(summonerIds, region, callback){
  * gets summoner mastery information by summoner id
  * @param {number|number[]} summonerIds ids of the summoner or summoners to get league information for, **MAXIMUM 40**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
@@ -80,7 +80,7 @@ var getMasteriesByIds = function(summonerIds, region, callback){
 * gets summoner names by summoner id
 * @param {number|number[]} summonerIds ids of the summoner or summoners to get names for, **MAXIMUM 40**
 * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
-* @param {tacoAPICallback} callback function to call after request is complete
+* @param {lolAPICallback} callback function to call after request is complete
 * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
 * @static
 */
@@ -99,7 +99,7 @@ var getSummonerNamesByIds = function(summonerIds, region, callback){
  * gets summoner rune information by summoner id
  * @param {number|number[]} summonerIds ids of the summoner or summoners to get names for, **MAXIMUM 40**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */

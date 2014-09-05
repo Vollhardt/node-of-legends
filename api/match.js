@@ -22,7 +22,7 @@ var getMatchUrl = function(callmethod, options, id){
  * gets a match record for the specified match ID
  * @param {number} matchId matchId to get match record for
  * @param {?boolean} [getTimeline=false] if true will return timeline information for this match.
- * @param {tacoAPICallback} callback function to call after request is complete
+ * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
