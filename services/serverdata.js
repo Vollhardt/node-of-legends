@@ -6,6 +6,12 @@ var config = require('../config/config.js');
 var utils = require('./utils.js');
 var https = require('https');
 
+/**
+ * hosts by region code
+ * @enum
+ * @readonly
+ * @static
+ */
 HOST_BY_REGION = {
 	BR: "br.api.pvp.net",
 	EUNE: "eune.api.pvp.net",
@@ -21,38 +27,45 @@ HOST_BY_REGION = {
 };
 
 /**
- * Region
+ * Region codes
  * @readonly
  * @enum
  * @static
  */
 REGION = {
     /** Brazil*/
-    BR: "br",
+    BRAZIL: "br",
 	/**EU North and East **/
-    EUNE: "eune",
+    EU_NORTH_EAST: "eune",
 	/**EU West*/
-    EUW: "euw",
+    EU_WEST: "euw",
     /**Korea*/
-	KR: "kr",
+	KOREA: "kr",
     /**Latin America South*/
-	LAS: "las",
+	LATIN_AMERICA_SOUTH: "las",
     /**Latin America North*/
-	LAN: "lan",
+    LATIN_AMERICA_NORTH: "lan",
     /**North America (DEFAULT)*/
-	NA: "na",
+	NORTH_AMERICA: "na",
     /**Oceania*/
-	OCE: "oce",
+	OCEANIA: "oce",
     /**Turkey*/
-	TR: "tr",
+	TURKEY: "tr",
     /**Russia*/
-	RU: "ru"
+	RUSSIA: "ru"
 };
 
+/**
+ * URLS for the riot API
+ * @enum
+ * @static
+ * @readonly
+ */
 URLS = {
+    /** static api */
     static: {
         championList: '/api/lol/static-data/{region}/v1.2/champion',
-        championById: '/api/lol/static-data/{region}/v1.2/champion',
+        championById: '/api/lol/static-data/{region}/v1.2/champion/{id}/',
         itemList: '/api/lol/static-data/{region}/v1.2/item',
         itemById: '/api/lol/static-data/{region}/v1.2/item/{id}',
         masteryList: '/api/lol/static-data/{region}/v1.2/mastery',
@@ -64,13 +77,16 @@ URLS = {
         summonerSpellById: '/api/lol/static-data/{region}/v1.2/summoner-spell/{id}',
         versions: '/api/lol/static-data/{region}/v1.2/versions'
     },
+    /** champion api */
     championFlags: {
         championList: '/api/lol/{region}/v1.2/champion',
         championById: '/api/lol/{region}/v1.2/champion/{id}'
     },
+    /** game api */
     game: {
         recentGames: '/api/lol/{region}/v1.3/game/by-summoner/{id}/recent'
     },
+    /** summoner api */
     summoner: {
         name: '/api/lol/{region}/v1.4/summoner/by-name/{id}',
         byIds: '/api/lol/{region}/v1.4/summoner/{id}', //can supply list of ids
@@ -78,6 +94,7 @@ URLS = {
         namesByIds: '/api/lol/{region}/v1.4/summoner/{id}/names', //can supply list of ids
         runesByIds: '/api/lol/{region}/v1.4/summoner/{id}/runes' //can supply list of ids
     },
+    /** league api */
     league: {
         bySummonerIds: '/api/lol/{region}/v2.5/league/by-summoner/{id}',
         entryBySummonerIds: '/api/lol/{region}/v2.5/league/by-summoner/{id}/entry',
@@ -85,16 +102,20 @@ URLS = {
         entryByTeamIds: '/api/lol/{region}/v2.5/league/by-team/{id}/entry',
         challengerLeagues: '/api/lol/{region}/v2.5/league/challenger'
     },
+    /** match api*/
     match: {
         byId: '/api/lol/{region}/v2.2/match/{id}'
     },
+    /** match history api */
     matchHistory: {
         bySummonerId: '/api/lol/{region}/v2.2/matchhistory/{id}'
     },
+    /** statistics api */
     stats: {
         ranked: '/api/lol/{region}/v1.3/stats/by-summoner/{id}/ranked',
         summary: '/api/lol/{region}/v1.3/stats/by-summoner/{id}/summary'
     },
+    /** ranked team api */
     team: {
         bySummonerIds: '/api/lol/{region}/v2.4/team/by-summoner/{id}',
         byTeamIds: '/api/lol/{region}/v2.4/team/{teamIds}'
@@ -129,7 +150,7 @@ var generateUrl = function(calltype, callmethod, options, id){
 
 /**
  * performs asynchronous https call to the specified URL
- * @param (string) url
+ * @param (string) url url to call
  * @param {tacoAPICallback} callback
  * @static
  */

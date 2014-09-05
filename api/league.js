@@ -1,7 +1,7 @@
 /**
  * @module league
  * @desc @desc Wrapper for Riot's league data api
- * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output and optional parameters}
+ * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 var serverdata = require('../services/serverdata.js');
 var utils = require('../services/utils.js');
@@ -20,17 +20,16 @@ var getLeagueUrl = function(callmethod, options, id){
 
 /**
 * gets all leagues for which the specified summoner or summoners are members
-* @param {number|number[]} summonerId ids of the summoner or summoners to get league information for, **MAXIMUM 10**
+* @param {number|number[]} summonerIds ids of the summoner or summoners to get league information for, **MAXIMUM 10**
 * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
 * @param {tacoAPICallback} callback function to call after request is complete
 * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
 * @static
 */
 var getLeaguesBySummonerIds = function(summonerIds, region, callback){
-    if(utils.isFunction(region)){
+    if(utils.isFunction(region))
         callback = region;
-        region = null;
-    }else
+    else
         var options = {region: region};
 
     var url = getLeagueUrl("bySummonerIds", options, utils.objOrArrayToCsv(summonerIds, 10));
@@ -40,17 +39,16 @@ var getLeaguesBySummonerIds = function(summonerIds, region, callback){
 
 /**
  * gets all entries for which the specified summoner or summoners are members
- * @param {number|number[]} summonerId id of the summoner or summoners to get entry information for, **MAXIMUM 10**
+ * @param {number|number[]} summonerIds id of the summoner or summoners to get entry information for, **MAXIMUM 10**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
  * @param {tacoAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
 var getEntryBySummonerIds = function(summonerIds, region, callback){
-    if(utils.isFunction(region)){
+    if(utils.isFunction(region))
         callback = region;
-        region = null;
-    }else
+    else
         var options = {region: region};
     var url = getLeagueUrl("entryBySummonerIds", options, utils.objOrArrayToCsv(summonerIds));
 
@@ -66,11 +64,10 @@ var getEntryBySummonerIds = function(summonerIds, region, callback){
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-var getTeamsByTeamIds = function(teamIds, options, callback){
-    if(utils.isFunction(region)){
+var getTeamsByTeamIds = function(teamIds, region, callback){
+    if(utils.isFunction(region))
         callback = region;
-        region = null;
-    }else
+    else
         var options = {region: region};
 
     var url = getLeagueUrl("teamByTeamIds", region, utils.objOrArrayToCsv(teamIds));
@@ -87,10 +84,9 @@ var getTeamsByTeamIds = function(teamIds, options, callback){
  * @static
  */
 var getEntryByTeamIds = function(teamIds, region, callback){
-    if(utils.isFunction(region)){
+    if(utils.isFunction(region))
         callback = region;
-        region = null;
-    }else
+    else
         var options = {region: region};
 
     var url = getLeagueUrl("entryByTeamIds", options, utils.objOrArrayToCsv(teamIds));
@@ -107,18 +103,12 @@ var getEntryByTeamIds = function(teamIds, region, callback){
  * @static
  */
 var getChallengerLeagues = function(queueType, region, callback){
-    var options = {
-        type: queueType
-    }
+    var options = {type: queueType};
 
-    if(utils.isFunction(region)){
+    if(utils.isFunction(region))
         callback = region;
-        region = null;
-    }
     else
         options.region = region;
-
-
 
     var url = getLeagueUrl("challengerLeagues", options, null);
 

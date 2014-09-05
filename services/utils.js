@@ -19,6 +19,11 @@
         OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+/**
+ * merges objects into one with later objects' properties taking precedence
+ * @param {object} obj... objects to process
+ * @returns {object}
+ */
 var extend = function() {
     var target = {};
 
@@ -32,10 +37,21 @@ var extend = function() {
     return target;
 };
 
+/**
+ * converts numbers and strings and arrays of those types into a comma separated string
+ * @param {number|number[]|string|string[]} obj object(s) to put into CSV string
+ * @param {number?} [max] maximum number of objects to put into csv string. **note returns first MAX objects**
+ * @returns {string} CSV string
+ */
 var objOrArrayToCsv = function(obj, max){
     return Array.isArray(obj) ? (max && max >= obj.length ? obj : obj.slice(0,max-1)).join(",") : obj;
 };
 
+/**
+ * test if a string is JSON or not
+ * @param {string} str string to test
+ * @returns {boolean} true if str is JSON, false if not JSON
+ */
 var isJson = function(str){
     var json = false;
     try {
@@ -44,10 +60,30 @@ var isJson = function(str){
     return json;
 };
 
+/**
+ * test if object is a function
+ * @param {object} obj object to test
+ * @returns {*|boolean} true if object is a function, false otherwise
+ */
 var isFunction = function (obj) {
     return obj && {}.toString.call(obj) == '[object Function]';
 };
 
+/**
+ * test if object is a boolean
+ * @param {object} obj object to test
+ * @returns {*|boolean} true if object is a boolean, false otherwise
+ */
+var isBoolean = function(obj){
+    return "boolean" === typeof obj;
+};
+
+/**
+ * performs callbacks for API
+ * @param {tacoAPICallback} callback function to callback to
+ * @param {number?} httpStatusCode HTTP result code 404,200 etc
+ * @param {string} json JSON to attach to callback
+ */
 var makeCallback = function(callback, httpStatusCode, json){
     var validJSON = isJson(json);
     if(validJSON) {
@@ -64,40 +100,9 @@ var makeCallback = function(callback, httpStatusCode, json){
         );
 };
 
-var makeErrorCallback = function(callback, statusCode, body){
-    var message;
-    if(!statusCode)
-        statusCode = -34;
-    switch(statusCode){
-        case 400:
-            message = 'bad request';
-            break;
-        case 401:
-            message = 'unauthorized';
-            break;
-        case 404:
-            message = 'data not found';
-            break;
-        case 429:
-            message = 'rate limit exceeded';
-            break;
-        case 500:
-            message = 'riot internal server error';
-            break;
-        case 503:
-            message = 'riot service not available';
-            break;
-        default:
-            var json = isJson(body);
-            message = json && json.status ? json.status.message : 'riot unspecified error';
-    }
-    callback({status_code: statusCode, message: message},null);
-
-};
-
 exports.extend = extend;
 exports.isJson = isJson;
 exports.makeCallback = makeCallback;
-exports.makeErrorCallback = makeErrorCallback;
 exports.isFunction = isFunction;
+exports.isBoolean = isBoolean;
 exports.objOrArrayToCsv = objOrArrayToCsv;
