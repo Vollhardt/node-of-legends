@@ -4,14 +4,13 @@
 > Find Riot's official API at:
 > https://developer.riotgames.com/api
 
-----
-##usage
+##Usage
 Just require node-lol, set config and you're good to!
 ```javascript
 var lol = require('node-lol');
 lol.setConfig({
     region: lol.REGION.NORTH_AMERICA,
-    apikey: '<my-api-key'>
+    apikey: '<my-api-key>'
 });
 ```
 That's it.  It's all setup now.
