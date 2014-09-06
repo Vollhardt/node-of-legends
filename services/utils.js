@@ -1,3 +1,7 @@
+/**
+ * utility module
+ * @module utils
+ */
 /* extend copyright:
     Copyright (c) 2012-2014 Raynos.
 
@@ -21,7 +25,7 @@ THE SOFTWARE.
 */
 /**
  * merges objects into one with later objects' properties taking precedence
- * @param {object} obj... objects to process
+ * @param {...object} obj objects to process
  * @returns {object}
  */
 var extend = function() {
@@ -63,7 +67,7 @@ var isJson = function(str){
 /**
  * test if object is a function
  * @param {object} obj object to test
- * @returns {*|boolean} true if object is a function, false otherwise
+ * @returns {boolean} true if object is a function, false otherwise
  */
 var isFunction = function (obj) {
     return obj && {}.toString.call(obj) == '[object Function]';
@@ -72,7 +76,7 @@ var isFunction = function (obj) {
 /**
  * test if object is a boolean
  * @param {object} obj object to test
- * @returns {*|boolean} true if object is a boolean, false otherwise
+ * @returns {boolean} true if object is a boolean, false otherwise
  */
 var isBoolean = function(obj){
     return "boolean" === typeof obj;

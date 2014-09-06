@@ -1,6 +1,6 @@
 /**
  * @module championflags
- * @desc @desc Wrapper for Riot's champion data api
+ * @desc Wrapper for Riot's champion data api
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 

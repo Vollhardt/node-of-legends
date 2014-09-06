@@ -65,7 +65,7 @@ var getAllChampData = function(id, callback){
 /**
  * gets a champion specific information from a specified champion's id
  * @param {number} champId ID of the champion to retrieve data for
- * @param {module:constants.ITEM_DATA_TO_RETRIEVE|module:constants.ITEM_DATA_TO_RETRIEVE[]?} dataType
+ * @param {?module:constants.ITEM_DATA_TO_RETRIEVE|module:constants.ITEM_DATA_TO_RETRIEVE[]} dataType
  * @param {boolean?} byId=false if true, keys will be champ ids and not champ names
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
@@ -96,7 +96,7 @@ var getChampionById = function(champId, dataType, byId, locale, version, region,
 
 /**
  * gets a full list of items
- * @param {module:constants.ITEM_DATA_TO_RETRIEVE|module:constants.ITEM_DATA_TO_RETRIEVE[]?} dataType
+ * @param {?module:constants.ITEM_DATA_TO_RETRIEVE|module:constants.ITEM_DATA_TO_RETRIEVE[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
@@ -122,7 +122,7 @@ var getItemList = function(dataType, locale, version, region, callback){
 /**
  * gets item specific information from a specified item's id
  * @param {number} id the item's ID which to retrieve
- * @param {module:constants.ITEM_DATA_TO_RETRIEVE|module:constants.ITEM_DATA_TO_RETRIEVE[]?} dataType
+ * @param {?module:constants.ITEM_DATA_TO_RETRIEVE|module:constants.ITEM_DATA_TO_RETRIEVE[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
@@ -167,7 +167,7 @@ var getAllItemData = function(id, callback){
 
 /**
  * gets a list of all the masteries available
- * @param {module:constants.MASTERY_DATA_TO_RETRIEVE|module:constants.MASTERY_DATA_TO_RETRIEVE[]?} dataType
+ * @param {?module:constants.MASTERY_DATA_TO_RETRIEVE|module:constants.MASTERY_DATA_TO_RETRIEVE[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
@@ -193,7 +193,7 @@ var getMasteryList = function(dataType, locale, version, region, callback){
 /**
  * gets a specific mastery object pertaining to the supplied id
  * @param {number} id ID of mastery to get data for
- * @param {module:constants.MASTERY_DATA_TO_RETRIEVE|module:constants.MASTERY_DATA_TO_RETRIEVE[]?} dataType
+ * @param {?module:constants.MASTERY_DATA_TO_RETRIEVE|module:constants.MASTERY_DATA_TO_RETRIEVE[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
@@ -238,7 +238,7 @@ var getAllMasteryData = function(id, callback){
 
 /**
  * gets a list of all available runes
- * @param {module:constants.RUNE_DATA_TO_RETRIEVE|module:constants.RUNE_DATA_TO_RETRIEVE[]?} dataType
+ * @param {?module:constants.RUNE_DATA_TO_RETRIEVE|module:constants.RUNE_DATA_TO_RETRIEVE[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
@@ -264,7 +264,7 @@ var getRuneList = function(dataType, locale, version, region, callback){
 /**
  * gets a rune object from a supplied rune id
  * @param {number} id ID of the rune to retrieve
- * @param {module:constants.RUNE_DATA_TO_RETRIEVE|module:constants.RUNE_DATA_TO_RETRIEVE[]?} dataType
+ * @param {?module:constants.RUNE_DATA_TO_RETRIEVE|module:constants.RUNE_DATA_TO_RETRIEVE[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
@@ -308,7 +308,7 @@ var getAllRuneData = function(id, callback){
 
 /**
  * gets all summoner spell objects
- * @param {module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE|module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE[]?} dataType
+ * @param {?module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE|module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE[]} dataType
  * @param {boolean} byId=false if true, keys will be spell ids and not spell names
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
@@ -336,7 +336,7 @@ var getSummonerSpellList = function(dataType, byId, locale, version, region, cal
 /**
  * gets a summoner spell object from a supplied summoner spell id
  * @param {number} id
- * @param {module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE|module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE[]?} dataType
+ * @param {?module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE|module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE[]} dataType
  * @param {boolean} byId=false if true, keys will be spell ids and not spell names
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version

@@ -1,6 +1,6 @@
 /**
  * @module game
- * @desc @desc Wrapper for Riot's game data api
+ * @desc Wrapper for Riot's game data api
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 var utils = require('../services/utils.js');
