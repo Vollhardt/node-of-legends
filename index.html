@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Node-LoL : Node.JS wrapper for Riot&#39;s Official API">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Node-LoL</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/SudSupreme/node-lol">View on GitHub</a>
+
+          <h1 id="project_title">Node-LoL</h1>
+          <h2 id="project_tagline">Node.JS wrapper for Riot&#39;s Official API</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/SudSupreme/node-lol/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/SudSupreme/node-lol/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="node-lol" class="anchor" href="#node-lol"><span class="octicon octicon-link"></span></a>Node-LoL</h1>
+
+<h3>
+<a name="league-of-legends-api-wrapper-for-nodejs" class="anchor" href="#league-of-legends-api-wrapper-for-nodejs"><span class="octicon octicon-link"></span></a>League of Legends API Wrapper for Node.JS</h3>
+
+<p>Find Riot's official API at:
+    <a href="https://developer.riotgames.com/api">https://developer.riotgames.com/api</a></p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>npm install node-lol
+</code></pre>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Just require node-lol, set config and you're good to!</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">lol</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-lol'</span><span class="p">);</span>
+<span class="nx">lol</span><span class="p">.</span><span class="nx">setConfig</span><span class="p">({</span>
+    <span class="nx">region</span><span class="o">:</span> <span class="nx">lol</span><span class="p">.</span><span class="nx">REGION</span><span class="p">.</span><span class="nx">NORTH_AMERICA</span><span class="p">,</span>
+    <span class="nx">apikey</span><span class="o">:</span> <span class="s1">'&lt;my-api-key&gt;'</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>That's it.  It's all setup now.
+Want to pull all Champion data?!
+Super easy:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">lol</span><span class="p">.</span><span class="kr">static</span><span class="p">.</span><span class="nx">getAllChampData</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>Want more control directly over the Riot API?
+That's also available!</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">dataTypesToRetrieve</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">var</span> <span class="nx">mapDataById</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">locale</span> <span class="o">=</span> <span class="s1">'en_US'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">region</span> <span class="o">=</span> <span class="s1">'NA'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">version</span> <span class="o">=</span> <span class="s1">'4.13.1'</span><span class="p">;</span>
+<span class="nx">lol</span><span class="p">.</span><span class="kr">static</span><span class="p">.</span><span class="nx">getChampionList</span><span class="p">(</span><span class="nx">dataTypesToRetrieve</span><span class="p">,</span> <span class="nx">mapDataById</span><span class="p">,</span> <span class="nx">locale</span><span class="p">,</span> <span class="nx">version</span><span class="p">,</span> <span class="nx">region</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="api-reference" class="anchor" href="#api-reference"><span class="octicon octicon-link"></span></a>API Reference</h2>
+
+<p>A full API can be found at
+<a href="http://node-lol.nope.io/api">http://node-lol.nope.io/api</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Node-LoL maintained by <a href="https://github.com/SudSupreme">SudSupreme</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
