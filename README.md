@@ -6,11 +6,11 @@
 
 ##Installation
 ```
-    npm install node-lol
+npm install node-lol
 ```
 
 ##Usage
-Just require node-lol, set config and you're good to!
+Just require node-lol, set config and you're good to go!
 ```javascript
 var lol = require('node-lol');
 lol.setConfig({
