@@ -29,8 +29,10 @@
         "api",
         "node"
     ],
+    "preferGlobal": false,
     "dependencies": {},
     "bugs": {
         "url": "https://github.com/sudphil/node-lol/issues"
-    }
+    },
+    "license": "MIT"
 }
