@@ -73,7 +73,7 @@ module.exports.setConfig = config.setConfig;
  * region list
  * @type {module:serverdata.REGION}
  */
-modules.exports.REGION = serverdata.REGION;
+module.exports.REGION = serverdata.REGION;
 
 /**
  *  @desc callback signature of all api calls
