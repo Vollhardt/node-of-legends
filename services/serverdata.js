@@ -2,9 +2,21 @@
  * @desc contains server data for the riot servers
  * @module serverdata
  */
-var config = require('../config/config.js');
-var utils = require('./utils.js');
 var https = require('https');
+var _ = require('lodash');
+var log = require('log4node');
+log.setLogLevel(process.env.LOG_LEVEL || 'info');
+
+var config = {
+    region: "NA",
+    apikey: null
+};
+
+function setConfig(update){
+    _.assign(config, update);
+log.info('config: ' + JSON.stringify(config));
+    return config;
+};
 
 /**
  * hosts by region code
@@ -63,7 +75,7 @@ REGION = {
  */
 URLS = {
     /** static api */
-    static: {
+    staticAPI: {
         championList: '/api/lol/static-data/{region}/v1.2/champion',
         championById: '/api/lol/static-data/{region}/v1.2/champion/{id}/',
         itemList: '/api/lol/static-data/{region}/v1.2/item',
@@ -135,16 +147,24 @@ var generateUrl = function(calltype, callmethod, options, id){
     var url = null;
     var region = (options && options.region ? options.region : config.region);
     var apikey = config.apikey;
+    log.info('\ncalltype: ' + calltype + '\ncallmethod: ' + callmethod + '\noptions: ' + JSON.stringify(options) + '\nid: ' + id + '\nregion: ' + region + '\napikey: ' + apikey);
 
-    if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && null !== apikey && 0 < apikey.length)
-        if(-1 == callmethod.indexOf("ById") || id)
-            if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod])
+    if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && 0 < apikey.length){
+        log.info('if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && null !== apikey && 0 < apikey.length)');
+        if(-1 == callmethod.indexOf("ById") || id){
+            if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod]){
                 url = "https://" + HOST_BY_REGION[region] + URLS[calltype][callmethod].replace("{region}",REGION[region]).replace("{id}", id) + "?api_key=" + apikey;
+                log.info('if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod])');
+            }
+            log.info('if(-1 == callmethod.indexOf("ById") || id)');
+        }
+        
+    }
 
     if(null != url && null != options && 0 < options.length)
         for(var key in options)
             url += "\&" + key + "=" + (Array.isArray(options[key]) ? options[key].join(",") : options[key]);
-
+    log.info('url2: ' + JSON.stringify(id));
     return url;
 };
 
@@ -154,7 +174,8 @@ var generateUrl = function(calltype, callmethod, options, id){
  * @param {lolAPICallback} callback
  * @static
  */
-var makeAsyncHttpsCall = function(url, callback){
+function makeAsyncHttpsCall(url, callback){
+    console.log('url: ' + url);
     https.get(url, function(res){
         var body = '';
         res
@@ -165,6 +186,7 @@ var makeAsyncHttpsCall = function(url, callback){
                 utils.makeCallback(callback, res.statusCode, body);
             });
     }).on('error', function(error){
+        console.log(error);
         callback({statusCode: null, message: 'error making API call'}, null);
     });
 };
@@ -172,3 +194,4 @@ var makeAsyncHttpsCall = function(url, callback){
 exports.generateAPIUrl = generateUrl;
 exports.makeAsyncHttpsCall = makeAsyncHttpsCall;
 exports.REGION = REGION;
+exports.setConfig = setConfig;
