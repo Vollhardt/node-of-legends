@@ -44,10 +44,10 @@ lol.staticdata.getChampionList(dataTypesToRetrieve, mapDataById, locale, version
 # Modules
 All of the API calls are divided into the same logical groups that Riot has chosen for their modules.
 
-## Champions
+## [Champion](module-champions.html)
 Not the most thrilling information, but important none-the-less.
 ```javascript
-var championsApi= lol.champions;
+var championApi= lol.champion;
 ```
 Available Data:
 - Free Champions
