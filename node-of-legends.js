@@ -18,7 +18,7 @@ var league = require('./api/league');
 var currentgame = require('./api/currentgame');
 var featuredgames = require('./api/featuredgames');
 var serverdata = require('./services/serverdata');
-
+var constants = require('./config/constants');
 
 /**
  * static data api
@@ -26,8 +26,8 @@ var serverdata = require('./services/serverdata');
  */
 module.exports.staticdata = staticdata;
 /**
- * champion flags api
- * @type {module:championflags}
+ * champion
+ * @type {module:champion}
  */
 module.exports.champion = champion;
 /**
@@ -95,3 +95,39 @@ module.exports.setConfig = serverdata.setConfig;
  * @type {module:serverdata.REGION}
  */
 module.exports.REGION = serverdata.REGION;
+
+/**
+ * Ranked Queue Types
+ * @type {module:constants.RANKED_QUEUE_TYPE}
+ */
+module.exports.RANKED_QUEUE_TYPE = constants.RANKED_QUEUE_TYPE
+
+/**
+ * Types of champion data available on the static API
+ * @type {module:constants.CHAMPION_DATA_TO_RETRIVE}
+ */
+module.exports.CHAMPION_DATA_TO_RETRIVE = constants.CHAMPION_DATA_TO_RETRIVE
+
+/**
+ * Types of item data available on the static API
+ * @type {module:constants.ITEM_DATA_TO_RETRIEVE}
+ */
+module.exports.ITEM_DATA_TO_RETRIEVE = constants.ITEM_DATA_TO_RETRIEVE
+
+/**
+ * Types of mastery data available on the static API
+ * @type {module:constants.MASTERY_DATA_TO_RETRIEVE}
+ */
+module.exports.MASTERY_DATA_TO_RETRIEVE = constants.MASTERY_DATA_TO_RETRIEVE
+
+/**
+ * Types of rune data available on the static API
+ * @type {module:constants.RUNE_DATA_TO_RETRIEVE}
+ */
+module.exports.RUNE_DATA_TO_RETRIEVE = constants.RUNE_DATA_TO_RETRIEVE
+
+/**
+ * Types of summoner spell data available on the static API
+ * @type {module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE}
+ */
+module.exports.SUMMONER_SPELL_INFO_TO_RETRIEVE = constants.SUMMONER_SPELL_INFO_TO_RETRIEVE
