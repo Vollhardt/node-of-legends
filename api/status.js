@@ -24,9 +24,9 @@ function getStatusUrl(callmethod, options){
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 function getShardList(){
-    var url = getTeamUrl("list", null);
+    var url = getStatusUrl("list", null);
 
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpCall(url);
 }
 
 /**
@@ -36,9 +36,9 @@ function getShardList(){
  */
 function getShardStatus(region){
     var options = {region: region};
-    var url = getTeamUrl("status", options, [].concat(teamIds).slice(0,10).join(','));
+    var url = getStatusUrl("status", options);
 
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpCall(url);
 }
 
 module.exports.getShardList = getShardList;

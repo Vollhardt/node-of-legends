@@ -6,6 +6,7 @@
 "use strict";
 
 var https = require('https');
+var http = require('http');
 var _assign = require('lodash.assign');
 var log = require('log4node');
 log.setLogLevel(process.env.LOG_LEVEL || 'error');
@@ -28,17 +29,18 @@ function setConfig(update){
  * @static
  */
 const HOST_BY_REGION = {
-	BR: "br.api.pvp.net",
-	EUNE: "eune.api.pvp.net",
-	EUW: "euw.api.pvp.net",
-	KR: "kr.api.pvp.net",
-	LAS: "las.api.pvp.net",
-	LAN: "lan.api.pvp.net",
-	NA: "na.api.pvp.net",
-	OCE: "oce.api.pvp.net",
-	TR: "tr.api.pvp.net",
-	RU: "ru.api.pvp.net",
-	GLOBAL: "global.api.pvp.net"
+	BR: "https://br.api.pvp.net",
+	EUNE: "https://eune.api.pvp.net",
+	EUW: "https://euw.api.pvp.net",
+	KR: "https://kr.api.pvp.net",
+	LAS: "https://las.api.pvp.net",
+	LAN: "https://lan.api.pvp.net",
+	NA: "https://na.api.pvp.net",
+	OCE: "https://oce.api.pvp.net",
+	TR: "https://tr.api.pvp.net",
+	RU: "https://ru.api.pvp.net",
+	GLOBAL: "https://global.api.pvp.net",
+    STATUS: "http://status.leagueoflegends.com"
 };
 
 /**
@@ -174,7 +176,8 @@ function generateUrl(calltype, callmethod, options, id){
             log.debug('if(-1 == callmethod.indexOf("ById") || id)');
             if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod]){
                 log.debug('if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod])');
-                url = "https://" + HOST_BY_REGION[region] + URLS[calltype][callmethod].replace("{region}",region.toLowerCase()).replace("{id}", id) + "?api_key=" + apikey;
+                let host = HOST_BY_REGION['staticdata' === calltype ? 'GLOBAL' : ('status'===calltype ? 'STATUS' : region)];
+                url = host + URLS[calltype][callmethod].replace("{region}",region.toLowerCase()).replace("{id}", id) + "?api_key=" + apikey;
             }
         }
     }
@@ -221,6 +224,39 @@ function makeAsyncHttpsCall(url){
 }
 
 /**
+ * returns a Promise to perform asynchronous http call to the specified URL.  
+ * @param (string) url url to call
+ * @static
+ */
+function makeAsyncHttpCall(url){
+    return new Promise(function(resolve,reject){
+        
+        http.get(url, function(res){
+            log.debug('in get callback for: ' + url + '\nres: ' + res.statusCode + ' | ' + res.statusMessage);
+            if(200 !== res.statusCode){
+                reject(new Error(res.statusMessage));
+            }else{
+                var body = '';
+                res
+                    .on('data', function(chunk){
+                        body += chunk;
+                        }
+                    )
+                    .on('end', function(){
+                        log.debug('body data: ' + body);
+                            resolve(JSON.parse(body));
+                        }
+                    )
+                ;
+            }
+        }).on('error', function(error){
+            log.error(error);
+            reject(new Error('error making API call: ' + error));//TODO: check if JSON
+        });
+    });
+}
+
+/**
  * returns a rejected promise creating an error with the messsage specified
  * @param (string) url url to call
  * @static
@@ -233,6 +269,7 @@ function rejectPromise(errorMessage){
 
 module.exports.generateAPIUrl = generateUrl;
 module.exports.makeAsyncHttpsCall = makeAsyncHttpsCall;
+module.exports.makeAsyncHttpCall = makeAsyncHttpCall;
 module.exports.rejectPromise = rejectPromise;
 module.exports.REGION = REGION;
 module.exports.setConfig = setConfig;
