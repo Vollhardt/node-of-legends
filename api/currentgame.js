@@ -1,5 +1,5 @@
 /**
- * @module current game
+ * @module currentgame
  * @desc Wrapper for Riot's current game api
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
