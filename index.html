@@ -32,59 +32,68 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a name="node-lol" class="anchor" href="#node-lol"><span class="octicon octicon-link"></span></a>Node-LoL</h1>
+<a id="node-lol" class="anchor" href="#node-lol" aria-hidden="true"><span class="octicon octicon-link"></span></a>Node-LoL</h1>
 
 <h3>
-<a name="league-of-legends-api-wrapper-for-nodejs" class="anchor" href="#league-of-legends-api-wrapper-for-nodejs"><span class="octicon octicon-link"></span></a>League of Legends API Wrapper for Node.JS</h3>
+<a id="league-of-legends-api-wrapper-for-nodejs-utilizing-es6-promises" class="anchor" href="#league-of-legends-api-wrapper-for-nodejs-utilizing-es6-promises" aria-hidden="true"><span class="octicon octicon-link"></span></a>League of Legends API Wrapper for Node.JS utilizing ES6 Promises</h3>
 
+<blockquote>
 <p>Find Riot's official API at:
-    <a href="https://developer.riotgames.com/api">https://developer.riotgames.com/api</a></p>
+<a href="https://developer.riotgames.com/api">https://developer.riotgames.com/api</a></p>
+</blockquote>
 
 <h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <pre><code>npm install node-lol
 </code></pre>
 
 <h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>Just require node-lol, set config and you're good to!</p>
+<p>Just require node-lol, set config and you're good to go!</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">lol</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-lol'</span><span class="p">);</span>
-<span class="nx">lol</span><span class="p">.</span><span class="nx">setConfig</span><span class="p">({</span>
-    <span class="nx">region</span><span class="o">:</span> <span class="nx">lol</span><span class="p">.</span><span class="nx">REGION</span><span class="p">.</span><span class="nx">NORTH_AMERICA</span><span class="p">,</span>
-    <span class="nx">apikey</span><span class="o">:</span> <span class="s1">'&lt;my-api-key&gt;'</span>
-<span class="p">});</span>
-</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> lol <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>node-lol<span class="pl-pds">'</span></span>);
+lol.setConfig({
+    region<span class="pl-k">:</span> lol.REGION.NORTH_AMERICA,
+    apikey<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;my-api-key&gt;<span class="pl-pds">'</span></span>
+});</pre></div>
 
 <p>That's it.  It's all setup now.
 Want to pull all Champion data?!
 Super easy:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="nx">lol</span><span class="p">.</span><span class="kr">static</span><span class="p">.</span><span class="nx">getAllChampData</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">});</span>
-</pre></div>
+<div class="highlight highlight-source-js"><pre>lol.staticdata.getAllChampData()
+    .then(<span class="pl-k">function</span>(<span class="pl-smi">data</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(data);
+    })
+    .catch(<span class="pl-k">function</span>(<span class="pl-smi">error</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(error);
+    })
+;</pre></div>
 
 <p>Want more control directly over the Riot API?
 That's also available!</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">dataTypesToRetrieve</span> <span class="o">=</span> <span class="p">[];</span>
-<span class="kd">var</span> <span class="nx">mapDataById</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">locale</span> <span class="o">=</span> <span class="s1">'en_US'</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">region</span> <span class="o">=</span> <span class="s1">'NA'</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">version</span> <span class="o">=</span> <span class="s1">'4.13.1'</span><span class="p">;</span>
-<span class="nx">lol</span><span class="p">.</span><span class="kr">static</span><span class="p">.</span><span class="nx">getChampionList</span><span class="p">(</span><span class="nx">dataTypesToRetrieve</span><span class="p">,</span> <span class="nx">mapDataById</span><span class="p">,</span> <span class="nx">locale</span><span class="p">,</span> <span class="nx">version</span><span class="p">,</span> <span class="nx">region</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">});</span>
-</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> dataTypesToRetrieve <span class="pl-k">=</span> [];
+<span class="pl-k">var</span> mapDataById <span class="pl-k">=</span> <span class="pl-c1">true</span>;
+<span class="pl-k">var</span> locale <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>en_US<span class="pl-pds">'</span></span>;
+<span class="pl-k">var</span> region <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>NA<span class="pl-pds">'</span></span>;
+<span class="pl-k">var</span> version <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>4.13.1<span class="pl-pds">'</span></span>;
+lol.staticdata.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, region)
+    .then(<span class="pl-k">function</span>(<span class="pl-smi">data</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(data);
+    })
+    .catch(<span class="pl-k">function</span>(<span class="pl-smi">error</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(error);
+    })
+;</pre></div>
 
 <h2>
-<a name="api-reference" class="anchor" href="#api-reference"><span class="octicon octicon-link"></span></a>API Reference</h2>
+<a id="api-reference" class="anchor" href="#api-reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>API Reference</h2>
 
 <p>A full API can be found at
-<a href="http://node-lol.nope.io/api">http://node-lol.nope.io/api</a></p>
+<a href="http://node-lol.suds.io/api">http://node-lol.suds.io/api</a></p>
       </section>
     </div>
 
@@ -92,7 +101,7 @@ That's also available!</p>
     <div id="footer_wrap" class="outer">
       <footer class="inner">
         <p class="copyright">Node-LoL maintained by <a href="https://github.com/SudSupreme">SudSupreme</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 
