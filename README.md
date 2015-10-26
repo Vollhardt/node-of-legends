@@ -51,4 +51,4 @@ lol.static.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, re
 
 ##API Reference
 A full API can be found at
-http://node-lol.nope.io/api
+http://node-lol.suds.io/api
