@@ -3,8 +3,10 @@
  * @desc Wrapper for Riot's match api
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
-var serverdata = require('../services/serverdata.js');
-var utils = require('../services/utils.js');
+
+'use strict';
+
+var serverdata = require('../services/serverdata');
 
 /**
  * gets the URL for the match api for the specified method
@@ -14,7 +16,7 @@ var utils = require('../services/utils.js');
  * @returns {string} generated url
  * @private
  */
-var getMatchUrl = function(callmethod, options, id){
+function getMatchUrl(callmethod, options, id){
     return serverdata.generateAPIUrl("match", callmethod, options, id);
 };
 
@@ -22,21 +24,18 @@ var getMatchUrl = function(callmethod, options, id){
  * gets a match record for the specified match ID
  * @param {number} matchId matchId to get match record for
  * @param {?boolean} [getTimeline=false] if true will return timeline information for this match.
- * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-var getMatchById = function(matchId, getTimeline, callback){
-    if(utils.isFunction(getTimeline)){
-        callback = getTimeline;
-        getTimeline = null;
-    }
+function getMatchById(matchId, getTimeline){
+    if(matchId){
+    	var options = {includeTimeline: getTimeline || false};
 
-    var options = {includeTimeline: getTimeline || false};
+    	var url = getMatchUrl("byId", options, matchId);
 
-    var url = getMatchUrl("byId", options, matchId);
-
-    serverdata.makeAsyncHttpsCall(url, callback);
+    	return serverdata.makeAsyncHttpsCall(url);
+	}else
+		return serverdata.rejectPromise('No match ID specified');
 };
 
-exports.getRankedStatsBySummonerId = getMatchById;
+module.exports.getMatchById = getMatchById;

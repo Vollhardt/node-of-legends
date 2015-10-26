@@ -4,8 +4,10 @@
  * **NOTE**: calls to this API will **NOT** count towards your rate limit <br/>
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
-var serverdata = require('../services/serverdata.js');
-var utils = require('../services/utils.js');
+
+ 'use strict';
+ 
+var serverdata = require('../services/serverdata');
 
 
 /**
@@ -16,106 +18,98 @@ var utils = require('../services/utils.js');
  * @returns {string} generated url
  * @private
  */
-var getSummonerUrl = function(callmethod, options, id){
+function getSummonerUrl(callmethod, options, id){
     return serverdata.generateAPIUrl("summoner", callmethod, options, id);
-};
+}
 
 /**
  * gets summoner information by summoner name
  * @param {string|string[]} summonerNames name/names of the summoner/summoners to get league information for, **MAXIMUM 40**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-var getSummonerByName = function(summonerNames, region, callback){
-    if(utils.isFunction(region))
-        callback = region;
-    else
+function getSummonerByName(summonerNames, region){
+    if(summonerNames){
         var options = {region: region};
 
-    var url = getSummonerUrl("name", options, utils.objOrArrayToCsv(summonerNames, 40));
+        var url = getSummonerUrl("name", options, [].concat(summonerNames).slice(0,40).join(','));
 
-    serverdata.makeAsyncHttpsCall(url, callback);
-};
+        return serverdata.makeAsyncHttpsCall(url);
+    }else
+        return serverdata.rejectPromise('No summoner name(s) specified');
+}
 
 /**
  * gets summoner information by summoner id
  * @param {number|number[]} summonerIds ids of the summoner or summoners to get league information for, **MAXIMUM 40**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-var getSummonersByIds = function(summonerIds, region, callback){
-    if(utils.isFunction(region))
-        callback = region;
-    else
+function getSummonersByIds(summonerIds, region){
+    if(summonerIds){
         var options = {region: region};
+        var url = getSummonerUrl("byIds", options, [].concat(summonerIds).slice(0,40).join(','));
 
-    var url = getSummonerUrl("byIds", options, utils.objOrArrayToCsv(summonerIds));
-
-    serverdata.makeAsyncHttpsCall(url, callback);
-};
+        return serverdata.makeAsyncHttpsCall(url);
+    }else
+        return serverdata.rejectPromise('No summoner ID(s) specified');
+}
 
 /**
  * gets summoner mastery information by summoner id
  * @param {number|number[]} summonerIds ids of the summoner or summoners to get league information for, **MAXIMUM 40**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-var getMasteriesByIds = function(summonerIds, region, callback){
-    if(utils.isFunction(options)){
-        callback = options;
-        options = null;
-    }
+function getMasteriesByIds(summonerIds, region){
+    if(summonerIds){
+        var options = {region: region};
+        var url = getSummonerUrl("masteriesByIds", options, [].concat(summonerIds).slice(0,40).join(','));
 
-    var url = getSummonerUrl("masteriesByIds", options, utils.objOrArrayToCsv(summonerIds));
+        return serverdata.makeAsyncHttpsCall(url);
+    }else
+        return serverdata.rejectPromise('No summoner ID(s) specified');
+}
 
-    serverdata.makeAsyncHttpsCall(url, callback);
-};
 /**
 * gets summoner names by summoner id
 * @param {number|number[]} summonerIds ids of the summoner or summoners to get names for, **MAXIMUM 40**
 * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
-* @param {lolAPICallback} callback function to call after request is complete
 * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
 * @static
 */
-var getSummonerNamesByIds = function(summonerIds, region, callback){
-    if(utils.isFunction(region))
-        callback = region;
-    else
+function getSummonerNamesByIds(summonerIds, region){
+    if(summonerIds){
         var options = {region: region};
+        var url = getSummonerUrl("namesByIds", options, [].concat(summonerIds).slice(0,40).join(','));
 
-    var url = getSummonerUrl("namesByIds", options, utils.objOrArrayToCsv(summonerIds));
-
-    serverdata.makeAsyncHttpsCall(url, callback);
-};
+        return serverdata.makeAsyncHttpsCall(url);
+    }else
+        return serverdata.rejectPromise('No summoner ID(s) specified');
+}
 
 /**
  * gets summoner rune information by summoner id
  * @param {number|number[]} summonerIds ids of the summoner or summoners to get names for, **MAXIMUM 40**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-var getRunesByIds = function(summonerIds, region, callback){
-    if(utils.isFunction(region))
-        callback = region;
-    else
+function getRunesByIds(summonerIds, region){
+    if(summonerIds){
         var options = {region: region};
+        var url = getSummonerUrl("runesByIds", options, [].concat(summonerIds).slice(0,40).join(','));
 
-    var url = getSummonerUrl("runesByIds", region, utils.objOrArrayToCsv(summonerIds));
+        return serverdata.makeAsyncHttpsCall(url);
+    }else
+        return serverdata.rejectPromise('No summoner ID(s) specified');
+}
 
-    serverdata.makeAsyncHttpsCall(url, callback);
-};
-
-exports.getSumonerByName = getSummonerByName;
-exports.getTeamsByTeamIds = getSummonersByIds;
-exports.getMasteriesByIds = getMasteriesByIds;
-exports.getSummonerNamesByIds = getSummonerNamesByIds;
-exports.getRunesByIds = getRunesByIds;
+module.exports.getSummonerByName = getSummonerByName;
+module.exports.getSummonersByIds = getSummonersByIds;
+module.exports.getMasteriesByIds = getMasteriesByIds;
+module.exports.getSummonerNamesByIds = getSummonerNamesByIds;
+module.exports.getRunesByIds = getRunesByIds;

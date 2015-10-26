@@ -3,8 +3,10 @@
  * @desc Wrapper for Riot's team data api <br/>
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
-var serverdata = require('../services/serverdata.js');
-var utils = require('../services/utils.js');
+
+'use strict';
+
+var serverdata = require('../services/serverdata');
 
 /**
  * gets the URL for the team api for the specified method
@@ -14,45 +16,41 @@ var utils = require('../services/utils.js');
  * @returns {string} generated url
  * @private
  */
-var getTeamUrl = function(callmethod, options, id){
+function getTeamUrl(callmethod, options, id){
     return serverdata.generateAPIUrl("team", callmethod, options, id);
-};
+}
 
 /**
  * gets ranked teams to which the summoner belongs
- * @param {number|number[]}summonerIds summoner ID or IDs to get ranked teams for
+ * @param {number|number[]}summonerIds summoner ID or IDs to get ranked teams for **MAX 10**
  * @param {?module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
-var getTeamsBySummonerIds = function(summonerIds, region, callback){
-    if(utils.isFunction(region))
-        callback = region;
-    else
+function getTeamsBySummonerIds(summonerIds, region){
+    if(summonerIds){
         var options = {region: region};
+        var url = getTeamUrl("name", options, [].concat(summonerIds).slice(0,10).join(','));
 
-    var url = getTeamUrl("name", options, utils.objOrArrayToCsv(summonerIds));
-
-    serverdata.makeAsyncHttpsCall(url, callback);
-};
+        return serverdata.makeAsyncHttpsCall(url);
+    }else
+        return serverdata.rejectPromise('No summoner ID(s) specified');
+}
 
 /**
  * gets a list of teams from the supplied team ID or IDs
- * @param {number|number[]}teamIds team ID or IDs to get ranked teams for
+ * @param {number|number[]}teamIds team ID or IDs to get ranked teams for **MAX 10**
  * @param {?module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
-var getTeamsByTeamIds = function(teamIds, region, callback){
-    if(utils.isFunction(region))
-        callback = region;
-    else
+function getTeamsByTeamIds(teamIds, region){
+    if(teamIds){
         var options = {region: region};
+        var url = getTeamUrl("name", options, [].concat(teamIds).slice(0,10).join(','));
 
-    var url = getTeamUrl("byIds", options, utils.objOrArrayToCsv(teamIds));
+        return serverdata.makeAsyncHttpsCall(url);
+    }else
+        return serverdata.rejectPromise('No team ID(s) specified');
+}
 
-    serverdata.makeAsyncHttpsCall(url, callback);
-};
-
-exports.getSumonerByName = getTeamsBySummonerIds;
-exports.getTeamsByTeamIds = getTeamsByTeamIds;
+module.exports.getTeamsBySummonerIds = getTeamsBySummonerIds;
+module.exports.getTeamsByTeamIds = getTeamsByTeamIds;

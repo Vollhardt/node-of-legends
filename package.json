@@ -1,38 +1,41 @@
 {
-	"name": "Node-LoL",
-	"version": "0.1.1",
-    "author": "Phil Vollhardt <phil@nope.io>",
-    "contributors": [
-        {
-            "name": "Phil Vollhardt",
-            "email": "phil@nope.io"
-        },
-        {
-            "name": "Matt Bangen",
-            "email": "bangonson"
-        }
-    ],
-    "script": {
-        "test": "node test.js"
+  "name": "Node-LoL",
+  "version": "1.0.0",
+  "author": "Phil Vollhardt <phil@suds.io>",
+  "contributors": [
+    {
+      "name": "Phil Vollhardt",
+      "email": "phil@suds.io"
     },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sudphil/node-lol"
-    },
-    "main": "node-lol.js",
-	"private": true,
-    "keywords":[
-        "node-lol",
-        "league of legends",
-        "lol",
-        "riot",
-        "api",
-        "node"
-    ],
-    "preferGlobal": false,
-    "dependencies": {},
-    "bugs": {
-        "url": "https://github.com/sudphil/node-lol/issues"
-    },
-    "license": "MIT"
+    {
+      "name": "Matt Bangen",
+      "email": "bangonson"
+    }
+  ],
+  "script": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sudphil/node-lol"
+  },
+  "main": "node-lol.js",
+  "private": true,
+  "keywords": [
+    "node-lol",
+    "league of legends",
+    "lol",
+    "riot",
+    "api",
+    "node"
+  ],
+  "preferGlobal": false,
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "log4node": "^0.1.6"
+  },
+  "bugs": {
+    "url": "https://github.com/sudphil/node-lol/issues"
+  },
+  "license": "MIT"
 }
