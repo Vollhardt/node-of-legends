@@ -2,10 +2,13 @@
  * @desc contains server data for the riot servers
  * @module serverdata
  */
+
+"use strict";
+
 var https = require('https');
 var _ = require('lodash');
 var log = require('log4node');
-log.setLogLevel(process.env.LOG_LEVEL || 'info');
+log.setLogLevel(process.env.LOG_LEVEL || 'error');
 
 var config = {
     region: "NA",
@@ -14,7 +17,7 @@ var config = {
 
 function setConfig(update){
     _.assign(config, update);
-log.info('config: ' + JSON.stringify(config));
+    log.debug('configuring: ' + JSON.stringify(config));
     return config;
 };
 
@@ -24,7 +27,7 @@ log.info('config: ' + JSON.stringify(config));
  * @readonly
  * @static
  */
-HOST_BY_REGION = {
+const HOST_BY_REGION = {
 	BR: "br.api.pvp.net",
 	EUNE: "eune.api.pvp.net",
 	EUW: "euw.api.pvp.net",
@@ -44,7 +47,7 @@ HOST_BY_REGION = {
  * @enum
  * @static
  */
-REGION = {
+const REGION = {
     /** Brazil*/
     BRAZIL: "br",
 	/**EU North and East **/
@@ -73,11 +76,44 @@ REGION = {
  * @static
  * @readonly
  */
-URLS = {
+const URLS = {
+    /** champion api */
+    champion: {
+        championList: '/api/lol/{region}/v1.2/champion',
+        championById: '/api/lol/{region}/v1.2/champion/{id}'
+    },
+    /** current game api */
+    currentgame: {
+        spectator: '/observer-mode/rest/consumer/getSpectatorGameInfo/{region}/{id}'
+    },
+    featuredgame: {
+        featured: '/observer-mode/rest/featured'
+    },
+    /** game api */
+    game: {
+        recentGames: '/api/lol/{region}/v1.3/game/by-summoner/{id}/recent'
+    },
+    /** league api */
+    league: {
+        bySummonerIds: '/api/lol/{region}/v2.5/league/by-summoner/{id}',
+        entryBySummonerIds: '/api/lol/{region}/v2.5/league/by-summoner/{id}/entry',
+        teamByTeamIds: '/api/lol/{region}/v2.5/league/by-team/{id}',
+        entryByTeamIds: '/api/lol/{region}/v2.5/league/by-team/{id}/entry',
+        masterLeagues: '/api/lol/{region}/v2.5/league/master',
+        challengerLeagues: '/api/lol/{region}/v2.5/league/challenger'
+    },
+    /** match api*/
+    match: {
+        byId: '/api/lol/{region}/v2.2/match/{id}'
+    },
+    /** match list api */
+    matchlist: {
+        bySummonerId: '/api/lol/{region}/v2.2/matchlist/by-summoner/{id}'
+    },
     /** static api */
-    staticAPI: {
+    staticdata: {
         championList: '/api/lol/static-data/{region}/v1.2/champion',
-        championById: '/api/lol/static-data/{region}/v1.2/champion/{id}/',
+        championById: '/api/lol/static-data/{region}/v1.2/champion/{id}',
         itemList: '/api/lol/static-data/{region}/v1.2/item',
         itemById: '/api/lol/static-data/{region}/v1.2/item/{id}',
         masteryList: '/api/lol/static-data/{region}/v1.2/mastery',
@@ -89,14 +125,15 @@ URLS = {
         summonerSpellById: '/api/lol/static-data/{region}/v1.2/summoner-spell/{id}',
         versions: '/api/lol/static-data/{region}/v1.2/versions'
     },
-    /** champion api */
-    championFlags: {
-        championList: '/api/lol/{region}/v1.2/champion',
-        championById: '/api/lol/{region}/v1.2/champion/{id}'
+    /** statistics api */
+    stats: {
+        ranked: '/api/lol/{region}/v1.3/stats/by-summoner/{id}/ranked',
+        summary: '/api/lol/{region}/v1.3/stats/by-summoner/{id}/summary'
     },
-    /** game api */
-    game: {
-        recentGames: '/api/lol/{region}/v1.3/game/by-summoner/{id}/recent'
+    /** status api */
+    status: {
+        list:'/shards',
+        status: '/shards/{region}'
     },
     /** summoner api */
     summoner: {
@@ -105,27 +142,6 @@ URLS = {
         masteriesByIds: '/api/lol/{region}/v1.4/summoner/{id}/masteries', //can supply list of ids
         namesByIds: '/api/lol/{region}/v1.4/summoner/{id}/names', //can supply list of ids
         runesByIds: '/api/lol/{region}/v1.4/summoner/{id}/runes' //can supply list of ids
-    },
-    /** league api */
-    league: {
-        bySummonerIds: '/api/lol/{region}/v2.5/league/by-summoner/{id}',
-        entryBySummonerIds: '/api/lol/{region}/v2.5/league/by-summoner/{id}/entry',
-        teamByTeamIds: '/api/lol/{region}/v2.5/league/by-team/{id}',
-        entryByTeamIds: '/api/lol/{region}/v2.5/league/by-team/{id}/entry',
-        challengerLeagues: '/api/lol/{region}/v2.5/league/challenger'
-    },
-    /** match api*/
-    match: {
-        byId: '/api/lol/{region}/v2.2/match/{id}'
-    },
-    /** match history api */
-    matchHistory: {
-        bySummonerId: '/api/lol/{region}/v2.2/matchhistory/{id}'
-    },
-    /** statistics api */
-    stats: {
-        ranked: '/api/lol/{region}/v1.3/stats/by-summoner/{id}/ranked',
-        summary: '/api/lol/{region}/v1.3/stats/by-summoner/{id}/summary'
     },
     /** ranked team api */
     team: {
@@ -143,55 +159,77 @@ URLS = {
  * @returns {string} url representing the call specified
  * @static
  */
-var generateUrl = function(calltype, callmethod, options, id){
+function generateUrl(calltype, callmethod, options, id){
     var url = null;
-    var region = (options && options.region ? options.region : config.region);
+    var region = (options && options.region ? options.region : config.region).toUpperCase();
     var apikey = config.apikey;
-    log.info('\ncalltype: ' + calltype + '\ncallmethod: ' + callmethod + '\noptions: ' + JSON.stringify(options) + '\nid: ' + id + '\nregion: ' + region + '\napikey: ' + apikey);
+    log.debug('\ncalltype: ' + calltype + '\ncallmethod: ' + callmethod + '\noptions: ' + JSON.stringify(options) + '\nid: ' + id + '\nregion: ' + region + '\napikey: ' + apikey);
 
     if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && 0 < apikey.length){
-        log.info('if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && null !== apikey && 0 < apikey.length)');
+        log.debug('if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && null !== apikey && 0 < apikey.length)');
         if(-1 == callmethod.indexOf("ById") || id){
+            log.debug('if(-1 == callmethod.indexOf("ById") || id)');
             if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod]){
-                url = "https://" + HOST_BY_REGION[region] + URLS[calltype][callmethod].replace("{region}",REGION[region]).replace("{id}", id) + "?api_key=" + apikey;
-                log.info('if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod])');
+                log.debug('if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod])');
+                url = "https://" + HOST_BY_REGION[region] + URLS[calltype][callmethod].replace("{region}",region.toLowerCase()).replace("{id}", id) + "?api_key=" + apikey;
             }
-            log.info('if(-1 == callmethod.indexOf("ById") || id)');
         }
-        
     }
 
     if(null != url && null != options && 0 < options.length)
         for(var key in options)
             url += "\&" + key + "=" + (Array.isArray(options[key]) ? options[key].join(",") : options[key]);
-    log.info('url2: ' + JSON.stringify(id));
+    
+    log.debug('final url: ' + JSON.stringify(url));
     return url;
 };
 
 /**
- * performs asynchronous https call to the specified URL
+ * returns a Promise to perform asynchronous https call to the specified URL.  
  * @param (string) url url to call
- * @param {lolAPICallback} callback
  * @static
  */
-function makeAsyncHttpsCall(url, callback){
-    console.log('url: ' + url);
-    https.get(url, function(res){
-        var body = '';
-        res
-            .on('data', function(chunk){
-                body += chunk;
-            })
-            .on('end', function(){
-                utils.makeCallback(callback, res.statusCode, body);
-            });
-    }).on('error', function(error){
-        console.log(error);
-        callback({statusCode: null, message: 'error making API call'}, null);
+function makeAsyncHttpsCall(url){
+    return new Promise(function(resolve,reject){
+        
+        https.get(url, function(res){
+            log.debug('in get callback for: ' + url + '\nres: ' + res.statusCode + ' | ' + res.statusMessage);
+            if(200 !== res.statusCode){
+                reject(new Error(res.statusMessage));
+            }else{
+                var body = '';
+                res
+                    .on('data', function(chunk){
+                        body += chunk;
+                        }
+                    )
+                    .on('end', function(){
+                        log.debug('body data: ' + body);
+                            resolve(body);
+                        }
+                    )
+                ;
+            }
+        }).on('error', function(error){
+            log.error(error);
+            reject(new Error('error making API call: ' + error));//TODO: check if JSON
+        });
     });
-};
+}
 
-exports.generateAPIUrl = generateUrl;
-exports.makeAsyncHttpsCall = makeAsyncHttpsCall;
-exports.REGION = REGION;
-exports.setConfig = setConfig;
+/**
+ * returns a rejected promise creating an error with the messsage specified
+ * @param (string) url url to call
+ * @static
+ */
+function rejectPromise(errorMessage){
+    return new Promise(function(resolve, reject){
+        reject(new Error(errorMessage));
+    });
+}
+
+module.exports.generateAPIUrl = generateUrl;
+module.exports.makeAsyncHttpsCall = makeAsyncHttpsCall;
+module.exports.rejectPromise = rejectPromise;
+module.exports.REGION = REGION;
+module.exports.setConfig = setConfig;

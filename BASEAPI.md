@@ -18,9 +18,14 @@ That's it.  It's all setup now.
 Want to pull all Champion data?!
 Super easy:
 ```javascript
-lol.static.getAllChampData(function(error, data){
-    console.log(data);
-});
+lol.static.getAllChampData()
+	.then(function(data){
+    	console.log(data);
+	})
+	.catch(function(error){
+		console.log(error);
+	})
+;
 ```
 Want more control directly over the Riot API?
 That's also available!
@@ -30,9 +35,10 @@ var mapDataById = true;
 var locale = 'en_US';
 var region = 'NA';
 var version = '4.13.1';
-lol.static.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, region, function(error, data){
-    console.log(data);
-});
+lol.static.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, region)
+	.then(function(data){
+    	console.log(data);
+	});
 ```
 
 #Submodules
@@ -76,7 +82,7 @@ var matchHistoryApi= lol.matchhistory;
 Available Data:
 - Ranked Queue Match Lists
 
-Full Match History API [here](module-matchhistory.html)
+Full Match List API [here](module-matchlist.html)
 
 ##Match
 Now you've got all your match/game IDs.

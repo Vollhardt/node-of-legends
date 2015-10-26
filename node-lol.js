@@ -2,29 +2,34 @@
  * @desc Main module of loltaco
  * @module node-lol
  */
-var static = require('./api/static.js');
-var championFlags = require('./api/championFlags.js');
-var game = require('./api/game.js');
-var summoner = require('./api/summoner.js');
-var team = require('./api/team.js');
-var stats = require('./api/stats.js');
-var match = require('./api/match.js');
-var matchHistory = require('./api/matchhistory.js');
-var league = require('./api/league.js');
-var config = require('./config/config.js');
-var serverdata = require('./services/serverdata.js');
+
+"use strict";
+
+var staticdata = require('./api/staticdata');
+var champion = require('./api/champion');
+var game = require('./api/game');
+var summoner = require('./api/summoner');
+var team = require('./api/team');
+var stats = require('./api/stats');
+var status = require('./api/status');
+var match = require('./api/match');
+var matchlist = require('./api/matchlist');
+var league = require('./api/league');
+var currentgame = require('./api/currentgame');
+var featuredgames = require('./api/featuredgames');
+var serverdata = require('./services/serverdata');
 
 
 /**
- * static api
- * @type {module:static}
+ * static data api
+ * @type {module:staticdata}
  */
-module.exports.static = static;
+module.exports.staticdata = staticdata;
 /**
  * champion flags api
  * @type {module:championflags}
  */
-module.exports.championFlags = championFlags;
+module.exports.champion = champion;
 /**
  * game api
  * @type {module:game}
@@ -46,10 +51,10 @@ module.exports.team = team;
  */
 module.exports.match = match;
 /**
- * match history api
- * @type {module:matchhistory}
+ * match list api
+ * @type {module:matchlist}
  */
-module.exports.matchHistory = matchHistory;
+module.exports.matchlist = matchlist;
 /**
  * stats api
  * @type {module:stats}
@@ -61,24 +66,32 @@ module.exports.stats = stats;
  */
 module.exports.league = league;
 /**
+ * featuredgames api
+ * @type {module:featuredgames}
+ */
+module.exports.featuredgames = featuredgames;
+/**
+ * currentgame api
+ * @type {module:currentgame}
+ */
+module.exports.currentgame = currentgame;
+/**
+ * status api
+ * @type {module:status}
+ */
+module.exports.status = status;
+
+/**
  * @func
  * @desc sets the configuration
  * @param {object} config key/value pairs to set
  * @return {object} returns the config object
  * @static
  */
-module.exports.setConfig = config.setConfig;
+module.exports.setConfig = serverdata.setConfig;
 
 /**
  * region list
  * @type {module:serverdata.REGION}
  */
 module.exports.REGION = serverdata.REGION;
-
-/**
- *  @desc callback signature of all api calls
- *  @callback lolAPICallback
- *  @param {{status_code: number, message: string}} error
- *  @param {Object} data
- *  @global
- */

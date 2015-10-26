@@ -3,8 +3,10 @@
  * @desc Wrapper for Riot's game data api
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
-var serverdata = require('../services/serverdata.js');
-var utils = require('../services/utils.js');
+
+ 'use strict';
+ 
+var serverdata = require('../services/serverdata');
 
 /**
  * gets the URL for the stats api for the specified method
@@ -14,56 +16,50 @@ var utils = require('../services/utils.js');
  * @returns {string} generated url
  * @private
  */
-var getStatsUrl = function(callmethod, options, id){
+function getStatsUrl(callmethod, options, id){
     return serverdata.generateAPIUrl("stats", callmethod, options, id);
-};
+}
 /**
  * gets a summoner's full ranked statistics for a season
  * @param {number} summonerId the summoner id
  * @param {module:constants.STATS_SEASON?} season the season to gets stats for. **DEFAULT: current season**
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-var getRankedStatsBySummonerId = function(summonerId, season, region, callback){
-    var options = {};
-    if(utils.isFunction(region))
-        callback = region;
-    else
-        options.region = region;
+function getRankedStatsBySummonerId(summonerId, season, region){
+    if(summonerId){
+        var options = {region: region};
+        
+        if(season) options.season = season;
 
-    if(season)
-        options.season = season;
+        var url = getStatsUrl("ranked", options, summonerId);
 
-    var url = getStatsUrl("ranked", options, summonerId);
-
-    serverdata.makeAsyncHttpsCall(url, callback);
-};
+        return serverdata.makeAsyncHttpsCall(url);
+    }else
+        return serverdata.rejectPromise('No summoner ID specified');
+}
 
 /**
  * Gets a summary of the summoner's stats for a ranked season
  * @param {number} summonerId the summoner id
  * @param {module:constants.STATS_SEASON?} season the season to gets stats for. **DEFAULT: current season**
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
- * @param {lolAPICallback} callback function to call after request is complete
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-var getStatSummaryBySummonerId = function(summonerId, season, region, callback){
-    var options = {};
-    if(utils.isFunction(region))
-        callback = region;
-    else
-        options.region = region;
+function getStatSummaryBySummonerId(summonerId, season, region){
+    if(summonerId){
+        var options = {region: region};
+        
+        if(season) options.season = season;
 
-    if(season)
-        options.season = season;
+        var url = getStatsUrl("summary", options, summonerId);
 
-    var url = getStatsUrl("summary", options, summonerId);
+        return serverdata.makeAsyncHttpsCall(url);
+    }else
+        return serverdata.rejectPromise('No summoner ID specified');
+}
 
-    serverdata.makeAsyncHttpsCall(url, callback);
-};
-
-exports.getStatSummaryBySummonerId = getStatSummaryBySummonerId;
-exports.getRankedStatsBySummonerId = getRankedStatsBySummonerId;
+module.exports.getStatSummaryBySummonerId = getStatSummaryBySummonerId;
+module.exports.getRankedStatsBySummonerId = getRankedStatsBySummonerId;
