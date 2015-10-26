@@ -6,7 +6,7 @@
 "use strict";
 
 var https = require('https');
-var _ = require('lodash');
+var _assign = require('lodash.assign');
 var log = require('log4node');
 log.setLogLevel(process.env.LOG_LEVEL || 'error');
 
@@ -16,7 +16,7 @@ var config = {
 };
 
 function setConfig(update){
-    _.assign(config, update);
+    _assign(config, update);
     log.debug('configuring: ' + JSON.stringify(config));
     return config;
 };
@@ -116,6 +116,9 @@ const URLS = {
         championById: '/api/lol/static-data/{region}/v1.2/champion/{id}',
         itemList: '/api/lol/static-data/{region}/v1.2/item',
         itemById: '/api/lol/static-data/{region}/v1.2/item/{id}',
+        languages: '/api/lol/static-data/{region}/v1.2/languages',
+        languagestrings: '/api/lol/static-data/{region}/v1.2/language-strings',
+        maps: '/api/lol/static-data/{region}/v1.2/map',
         masteryList: '/api/lol/static-data/{region}/v1.2/mastery',
         masteryById: '/api/lol/static-data/{region}/v1.2/mastery/{id}',
         realm: '/api/lol/static-data/{region}/v1.2/realm',
@@ -205,7 +208,7 @@ function makeAsyncHttpsCall(url){
                     )
                     .on('end', function(){
                         log.debug('body data: ' + body);
-                            resolve(body);
+                            resolve(JSON.parse(body));
                         }
                     )
                 ;
