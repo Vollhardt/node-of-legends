@@ -22,7 +22,7 @@ That's it.  It's all setup now.
 Want to pull all Champion data?!
 Super easy:
 ```javascript
-lol.static.getAllChampData()
+lol.staticdata.getAllChampData()
 	.then(function(data){
     	console.log(data);
 	})
@@ -39,7 +39,7 @@ var mapDataById = true;
 var locale = 'en_US';
 var region = 'NA';
 var version = '4.13.1';
-lol.static.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, region)
+lol.staticdata.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, region)
 	.then(function(data){
     	console.log(data);
 	})
