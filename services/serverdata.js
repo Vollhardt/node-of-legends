@@ -166,25 +166,34 @@ const URLS = {
  */
 function generateUrl(calltype, callmethod, options, id){
     var url = null;
+    
+    //set region
     var region = (options && options.region ? options.region : config.region).toUpperCase();
+    
+    //remove region so we do not encode extra params in the URL
+    if(options) delete options['region'];
+    
     var apikey = config.apikey;
     log.debug('\ncalltype: ' + calltype + '\ncallmethod: ' + callmethod + '\noptions: ' + JSON.stringify(options) + '\nid: ' + id + '\nregion: ' + region + '\napikey: ' + apikey);
 
+    //check for required parameters
     if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && 0 < apikey.length){
-        log.debug('if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && null !== apikey && 0 < apikey.length)');
+        //make sure id is present if necessary
         if(-1 == callmethod.indexOf("ById") || id){
-            log.debug('if(-1 == callmethod.indexOf("ById") || id)');
+            //verify nec. variables are defined
             if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod]){
-                log.debug('if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod])');
                 let host = HOST_BY_REGION['staticdata' === calltype ? 'GLOBAL' : ('status'===calltype ? 'STATUS' : region)];
                 url = host + URLS[calltype][callmethod].replace("{region}",region.toLowerCase()).replace("{id}", id) + "?api_key=" + apikey;
             }
         }
     }
 
-    if(null != url && null != options && 0 < options.length)
-        for(var key in options)
+    //add options to the URL
+    if(url && options && 0 < Object.keys(options).length){
+        for(var key in options){
             url += "\&" + key + "=" + (Array.isArray(options[key]) ? options[key].join(",") : options[key]);
+        }
+    }
     
     log.debug('final url: ' + JSON.stringify(url));
     return url;
