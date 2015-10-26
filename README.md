@@ -1,6 +1,6 @@
 #Node-LoL
 
-###League of Legends API Wrapper for Node.JS
+###League of Legends API Wrapper for Node.JS utilizing ES6 Promises
 > Find Riot's official API at:
 > https://developer.riotgames.com/api
 
