@@ -43,7 +43,7 @@ function getChampionsById(id, region){
     var options = {region: region};
 
     if(id)
-        return serverdata.makeAsyncHttpsCall(getChampionFlagUrl("championById",options,id), callback);
+        return serverdata.makeAsyncHttpsCall(getChampionFlagUrl("championById",options,id));
     else
         return serverdata.rejectPromise("No champion ID specified");
 }
