@@ -12,10 +12,10 @@ lol.setConfig({
 describe('Featured Games API',function(){
 	it('should get featured games for NA (default region)',function(){
 		this.timeout(10000);
-		return lol.champion.getFeaturedGames().should.eventually.be.an('Object');
+		return lol.featuredgames.getFeaturedGames().should.eventually.be.an('Object');
 	});
 	it('should get featured games for a specified reginon (BRAZIL)',function(){
 		this.timeout(10000);
-		return lol.champion.getFeaturedGames(lol.REGION.BRAZIL).should.eventually.be.an('Object');
+		return lol.featuredgames.getFeaturedGames(lol.REGION.BRAZIL).should.eventually.be.an('Object');
 	});
 });
