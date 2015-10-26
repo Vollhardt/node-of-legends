@@ -145,7 +145,7 @@ const URLS = {
         name: '/api/lol/{region}/v1.4/summoner/by-name/{id}',
         byIds: '/api/lol/{region}/v1.4/summoner/{id}', //can supply list of ids
         masteriesByIds: '/api/lol/{region}/v1.4/summoner/{id}/masteries', //can supply list of ids
-        namesByIds: '/api/lol/{region}/v1.4/summoner/{id}/names', //can supply list of ids
+        namesByIds: '/api/lol/{region}/v1.4/summoner/{id}/name', //can supply list of ids
         runesByIds: '/api/lol/{region}/v1.4/summoner/{id}/runes' //can supply list of ids
     },
     /** ranked team api */
