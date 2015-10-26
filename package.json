@@ -19,7 +19,7 @@
     "type": "git",
     "url": "https://github.com/sudphil/node-of-legends"
   },
-  "main": "node-lol.js",
+  "main": "node-of-legends.js",
   "private": true,
   "keywords": [
     "node-of-legends",
