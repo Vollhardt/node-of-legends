@@ -1,6 +1,6 @@
 /**
  * @desc Main module of loltaco
- * @module node-lol
+ * @module node-of-legends
  */
 
 "use strict";

@@ -1,5 +1,5 @@
 {
-  "name": "Node-LoL",
+  "name": "Node-of-Legends",
   "version": "1.0.0",
   "author": "Phil Vollhardt <phil@suds.io>",
   "contributors": [
@@ -17,17 +17,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sudphil/node-lol"
+    "url": "https://github.com/sudphil/node-of-legends"
   },
   "main": "node-lol.js",
   "private": true,
   "keywords": [
-    "node-lol",
+    "node-of-legends",
     "league of legends",
     "lol",
     "riot",
     "api",
-    "node"
+    "node",
+    "promises"
   ],
   "preferGlobal": false,
   "dependencies": {
@@ -35,7 +36,7 @@
     "log4node": "^0.1.6"
   },
   "bugs": {
-    "url": "https://github.com/sudphil/node-lol/issues"
+    "url": "https://github.com/sudphil/node-of-legends/issues"
   },
   "license": "MIT"
 }

@@ -1,4 +1,4 @@
-#Node-LoL
+#Node-of-Legends
 
 ###League of Legends API Wrapper for Node.JS utilizing ES6 Promises
 > Find Riot's official API at:
@@ -6,13 +6,13 @@
 
 ##Installation
 ```
-npm install node-lol
+npm install node-of-legends
 ```
 
 ##Usage
-Just require node-lol, set config and you're good to go!
+Just require node-of-legends, set config and you're good to go!
 ```javascript
-var lol = require('node-lol');
+var lol = require('node-of-legends');
 lol.setConfig({
     region: lol.REGION.NORTH_AMERICA,
     apikey: '<my-api-key>'
@@ -51,4 +51,4 @@ lol.staticdata.getChampionList(dataTypesToRetrieve, mapDataById, locale, version
 
 ##API Reference
 A full API can be found at
-http://node-lol.suds.io/api
+http://node-of-legends.suds.io/api

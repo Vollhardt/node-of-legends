@@ -1,14 +1,14 @@
-# Welcome to Node-LoL's Promises API
+# Welcome to Node-of-Legends's Promises API
 The *official* API of the unofficial Node.JS wrapper for Riot's League Of Legend's [API](http://developer.riotgames.com) utilizing Promises!
 ### Installation
 ```
-npm install node-lol
+npm install node-of-legends
 ```
 
 ## Usage
-Just require node-lol, set config and you're good to go!
+Just require node-of-legends, set config and you're good to go!
 ```javascript
-var lol = require('node-lol');
+var lol = require('node-of-legends');
 lol.setConfig({
     region: lol.REGION.NORTH_AMERICA,
     apikey: '<my-api-key>'
