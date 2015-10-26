@@ -38,5 +38,12 @@
   "bugs": {
     "url": "https://github.com/sudphil/node-of-legends/issues"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.4.0",
+    "chai-as-promised": "^5.1.0",
+    "ink-docstrap": "^0.5.2",
+    "jsdoc": "^3.3.3",
+    "mocha": "^2.3.3"
+  }
 }
