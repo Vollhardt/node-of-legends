@@ -25,11 +25,11 @@ function getStaticUrl(callmethod, options, id){
 
 /**
  * gets a list of champions
- * @param {module:constants.CHAMPION_DATA_TO_RETRIVE|module:constants.CHAMPION_DATA_TO_RETRIVE[]}dataType
- * @param {boolean} byId=false if true, keys will be champ ids and not champ names
- * @param {string} locale local code to use for returned data
- * @param {string} version data version
- * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
+ * @param {?module:constants.CHAMPION_DATA_TO_RETRIVE|module:constants.CHAMPION_DATA_TO_RETRIVE[]}dataType
+ * @param {boolean?} byId=false if true, keys will be champ ids and not champ names
+ * @param {string?} locale local code to use for returned data
+ * @param {string?} version data version
+ * @param {?module:serverdata.REGION} [region] if no region is specified the configured region will be used
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
@@ -333,6 +333,50 @@ function getRealmData(region){
 function getVersions(region){
     var options = {region: region};
     var url = getStaticUrl("versions", options, null);
+    return serverdata.makeAsyncHttpsCall(url);
+}
+
+/**
+ * gets array of languages(locales) supported in region
+ * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
+ * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
+ * @static
+ */
+function getLanguages(region){
+    var options = {region: region};
+    var url = getStaticUrl("languages", options, null);
+    return serverdata.makeAsyncHttpsCall(url);
+}
+
+/**
+ * gets display strings for specified language(locale)
+ * @param {string?} locale local code to use for returned data
+ * @param {string?} version data version
+ * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
+ * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
+ * @static
+ */
+function getLanguageStrings(locale, version, region){
+    var options = {region: region};
+    if(locale) options.locale=locale;
+    if(version) options.version=version;
+    var url = getStaticUrl("languagestrings", options, null);
+    return serverdata.makeAsyncHttpsCall(url);
+}
+
+/**
+ * gets map information for specified language(locale)
+ * @param {string?} locale local code to use for returned data
+ * @param {string?} version data version
+ * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
+ * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
+ * @static
+ */
+function getMaps(locale, version, region){
+    var options = {region: region};
+    if(locale) options.locale=locale;
+    if(version) options.version=version;
+    var url = getStaticUrl("maps", options, null);
     return serverdata.makeAsyncHttpsCall(url);
 }
 
