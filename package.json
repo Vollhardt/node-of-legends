@@ -1,5 +1,5 @@
 {
-  "name": "Node-of-Legends",
+  "name": "node-of-legends",
   "version": "1.0.0",
   "author": "Phil Vollhardt <phil@suds.io>",
   "contributors": [
@@ -20,7 +20,7 @@
     "url": "https://github.com/sudphil/node-of-legends"
   },
   "main": "node-of-legends.js",
-  "private": true,
+  "private": false,
   "keywords": [
     "node-of-legends",
     "league of legends",
