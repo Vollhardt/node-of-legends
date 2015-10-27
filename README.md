@@ -1,6 +1,8 @@
 # Node-of-Legends
 
 ### League of Legends API Wrapper for Node.JS utilizing ES6 Promises
+A wrapper for the League of Legends API using Promises
+
 A full API can be found at
 [http://node-of-legends.suds.io/api](http://node-of-legends.suds.io/api)
 
