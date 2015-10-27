@@ -45,7 +45,7 @@ function getChampionsById(id, region){
     if(id)
         return serverdata.makeAsyncHttpsCall(getChampionFlagUrl("championById",options,id));
     else
-        return serverdata.rejectPromise("No champion ID specified");
+        return Promise.reject(new Error("No champion ID specified"));
 }
 
 module.exports.getChampionList = getChampionList;

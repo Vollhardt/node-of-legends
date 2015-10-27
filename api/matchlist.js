@@ -48,7 +48,7 @@ function getMatchListBySummonerId(summonerId, championIds, rankedQueues, beginTi
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner ID specified');
+        return Promise.reject(new Error('No summoner ID specified'));
 };
 
 module.exports.getMatchListBySummonerId = getMatchListBySummonerId;

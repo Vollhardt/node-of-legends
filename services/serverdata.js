@@ -250,20 +250,8 @@ function makeCallToApi(url, module){
     });
 }
 
-/**
- * returns a rejected promise creating an error with the messsage specified
- * @param (string) url url to call
- * @static
- */
-function rejectPromise(errorMessage){
-    return new Promise(function(resolve, reject){
-        reject(new Error(errorMessage));
-    });
-}
-
 module.exports.generateAPIUrl = generateUrl;
 module.exports.makeAsyncHttpsCall = makeAsyncHttpsCall;
 module.exports.makeAsyncHttpCall = makeAsyncHttpCall;
-module.exports.rejectPromise = rejectPromise;
 module.exports.REGION = REGION;
 module.exports.setConfig = setConfig;

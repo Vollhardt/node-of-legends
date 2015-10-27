@@ -37,7 +37,7 @@ function getSummonerRecentGameHistoryById(summonerId, region){
 		log.debug('\n\nsummonerId: ' + summonerId + '\n\n');
     	return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner ID specified.');
+        return Promise.reject(new Error('No summoner ID specified.'));
 }
 
 module.exports.getSummonerRecentGameHistoryById = getSummonerRecentGameHistoryById;

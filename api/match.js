@@ -35,7 +35,7 @@ function getMatchById(matchId, getTimeline){
 
     	return serverdata.makeAsyncHttpsCall(url);
 	}else
-		return serverdata.rejectPromise('No match ID specified');
+		return Promise.reject(new Error('No match ID specified'));
 };
 
 module.exports.getMatchById = getMatchById;

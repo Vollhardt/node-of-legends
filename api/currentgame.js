@@ -31,7 +31,7 @@ function getSpectatorGameInfo(summonerId, region){
 
         return serverdata.makeAsyncHttpsCall(getCurrentGameUrl("spectator", options, summonerId));
     }else
-        return serverdata.rejectPromise('No summoner ID specified.')
+        return Promise.reject(new Error('No summoner ID specified.'));
 }
 
 module.exports.getSpectatorGameInfo = getSpectatorGameInfo;

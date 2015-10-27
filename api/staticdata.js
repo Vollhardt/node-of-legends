@@ -81,7 +81,7 @@ function getChampionById(champId, dataType, byId, locale, version, region){
         return serverdata.makeAsyncHttpsCall(url);
     }
     else
-        return serverdata.rejectPromise('No champion ID specified');
+        return Promise.reject(new Error('No champion ID specified'));
 }
 
 /**
@@ -126,7 +126,7 @@ function getItemById(id, dataType, locale, version, region){
     
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No item ID specified');
+        return Promise.reject(new Error('No item ID specified'));
 }
 
 /**
@@ -182,7 +182,7 @@ function getMasteryById(id, dataType, locale, version, region){
     
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No mastery ID specified');
+        return Promise.reject(new Error('No mastery ID specified'));
 }
 
 /**
@@ -238,7 +238,7 @@ function getRuneById(id, dataType, locale, version, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No rune ID specified');
+        return Promise.reject(new Error('No rune ID specified'));
 }
 
 /**
@@ -297,7 +297,7 @@ function getSummonerSpellById(id, dataType, byId, locale, version, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No spell ID specified');
+        return Promise.reject(new Error('No spell ID specified'));
 }
 
 /**

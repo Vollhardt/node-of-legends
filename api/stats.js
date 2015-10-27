@@ -37,7 +37,7 @@ function getRankedStatsBySummonerId(summonerId, season, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner ID specified');
+        return Promise.reject(new Error('No summoner ID specified'));
 }
 
 /**
@@ -58,7 +58,7 @@ function getStatSummaryBySummonerId(summonerId, season, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner ID specified');
+        return Promise.reject(new Error('No summoner ID specified'));
 }
 
 module.exports.getStatSummaryBySummonerId = getStatSummaryBySummonerId;

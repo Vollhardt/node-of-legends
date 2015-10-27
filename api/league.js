@@ -35,7 +35,7 @@ function getLeaguesBySummonerIds(summonerIds, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner ID(s) specified');
+        return Promise.reject(new Error('No summoner ID(s) specified'));
 }
 
 /**
@@ -52,7 +52,7 @@ function getEntryBySummonerIds(summonerIds, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner ID(s) specified');
+        return Promise.reject(new Error('No summoner ID(s) specified'));
 }
 
 
@@ -71,7 +71,7 @@ function getTeamsByTeamIds(teamIds, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No team ID(s) specified');
+        return Promise.reject(new Error('No team ID(s) specified'));
 }
 
 /**
@@ -89,7 +89,7 @@ function getEntryByTeamIds(teamIds, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No team ID(s) specified');
+        return Promise.reject(new Error('No team ID(s) specified'));
 }
 
 /**
@@ -107,7 +107,7 @@ function getMasterLeagues(queueType, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No queue type specified');
+        return Promise.reject(new Error('No queue type specified'));
 }
 
 /**
@@ -125,7 +125,7 @@ function getChallengerLeagues(queueType, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No queue type specified');
+        return Promise.reject(new Error('No queue type specified'));
 }
 
 module.exports.getLeaguesBySummonerIds = getLeaguesBySummonerIds;

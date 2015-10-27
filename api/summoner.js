@@ -37,7 +37,7 @@ function getSummonerByName(summonerNames, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner name(s) specified');
+        return Promise.reject(new Error('No summoner name(s) specified'));
 }
 
 /**
@@ -54,7 +54,7 @@ function getSummonersByIds(summonerIds, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner ID(s) specified');
+        return Promise.reject(new Error('No summoner ID(s) specified'));
 }
 
 /**
@@ -71,7 +71,7 @@ function getMasteriesByIds(summonerIds, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner ID(s) specified');
+        return Promise.reject(new Error('No summoner ID(s) specified'));
 }
 
 /**
@@ -88,7 +88,7 @@ function getSummonerNamesByIds(summonerIds, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner ID(s) specified');
+        return Promise.reject(new Error('No summoner ID(s) specified'));
 }
 
 /**
@@ -105,7 +105,7 @@ function getRunesByIds(summonerIds, region){
 
         return serverdata.makeAsyncHttpsCall(url);
     }else
-        return serverdata.rejectPromise('No summoner ID(s) specified');
+        return Promise.reject(new Error('No summoner ID(s) specified'));
 }
 
 module.exports.getSummonerByName = getSummonerByName;
