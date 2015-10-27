@@ -1,8 +1,8 @@
 # Node-of-Legends
 
 ### League of Legends API Wrapper for Node.JS utilizing ES6 Promises
-> Find Riot's official API at:
-> https://developer.riotgames.com/api
+A full API can be found at
+[http://node-of-legends.suds.io/api](http://node-of-legends.suds.io/api)
 
 ## Installation
 ```
@@ -48,7 +48,3 @@ lol.staticdata.getChampionList(dataTypesToRetrieve, mapDataById, locale, version
 	})
 ;
 ```
-
-## API Reference
-A full API can be found at
-http://node-of-legends.suds.io/api
