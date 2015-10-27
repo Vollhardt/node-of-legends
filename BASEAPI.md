@@ -1,4 +1,4 @@
-# Welcome to Node-of-Legends's Promises API
+# Welcome to node-of-legends's Promises API
 The *official* API of the unofficial Node.JS wrapper for Riot's League Of Legend's [API](http://developer.riotgames.com) utilizing Promises!
 ### Installation
 ```
