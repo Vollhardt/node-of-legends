@@ -205,31 +205,7 @@ function generateUrl(calltype, callmethod, options, id){
  * @static
  */
 function makeAsyncHttpsCall(url){
-    return new Promise(function(resolve,reject){
-        
-        https.get(url, function(res){
-            log.debug('in get callback for: ' + url + '\nres: ' + res.statusCode + ' | ' + res.statusMessage);
-            if(200 !== res.statusCode){
-                reject(new Error(res.statusMessage));
-            }else{
-                var body = '';
-                res
-                    .on('data', function(chunk){
-                        body += chunk;
-                        }
-                    )
-                    .on('end', function(){
-                        log.debug('body data: ' + body);
-                            resolve(JSON.parse(body));
-                        }
-                    )
-                ;
-            }
-        }).on('error', function(error){
-            log.error(error);
-            reject(new Error('error making API call: ' + error));//TODO: check if JSON
-        });
-    });
+    return makeCallToApi(url, https);
 }
 
 /**
@@ -238,9 +214,19 @@ function makeAsyncHttpsCall(url){
  * @static
  */
 function makeAsyncHttpCall(url){
+    return makeCallToApi(url, http);
+}
+
+/**
+ * returns a Promise to perform the call to the url using the specified module (http/https)
+ * @param (string) url url to call
+ * @param (object) module http/https module
+ * @static
+ */
+function makeCallToApi(url, module){
     return new Promise(function(resolve,reject){
         
-        http.get(url, function(res){
+        module.get(url, function(res){
             log.debug('in get callback for: ' + url + '\nres: ' + res.statusCode + ' | ' + res.statusMessage);
             if(200 !== res.statusCode){
                 reject(new Error(res.statusMessage));
@@ -255,8 +241,7 @@ function makeAsyncHttpCall(url){
                         log.debug('body data: ' + body);
                             resolve(JSON.parse(body));
                         }
-                    )
-                ;
+                    );
             }
         }).on('error', function(error){
             log.error(error);
