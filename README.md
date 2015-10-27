@@ -30,8 +30,7 @@ lol.staticdata.getAllChampData()
 	})
 	.catch(function(error){
 		console.log(error);
-	})
-;
+	});
 ```
 Want more control directly over the Riot API?
 That's also available!
@@ -47,6 +46,5 @@ lol.staticdata.getChampionList(dataTypesToRetrieve, mapDataById, locale, version
 	})
 	.catch(function(error){
 		console.log(error);
-	})
-;
+	});
 ```
