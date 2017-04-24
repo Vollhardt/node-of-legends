@@ -1,7 +1,7 @@
 /**
  * @module summoner
  * @desc Wrapper for Riot's summoner data api <br/>
- * **NOTE**: calls to this API will **NOT** count towards your rate limit <br/>
+ * @deprecated
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 
@@ -58,23 +58,6 @@ function getSummonersByIds(summonerIds, region){
 }
 
 /**
- * gets summoner mastery information by summoner id
- * @param {number|number[]} summonerIds ids of the summoner or summoners to get league information for, **MAXIMUM 40**
- * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
- * @static
- */
-function getMasteriesByIds(summonerIds, region){
-    if(summonerIds){
-        var options = {region: region};
-        var url = getSummonerUrl("masteriesByIds", options, [].concat(summonerIds).slice(0,40).join(','));
-
-        return serverdata.makeAsyncHttpsCall(url);
-    }else
-        return Promise.reject(new Error('No summoner ID(s) specified'));
-}
-
-/**
 * gets summoner names by summoner id
 * @param {number|number[]} summonerIds ids of the summoner or summoners to get names for, **MAXIMUM 40**
 * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
@@ -91,25 +74,6 @@ function getSummonerNamesByIds(summonerIds, region){
         return Promise.reject(new Error('No summoner ID(s) specified'));
 }
 
-/**
- * gets summoner rune information by summoner id
- * @param {number|number[]} summonerIds ids of the summoner or summoners to get names for, **MAXIMUM 40**
- * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
- * @static
- */
-function getRunesByIds(summonerIds, region){
-    if(summonerIds){
-        var options = {region: region};
-        var url = getSummonerUrl("runesByIds", options, [].concat(summonerIds).slice(0,40).join(','));
-
-        return serverdata.makeAsyncHttpsCall(url);
-    }else
-        return Promise.reject(new Error('No summoner ID(s) specified'));
-}
-
 module.exports.getSummonerByName = getSummonerByName;
 module.exports.getSummonersByIds = getSummonersByIds;
-module.exports.getMasteriesByIds = getMasteriesByIds;
 module.exports.getSummonerNamesByIds = getSummonerNamesByIds;
-module.exports.getRunesByIds = getRunesByIds;
