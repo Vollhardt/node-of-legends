@@ -2,6 +2,7 @@
  * @module featuredgames
  * @desc Wrapper for Riot's featured game data api
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
+ * @deprecated
  */
 
 'use strict';
