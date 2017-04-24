@@ -57,42 +57,6 @@ function getEntryBySummonerIds(summonerIds, region){
 
 
 /**
- * gets all team information for specified team or teams
- * @param {number|number[]} teamIds id(s) of the team or teams to get team information for, **MAXIMUM 10**
- * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
- * @static
- */
-function getTeamsByTeamIds(teamIds, region){
-    if(teamIds){
-        var options = {region: region};
-
-        var url = getLeagueUrl("teamByTeamIds", region, [].concat(teamIds).slice(0,10).join(','));
-
-        return serverdata.makeAsyncHttpsCall(url);
-    }else
-        return Promise.reject(new Error('No team ID(s) specified'));
-}
-
-/**
- * gets all entry information for specified team or teams
- * @param {number|number[]} teamIds id(s) of the team or teams to get team information for **MAXIMUM 10**
- * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
- * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
- * @static
- */
-function getEntryByTeamIds(teamIds, region){
-    if(teamIds){
-        var options = {region: region};
-
-        var url = getLeagueUrl("entryByTeamIds", options, [].concat(teamIds).slice(0,10).join(','));
-
-        return serverdata.makeAsyncHttpsCall(url);
-    }else
-        return Promise.reject(new Error('No team ID(s) specified'));
-}
-
-/**
  * gets all master league information for the specified region
  * @param {module:constants.RANKED_QUEUE_TYPE} queueType Ranked Queue type
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
@@ -130,7 +94,5 @@ function getChallengerLeagues(queueType, region){
 
 module.exports.getLeaguesBySummonerIds = getLeaguesBySummonerIds;
 module.exports.getEntryBySummonerIds = getEntryBySummonerIds;
-module.exports.getTeamsByTeamIds = getTeamsByTeamIds;
-module.exports.getEntryByTeamIds = getEntryByTeamIds;
 module.exports.getMasterLeagues = getMasterLeagues;
 module.exports.getChallengerLeagues = getChallengerLeagues;
