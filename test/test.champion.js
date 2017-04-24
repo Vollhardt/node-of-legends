@@ -1,6 +1,5 @@
 var chai = require('chai');
 var should = chai.should();
-var assert = chai.assert;
 chai.use(require('chai-as-promised'));
 var lol = require('../node-of-legends');
 
