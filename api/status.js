@@ -1,5 +1,6 @@
 /**
  * @module status
+ * @deprecated
  * @desc Wrapper for Riot's status api <br/>
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
@@ -26,7 +27,7 @@ function getStatusUrl(callmethod, options){
 function getShardList(){
     var url = getStatusUrl("list", null);
 
-    return serverdata.makeAsyncHttpCall(url);
+    return serverdata.makeAsyncHttpsCall(url);
 }
 
 /**
@@ -38,7 +39,7 @@ function getShardStatus(region){
     var options = {region: region};
     var url = getStatusUrl("status", options);
 
-    return serverdata.makeAsyncHttpCall(url);
+    return serverdata.makeAsyncHttpsCall(url);
 }
 
 module.exports.getShardList = getShardList;
