@@ -28,19 +28,20 @@ function setConfig(update){
  * @readonly
  * @static
  */
-const HOST_BY_REGION = {
-	BR: "https://br.api.pvp.net",
-	EUNE: "https://eune.api.pvp.net",
-	EUW: "https://euw.api.pvp.net",
-	KR: "https://kr.api.pvp.net",
-	LAS: "https://las.api.pvp.net",
-	LAN: "https://lan.api.pvp.net",
-	NA: "https://na.api.pvp.net",
-	OCE: "https://oce.api.pvp.net",
-	TR: "https://tr.api.pvp.net",
-	RU: "https://ru.api.pvp.net",
-	GLOBAL: "https://global.api.pvp.net",
-    STATUS: "http://status.leagueoflegends.com"
+const HOST_BY_REGION= {
+  BR: "https://br1.api.riotgames.com",
+  EUNE: "https://eun1.api.riotgames.com",
+  EUW: "https://euw1.api.riotgames.com",
+  JP: "https://jp1.api.riotgames.com",
+  KR: "https://kr.api.riotgames.com",
+  LAN: "https://la1.api.riotgames.com",
+  LAS: "https://la2.api.riotgames.com",
+  NA: "https://na1.api.riotgames.com",
+  OCE: "https://oc1.api.riotgames.com",
+  PBE: "https://pbe1.api.riotgames.com",
+  TR: "https://tr1.api.riotgames.com",
+  RU: "https://ru.api.riotgames.com",
+  GLOBAL: "https://global.api.riotgames.com"
 };
 
 /**
@@ -50,26 +51,30 @@ const HOST_BY_REGION = {
  * @static
  */
 const REGION = {
-    /** Brazil*/
-    BRAZIL: "br",
-	/**EU North and East **/
-    EU_NORTH_EAST: "eune",
-	/**EU West*/
-    EU_WEST: "euw",
-    /**Korea*/
-	KOREA: "kr",
-    /**Latin America South*/
-	LATIN_AMERICA_SOUTH: "las",
-    /**Latin America North*/
-    LATIN_AMERICA_NORTH: "lan",
-    /**North America (DEFAULT)*/
-	NORTH_AMERICA: "na",
-    /**Oceania*/
-	OCEANIA: "oce",
-    /**Turkey*/
-	TURKEY: "tr",
-    /**Russia*/
-	RUSSIA: "ru"
+  /** Brazil*/
+  BRAZIL: "br",
+  /**EU North and East **/
+  EU_NORTH_EAST: "eune",
+  /**EU West*/
+  EU_WEST: "euw",
+  /**Japan*/
+  JAPAN: "jp",
+  /**Korea*/
+  KOREA: "kr",
+  /**Latin America North*/
+  LATIN_AMERICA_NORTH: "lan",
+  /**Latin America South*/
+  LATIN_AMERICA_SOUTH: "las",
+  /**North America (DEFAULT)*/
+  NORTH_AMERICA: "na",
+  /**Oceania*/
+  OCEANIA: "oce",
+  /**Public Beta Environment*/
+  PBE: "pbe",
+  /**Turkey*/
+  TURKEY: "tr",
+  /**Russia*/
+  RUSSIA: "ru"
 };
 
 /**
@@ -81,8 +86,14 @@ const REGION = {
 const URLS = {
     /** champion api */
     champion: {
-        championList: '/api/lol/{region}/v1.2/champion',
-        championById: '/api/lol/{region}/v1.2/champion/{id}'
+        championList: '/lol/platform/v3/champions',
+        championById: '/lol/platform/v3/champions/{id}'
+    },
+    /** champion mastery api */
+    championmasteryv3:{
+        masteryById: '/lol/champion-mastery/v3/champion-masteries/by-summoner/{id}',
+        masteryByIdByChampionId: '/lol/champion-mastery/v3/champion-masteries/by-summoner/{id}/by-champion/{championId}',
+        scoreById: '/lol/champion-mastery/v3/scores/by-summoner/{id}'
     },
     /** current game api */
     currentgame: {
@@ -99,10 +110,12 @@ const URLS = {
     league: {
         bySummonerIds: '/api/lol/{region}/v2.5/league/by-summoner/{id}',
         entryBySummonerIds: '/api/lol/{region}/v2.5/league/by-summoner/{id}/entry',
-        teamByTeamIds: '/api/lol/{region}/v2.5/league/by-team/{id}',
-        entryByTeamIds: '/api/lol/{region}/v2.5/league/by-team/{id}/entry',
         masterLeagues: '/api/lol/{region}/v2.5/league/master',
         challengerLeagues: '/api/lol/{region}/v2.5/league/challenger'
+    },
+  /** masteries v3 api*/
+    masteries: {
+        masteriesById: '/lol/platform/v3/masteries/by-summoner/{id}'
     },
     /** match api*/
     match: {
@@ -111,6 +124,15 @@ const URLS = {
     /** match list api */
     matchlist: {
         bySummonerId: '/api/lol/{region}/v2.2/matchlist/by-summoner/{id}'
+    },
+    /** runes api*/
+    runes: {
+      bySummonerId: '/lol/platform/v3/runes/by-summoner/{id}'
+    },
+    /** spectator api*/
+    spectator: {
+      bySummonerId:'/lol/spectator/v3/active-games/by-summoner/{id}',
+      featuredGames: '/lol/spectator/v3/featured-games'
     },
     /** static api */
     staticdata: {
@@ -130,6 +152,25 @@ const URLS = {
         summonerSpellById: '/api/lol/static-data/{region}/v1.2/summoner-spell/{id}',
         versions: '/api/lol/static-data/{region}/v1.2/versions'
     },
+    /** static v3 api */
+    staticdatav3: {
+        championList: '/lol/static-data/v3/champions',
+        championById: '/lol/static-data/v3/champions/{id}',
+        itemList: '/lol/static-data/v3/items',
+        itemById: '/lol/static-data/v3/items/{id}',
+        languages: '/lol/static-data/v3/languages',
+        languagestrings: '/lol/static-data/v3/language-strings',
+        maps: '/lol/static-data/v3/maps',
+        masteryList: '/lol/static-data/v3/masteries',
+        masteryById: '/lol/static-data/v3/masteries/{id}',
+        profileIcons: '/lol/static-data/v3/profile-icons',
+        realm: '/lol/static-data/v3/realms',
+        runeList: '/lol/static-data/v3/runes',
+        runeById: '/lol/static-data/v3/runes/{id}',
+        summonerSpellList: '/lol/static-data/v3/summoner-spells',
+        summonerSpellById: '/lol/static-data/v3/summoner-spells/{id}',
+        versions: '/lol/static-data/v3/versions'
+    },
     /** statistics api */
     stats: {
         ranked: '/api/lol/{region}/v1.3/stats/by-summoner/{id}/ranked',
@@ -137,21 +178,24 @@ const URLS = {
     },
     /** status api */
     status: {
-        list:'/shards',
-        status: '/shards/{region}'
+        list:'/lol/status/v1/shards',
+        status: '/lol/status/v1/shard'
+    },
+    /** status v3 api */
+    statusv3:{
+        status: '/lol/status/v3/shard-data'
     },
     /** summoner api */
     summoner: {
         name: '/api/lol/{region}/v1.4/summoner/by-name/{id}',
         byIds: '/api/lol/{region}/v1.4/summoner/{id}', //can supply list of ids
-        masteriesByIds: '/api/lol/{region}/v1.4/summoner/{id}/masteries', //can supply list of ids
         namesByIds: '/api/lol/{region}/v1.4/summoner/{id}/name', //can supply list of ids
-        runesByIds: '/api/lol/{region}/v1.4/summoner/{id}/runes' //can supply list of ids
     },
-    /** ranked team api */
-    team: {
-        bySummonerIds: '/api/lol/{region}/v2.4/team/by-summoner/{id}',
-        byTeamIds: '/api/lol/{region}/v2.4/team/{teamIds}'
+    /** summoner v3 api */
+    summonerv3: {
+        name: '/lol/summoner/v3/summoners/by-name/{id}',
+        byId: '/lol/summoner/v3/summoners/{id}', //can supply list of ids
+        byAccountId: '/lol/summoner/v3/summoners/by-account/{id}', //can supply list of ids
     }
 };
 
@@ -174,7 +218,7 @@ function generateUrl(calltype, callmethod, options, id){
     if(options) delete options['region'];
     
     var apikey = config.apikey;
-    log.debug('\ncalltype: ' + calltype + '\ncallmethod: ' + callmethod + '\noptions: ' + JSON.stringify(options) + '\nid: ' + id + '\nregion: ' + region + '\napikey: ' + apikey);
+    log.debug('\ncalltype: ' + calltype + '\ncallmethod: ' + callmethod + '\noptions: ' + JSON.stringify(options) + '\nid: ' + (id?id:'null') + '\nregion: ' + region + '\napikey: ' + apikey);
 
     //check for required parameters
     if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && 0 < apikey.length){
@@ -182,8 +226,12 @@ function generateUrl(calltype, callmethod, options, id){
         if(-1 == callmethod.indexOf("ById") || id){
             //verify nec. variables are defined
             if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod]){
-                let host = HOST_BY_REGION['staticdata' === calltype ? 'GLOBAL' : ('status'===calltype ? 'STATUS' : region)];
-                url = host + URLS[calltype][callmethod].replace("{region}",region.toLowerCase()).replace("{id}", id) + "?api_key=" + apikey;
+                let host = HOST_BY_REGION['staticdata' === calltype ? 'GLOBAL' : region];
+                // featureg games cannot be called on the new 'NA1' urls
+              if('featuredgame'==calltype || 'league'==calltype || 'status'==calltype || 'currentgame' == calltype){
+                host = host.replace(/1|2/,'');
+              }
+                url = host + URLS[calltype][callmethod].replace("{region}",region.toLowerCase()).replace("{id}", (id?id:'')) + "?api_key=" + apikey;
             }
         }
     }
@@ -255,3 +303,4 @@ module.exports.makeAsyncHttpsCall = makeAsyncHttpsCall;
 module.exports.makeAsyncHttpCall = makeAsyncHttpCall;
 module.exports.REGION = REGION;
 module.exports.setConfig = setConfig;
+module.exports.configuredRegion = config.region;
