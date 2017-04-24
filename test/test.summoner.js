@@ -1,6 +1,5 @@
 var chai = require('chai');
 var should = chai.should();
-var assert = chai.assert;
 chai.use(require('chai-as-promised'));
 var lol = require('../node-of-legends');
 
@@ -35,24 +34,4 @@ describe('Summoner API',function(){
 		this.timeout(10000);
 		return lol.summoner.getSummonerNamesByIds([19112268,19035694,19036686]).should.eventually.be.an('Object');
 	});
-
-	it('should get mastery information for individual summoner id ',function(){
-		this.timeout(10000);
-		return lol.summoner.getMasteriesByIds(19112268).should.eventually.be.an('Object');
-	});
-	it('should get mastery information for multiple summoner id ',function(){
-		this.timeout(10000);
-		return lol.summoner.getMasteriesByIds([19112268,19035694,19036686]).should.eventually.be.an('Object');
-	});
-
-	it('should get runes information for individual summoner id ',function(){
-		this.timeout(10000);
-		return lol.summoner.getRunesByIds(19112268).should.eventually.be.an('Object');
-	});
-	it('should get runes information for multiple summoner id ',function(){
-		this.timeout(10000);
-		return lol.summoner.getRunesByIds([19112268,19035694,19036686]).should.eventually.be.an('Object');
-	});
-
-
 });
