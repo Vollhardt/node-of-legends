@@ -12,9 +12,9 @@ lol.setConfig({
 
 
 describe('Stats API',function(){
-	it('should get stats for summoner id 19112268',function(){
+	it('should get stats for summoner id 35301382',function(){
 		this.timeout(10000);
-		return lol.stats.getRankedStatsBySummonerId(19112268).should.eventually.be.an('Object');
+		return lol.stats.getRankedStatsBySummonerId(35301382).should.eventually.be.an('Object');
 	});
 	it('should fail to get stats',function(){
 		this.timeout(10000);
