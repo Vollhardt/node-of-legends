@@ -6,17 +6,23 @@
 "use strict";
 
 var staticdata = require('./api/staticdata');
+var staticdatav3 = require('./api/staticdata-v3');
 var champion = require('./api/champion');
+var championmasteryv3 = require('./api/championmastery-v3');
 var game = require('./api/game');
 var summoner = require('./api/summoner');
-var team = require('./api/team');
+var summonerv3 = require('./api/summoner-v3');
 var stats = require('./api/stats');
 var status = require('./api/status');
+var statusv3 = require('./api/status-v3');
+var masteries = require('./api/masteries');
 var match = require('./api/match');
 var matchlist = require('./api/matchlist');
 var league = require('./api/league');
 var currentgame = require('./api/currentgame');
 var featuredgames = require('./api/featuredgames');
+var spectator = require('./api/spectator');
+var runes = require('./api/runes');
 var serverdata = require('./services/serverdata');
 var constants = require('./config/constants');
 
@@ -26,10 +32,20 @@ var constants = require('./config/constants');
  */
 module.exports.staticdata = staticdata;
 /**
+ * static data v3 api
+ * @type {module:staticdatav3}
+ */
+module.exports.staticdatav3 = staticdatav3;
+/**
  * champion
  * @type {module:champion}
  */
 module.exports.champion = champion;
+/**
+ * champion mastery v3
+ * @type {module:championmasteryv3}
+ */
+module.exports.championmasteryv3 = championmasteryv3;
 /**
  * game api
  * @type {module:game}
@@ -41,10 +57,15 @@ module.exports.game = game;
  */
 module.exports.summoner = summoner;
 /**
- * team api
- * @type {module:team}
+ * summoner v3 api
+ * @type {module:summonerv3}
  */
-module.exports.team = team;
+module.exports.summonerv3 = summonerv3;
+/**
+ * masteries api
+ * @type {module:match}
+ */
+module.exports.masteries = masteries;
 /**
  * match api
  * @type {module:match}
@@ -80,6 +101,21 @@ module.exports.currentgame = currentgame;
  * @type {module:status}
  */
 module.exports.status = status;
+/**
+ * runes api
+ * @type {module:runes}
+ */
+module.exports.runes = runes;
+/**
+ * spectator api
+ * @type {module:spectator}
+ */
+module.exports.spectator = spectator;
+/**
+ * status v3 api
+ * @type {module:statusv3}
+ */
+module.exports.statusv3 = statusv3;
 
 /**
  * @func
