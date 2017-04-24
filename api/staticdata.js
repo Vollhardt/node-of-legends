@@ -1,5 +1,6 @@
 /**
  * @module staticdata
+ * @deprecated
  * @desc Wrapper for Riot's static data api <br/>
  * **NOTE**: calls to this API will **NOT** count towards your rate limit <br/>
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
