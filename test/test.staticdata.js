@@ -1,6 +1,5 @@
 var chai = require('chai');
 var should = chai.should();
-var assert = chai.assert;
 chai.use(require('chai-as-promised'));
 var lol = require('../node-of-legends');
 
@@ -33,8 +32,8 @@ describe('Static Data API',function(){
 		it('should get all items in EU West with all data',function(){
 			return lol.staticdata.getItemList(lol.ITEM_DATA_TO_RETRIEVE.ALL, null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
 		});	
-		it('should get all data for Cinderhulk',function(){
-			return lol.staticdata.getAllItemData(3725).should.eventually.be.an('Object');
+		it('should get all data for Boots 1',function(){
+			return lol.staticdata.getAllItemData(1001).should.eventually.be.an('Object');
 		});
 	});
 
@@ -63,8 +62,8 @@ describe('Static Data API',function(){
 		it('should get all masteries in EU West with all data',function(){
 			return lol.staticdata.getMasteryList(lol.MASTERY_DATA_TO_RETRIEVE.ALL, null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
 		});	
-		it('should get all data for Bandit',function(){
-			return lol.staticdata.getAllMasteryData(4352).should.eventually.be.an('Object');
+		it('should get all data for Fury',function(){
+			return lol.staticdata.getAllMasteryData(6111).should.eventually.be.an('Object');
 		});
 	});
 
