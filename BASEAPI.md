@@ -18,7 +18,7 @@ That's it.  It's all setup now.
 Want to pull all Champion data?!
 Super easy:
 ```javascript
-lol.staticdata.getAllChampData()
+lol.staticdatav3.getAllChampData()
 	.then(function(data){
     	console.log(data);
 	})
@@ -34,7 +34,7 @@ var mapDataById = true;
 var locale = 'en_US';
 var region = 'NA';
 var version = '4.13.1';
-lol.staticdata.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, region)
+lol.staticdatav3.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, region)
 	.then(function(data){
     	console.log(data);
 	});
@@ -63,35 +63,34 @@ Full Champion API [here](module-champion.html)
 
 ---
 
-### [Current Game (Spectator)](module-currentgame.html)
-Want to get some specbate information?
-Then hit up this saaaaweeeet API
-
+### [Champion Mastery](module-championmasteryv3.html)
+Hear ye, hear ye! Champion Mastery Information for sale(free).
 ```javascript
-var currentGameApi = lol.currentgame;
+var championMasteryApi = lol.championmasteryv3;
 ```
 Available Data:
- - Banned/Picked champs
- - General Game information
- - Observer Encryption Key
+- Champion Mastery Data for any Summoner
+- Summoner's Total Mastery Points
 
-Full Current Game (Spectator) [here](module-champions.html)
+Full Champion Mastery API [here](module-championmasteryv3.html)
+
+---
+
+### [Current Game](module-currentgame.html)
+**Deprecated**
+
+Please use the [Spectator API](module-spectator.html)
+
+Full Current Game [here](module-currentgame.html)
 
 ---
 
 ### [Featured Games](module-featuredgame.html)
-Games featured by Riot's PVP.net client...Need them?
-Sure you do, why? I still don't know the answer to that, BUT NOW YOU CAN HAVE THEM!!
+**Deprecated**
 
-```javascript
-var featuredGamesApi = lol.featuredgames;
-```
+Please use the [Spectator API](module-spectator.html)
 
-Available Data:
- - Featured Game information
- - Observer Encryption Key
-
-Full Featured Game API [here](module-featuredgame.html)
+Full Featured Game API [here](module-featuredgames.html)
 
 ---
 
@@ -120,7 +119,6 @@ var leagueApi = lol.league;
 Available Data:
 - Challenger League info by region
 - Leagues Summoners are in
-- Leagues Teams are in
 
 Full League API [here](module-league.html)
 
@@ -162,7 +160,51 @@ Full Match List API [here](module-matchlist.html)
 
 ---
 
+### [Runes](module-runes.html)
+Need Rune Page information for your Favorite Streamoes?
+
+Don't worry, the Runes API is HOT TO TROT
+Contains all the information you crave to make your rune pages just like the pros
+```javascript
+var runesApi = lol.runes;
+```
+Available Data:
+- Rune Page Information
+- Current Rune Page Information
+
+Full Runes API [here](module-runes.html)
+
+---
+
+### [Spectator](module-spectator.html)
+Want to get some specbate information?
+Then hit up this saaaaweeeet API
+
+```javascript
+var spectatorApi = lol.spectator;
+```
+Available Data:
+ - Live Game Data (including, but not limited to)
+   - Banned/Picked champs
+   - General Game information
+   - Observer Encryption Key
+ - Featured Games by Region
+ - Observer Encryption Key
+
+Full Spectator API [here](module-spectator.html)
+
+---
+
 ### [Static](module-staticdata.html)
+**Deprecated**
+This version of the static data api is going out of style.
+Get your new hot static data from the [Static Data Version 3 API](module-staticdatav3.html)
+
+Full Static API [here](module-staticdata.html)
+
+---
+
+### [Static v3](module-staticdata.html)
 Free static data!
 
 **All calls to this API do NOT count against your rate limit**
@@ -179,14 +221,14 @@ Available Data:
 - Realm Data
 - Version Data
 
-Full Static API [here](module-staticdata.html)
+Full Static API [here](module-staticdatav3.html)
 
 ---
 
 ### [Stats](module-stats.html)
 Here is it.  The big Kahuna.
 
-Stats. nuff said.
+Stats. 'nuff said.
 ```javascript
 var statsAPI = lol.stats;
 ```
@@ -218,30 +260,26 @@ Full Status API [here](module-status.html)
 ---
 
 ### [Summoner](module-summoner.html)
-Need Summoner data?!
+**Deprecated**
 
-Then this is the place for you:
-```javascript
-var summonerApi = lol.summoner;
-```
-Available Data:
-- Summoner Name/IDs
-- Rune Lists
-- Mastery Lists
+Please use the [Summoner version 3 API](module-summonerv3.html)
 
 Full Summoner API [here](module-summoner.html)
 
 ---
 
-### [Team](module-team.html)
-Ranked Team information.
+### [Summoner v3](module-summonerv3.html)
+Need Summoner data?!
 
+Then this is the place for you:
 ```javascript
-var teamAPI = lol.team;
+var summonerApi = lol.summonerv3;
 ```
 Available Data:
-- Roster
-- Match History
-- Roster History
+- Summoner Name/IDs
+- Account IDs
 
-Full Team API [here](module-team.html)
+Full Summoner API [here](module-summonerv3.html)
+
+---
+

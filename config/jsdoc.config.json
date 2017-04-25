@@ -32,5 +32,5 @@
     }
 }
 
-//npm install jsdoc ink-docstrap
-//jsdoc -R BASEAPI.md -c ./config/jsdoc.config.json
+//npm i jsdoc ink-docstrap
+//node .\node_modules\jsdoc\jsdoc.js -R BASEAPI.md -c ./config/jsdoc.config.json
