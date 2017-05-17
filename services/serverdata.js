@@ -239,7 +239,7 @@ function generateUrl(calltype, callmethod, options, id){
     //add options to the URL
     if(url && options && 0 < Object.keys(options).length){
         for(var key in options){
-            url += "\&" + key + "=" + (Array.isArray(options[key]) ? options[key].join(",") : options[key]);
+            url += "\&" + key + "=" + (Array.isArray(options[key]) ? options[key].join("%2C") : options[key]);
         }
     }
     
@@ -277,7 +277,7 @@ function makeCallToApi(url, module){
         module.get(url, function(res){
             log.debug('in get callback for: ' + url + '\nres: ' + res.statusCode + ' | ' + res.statusMessage);
             if(200 !== res.statusCode){
-                reject(new Error(res.statusMessage));
+                reject({msg:res.statusMessage,status:res.statusCode});
             }else{
                 var body = '';
                 res
