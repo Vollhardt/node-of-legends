@@ -2,6 +2,11 @@
 
 ### League of Legends API Wrapper for Node.JS utilizing ES6 Promises
 A wrapper for the League of Legends API using Promises
+Completely updated for API v3.
+
+**TODO: Tournament End Points**
+
+*Note: This is a full breaking change from version 1 of this library
 
 A full API can be found at
 [http://node-of-legends.suds.io/api](http://node-of-legends.suds.io/api)

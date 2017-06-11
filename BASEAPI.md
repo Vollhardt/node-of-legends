@@ -18,7 +18,7 @@ That's it.  It's all setup now.
 Want to pull all Champion data?!
 Super easy:
 ```javascript
-lol.staticdatav3.getAllChampData()
+lol.staticdata.getAllChampData()
 	.then(function(data){
     	console.log(data);
 	})
@@ -34,7 +34,7 @@ var mapDataById = true;
 var locale = 'en_US';
 var region = 'NA';
 var version = '4.13.1';
-lol.staticdatav3.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, region)
+lol.staticdata.getChampionList(dataTypesToRetrieve, mapDataById, locale, version, region)
 	.then(function(data){
     	console.log(data);
 	});
@@ -63,16 +63,16 @@ Full Champion API [here](module-champion.html)
 
 ---
 
-### [Champion Mastery](module-championmasteryv3.html)
+### [Champion Mastery](module-championmastery.html)
 Hear ye, hear ye! Champion Mastery Information for sale(free).
 ```javascript
-var championMasteryApi = lol.championmasteryv3;
+var championMasteryApi = lol.championmastery;
 ```
 Available Data:
 - Champion Mastery Data for any Summoner
 - Summoner's Total Mastery Points
 
-Full Champion Mastery API [here](module-championmasteryv3.html)
+Full Champion Mastery API [here](module-championmastery.html)
 
 ---
 
@@ -198,13 +198,13 @@ Full Spectator API [here](module-spectator.html)
 ### [Static](module-staticdata.html)
 **Deprecated**
 This version of the static data api is going out of style.
-Get your new hot static data from the [Static Data Version 3 API](module-staticdatav3.html)
+Get your new hot static data from the [Static Data Version 3 API](module-staticdata.html)
 
 Full Static API [here](module-staticdata.html)
 
 ---
 
-### [Static v3](module-staticdata.html)
+### [Static](module-staticdata.html)
 Free static data!
 
 **All calls to this API do NOT count against your rate limit**
@@ -221,7 +221,7 @@ Available Data:
 - Realm Data
 - Version Data
 
-Full Static API [here](module-staticdatav3.html)
+Full Static API [here](module-staticdata.html)
 
 ---
 
@@ -259,27 +259,18 @@ Full Status API [here](module-status.html)
 
 ---
 
-### [Summoner](module-summoner.html)
-**Deprecated**
-
-Please use the [Summoner version 3 API](module-summonerv3.html)
-
-Full Summoner API [here](module-summoner.html)
-
----
-
-### [Summoner v3](module-summonerv3.html)
+### [Summoner ](module-summoner.html)
 Need Summoner data?!
 
 Then this is the place for you:
 ```javascript
-var summonerApi = lol.summonerv3;
+var summonerApi = lol.summoner;
 ```
 Available Data:
 - Summoner Name/IDs
 - Account IDs
 
-Full Summoner API [here](module-summonerv3.html)
+Full Summoner API [here](module-summoner.html)
 
 ---
 
