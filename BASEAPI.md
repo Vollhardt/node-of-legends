@@ -76,24 +76,6 @@ Full Champion Mastery API [here](module-championmastery.html)
 
 ---
 
-### [Current Game](module-currentgame.html)
-**Deprecated**
-
-Please use the [Spectator API](module-spectator.html)
-
-Full Current Game [here](module-currentgame.html)
-
----
-
-### [Featured Games](module-featuredgame.html)
-**Deprecated**
-
-Please use the [Spectator API](module-spectator.html)
-
-Full Featured Game API [here](module-featuredgames.html)
-
----
-
 ### [Game](module-game.html)
 Game information contains only one thing...
 
@@ -192,15 +174,6 @@ Available Data:
  - Observer Encryption Key
 
 Full Spectator API [here](module-spectator.html)
-
----
-
-### [Static](module-staticdata.html)
-**Deprecated**
-This version of the static data api is going out of style.
-Get your new hot static data from the [Static Data Version 3 API](module-staticdata.html)
-
-Full Static API [here](module-staticdata.html)
 
 ---
 
