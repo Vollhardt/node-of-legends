@@ -1,15 +1,11 @@
 {
   "name": "node-of-legends",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "author": "Phil Vollhardt <phil@suds.io>",
   "contributors": [
     {
       "name": "Phil Vollhardt",
       "email": "phil@suds.io"
-    },
-    {
-      "name": "Matt Zangen",
-      "email": "zangen+node-of-legends@gmail.com"
     }
   ],
   "scripts": {
@@ -28,12 +24,15 @@
     "riot",
     "api",
     "node",
-    "promises"
+    "promises",
+    "async",
+    "await",
+    "league"
   ],
   "preferGlobal": false,
   "dependencies": {
-    "lodash.assign": "^3.2.0",
-    "log4node": "^0.1.6"
+    "lodash.assign": "^4.2.0",
+    "lodash.assignin": "^4.2.0"
   },
   "bugs": {
     "url": "https://github.com/SudSupreme/node-of-legends/issues"
