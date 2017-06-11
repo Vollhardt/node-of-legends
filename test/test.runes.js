@@ -1,7 +1,7 @@
-var chai = require('chai');
-var should = chai.should();
+let chai = require('chai');
+let should = chai.should();
 chai.use(require('chai-as-promised'));
-var lol = require('../node-of-legends');
+let lol = require('../node-of-legends');
 
 //setup config
 lol.setConfig({

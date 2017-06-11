@@ -1,8 +1,8 @@
-var chai = require('chai');
-var should = chai.should();
-var assert = chai.assert;
+let chai = require('chai');
+let should = chai.should();
+let assert = chai.assert;
 chai.use(require('chai-as-promised'));
-var lol = require('../node-of-legends');
+let lol = require('../node-of-legends');
 
 //test to validate API key is set
 describe('API Key',function(){

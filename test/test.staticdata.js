@@ -1,7 +1,7 @@
-var chai = require('chai');
-var should = chai.should();
+let chai = require('chai');
+let should = chai.should();
 chai.use(require('chai-as-promised'));
-var lol = require('../node-of-legends');
+let lol = require('../node-of-legends');
 
 //setup config
 lol.setConfig({
@@ -10,7 +10,7 @@ lol.setConfig({
 });
 
 
-describe('Static Data API',function(){
+describe('Static Data v3 API',function(){
 
 	describe('Champions',function(){
 		it('should get champion list',function(){
@@ -18,7 +18,7 @@ describe('Static Data API',function(){
 		});
 		it('should get all champions in EU West with all data and by id',function(){
 			this.timeout(10000); 
-			return lol.staticdata.getChampionList(lol.CHAMPION_DATA_TO_RETRIVE.ALL, false, null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
+			return lol.staticdata.getChampionList('all', false, null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
 		});	
 		it('should get all data for Anivia',function(){
 			return lol.staticdata.getAllChampData(34).should.eventually.be.an('Object');
@@ -30,7 +30,7 @@ describe('Static Data API',function(){
 			return lol.staticdata.getItemList().should.eventually.be.an('Object');
 		});
 		it('should get all items in EU West with all data',function(){
-			return lol.staticdata.getItemList(lol.ITEM_DATA_TO_RETRIEVE.ALL, null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
+			return lol.staticdata.getItemList('all', null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
 		});	
 		it('should get all data for Boots 1',function(){
 			return lol.staticdata.getAllItemData(1001).should.eventually.be.an('Object');
@@ -60,10 +60,16 @@ describe('Static Data API',function(){
 			return lol.staticdata.getMasteryList().should.eventually.be.an('Object');
 		});
 		it('should get all masteries in EU West with all data',function(){
-			return lol.staticdata.getMasteryList(lol.MASTERY_DATA_TO_RETRIEVE.ALL, null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
+			return lol.staticdata.getMasteryList('all', null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
 		});	
 		it('should get all data for Fury',function(){
 			return lol.staticdata.getAllMasteryData(6111).should.eventually.be.an('Object');
+		});
+	});
+
+	describe('Profile Icons',function(){
+		it('should get profile icons',function(){
+			return lol.staticdata.getProfileIcons().should.eventually.be.an('Object');
 		});
 	});
 
@@ -78,7 +84,7 @@ describe('Static Data API',function(){
 			return lol.staticdata.getRuneList().should.eventually.be.an('Object');
 		});
 		it('should get all runes in EU West with all data',function(){
-			return lol.staticdata.getRuneList(lol.RUNE_DATA_TO_RETRIEVE.ALL, null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
+			return lol.staticdata.getRuneList('all', null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
 		});	
 		it('should get all data for AP Quint',function(){
 			return lol.staticdata.getAllRuneData(5235).should.eventually.be.an('Object');
@@ -90,7 +96,7 @@ describe('Static Data API',function(){
 			return lol.staticdata.getSummonerSpellList().should.eventually.be.an('Object');
 		});
 		it('should get all summoner spells in EU West with all data',function(){
-			return lol.staticdata.getSummonerSpellList(lol.SUMMONER_SPELL_INFO_TO_RETRIEVE.ALL, null, null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
+			return lol.staticdata.getSummonerSpellList('all', null, null, null, lol.REGION.EU_WEST).should.eventually.be.an('Object');
 		});	
 		it('should get all data for Teleport',function(){
 			return lol.staticdata.getAllSummonerSpellData(12).should.eventually.be.an('Object');
