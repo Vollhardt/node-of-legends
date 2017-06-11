@@ -1,79 +1,60 @@
 /**
  * @module summoner
- * @desc Wrapper for Riot's summoner data api <br/>
- * @deprecated
+ * @desc Wrapper for Riot's summoner v3 data api <br/>
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 
- 'use strict';
+'use strict';
  
-var serverdata = require('../services/serverdata');
-
-
-/**
- * gets the URL for the summoner api for the specified method
- * @param {string} callmethod method to generate URL for
- * @param {object?}  options options to pass to the riot server
- * @param {number?} id optional ID to pass
- * @returns {string} generated url
- * @private
- */
-function getSummonerUrl(callmethod, options, id){
-    return serverdata.generateAPIUrl("summoner", callmethod, options, id);
-}
+let serverdata = require('../services/serverdata');
 
 /**
  * gets summoner information by summoner name
- * @param {string|string[]} summonerNames name/names of the summoner/summoners to get league information for, **MAXIMUM 40**
+ * @param {string} summonerName name of the summoner to get league information for
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-function getSummonerByName(summonerNames, region){
-    if(summonerNames){
-        var options = {region: region};
-
-        var url = getSummonerUrl("name", options, [].concat(summonerNames).slice(0,40).join(','));
-
-        return serverdata.makeAsyncHttpsCall(url);
+function getSummonerByName(summonerName, region){
+    if(summonerName){
+        let options = {region: region,summonerName:summonerName.replace(/\s/,'')};
+        return serverdata.makeAsyncHttpsCall('summoner','name', options);
     }else
-        return Promise.reject(new Error('No summoner name(s) specified'));
+        return Promise.reject(new Error('No summoner name specified'));
 }
 
 /**
  * gets summoner information by summoner id
- * @param {number|number[]} summonerIds ids of the summoner or summoners to get league information for, **MAXIMUM 40**
+ * @param {number} summonerId id of the summoner or summoners to get information for
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-function getSummonersByIds(summonerIds, region){
-    if(summonerIds){
-        var options = {region: region};
-        var url = getSummonerUrl("byIds", options, [].concat(summonerIds).slice(0,40).join(','));
+function getSummonerById(summonerId, region){
+    if(summonerId){
+        let options = {region: region,summonerId:summonerId};
 
-        return serverdata.makeAsyncHttpsCall(url);
+        return serverdata.makeAsyncHttpsCall('summoner','byId', options);
     }else
-        return Promise.reject(new Error('No summoner ID(s) specified'));
+        return Promise.reject(new Error('No summoner ID specified'));
 }
 
 /**
-* gets summoner names by summoner id
-* @param {number|number[]} summonerIds ids of the summoner or summoners to get names for, **MAXIMUM 40**
+* gets summoner by account id
+* @param {number} accountId id of the account to get the summoner for
 * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
 * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
 * @static
 */
-function getSummonerNamesByIds(summonerIds, region){
-    if(summonerIds){
-        var options = {region: region};
-        var url = getSummonerUrl("namesByIds", options, [].concat(summonerIds).slice(0,40).join(','));
+function getSummonerByAccountIds(accountId, region){
+    if(accountId){
+        let options = {region: region,accountId:accountId};
 
-        return serverdata.makeAsyncHttpsCall(url);
+        return serverdata.makeAsyncHttpsCall('summoner','byAccountId', options);
     }else
-        return Promise.reject(new Error('No summoner ID(s) specified'));
+        return Promise.reject(new Error('No account ID specified'));
 }
 
 module.exports.getSummonerByName = getSummonerByName;
-module.exports.getSummonersByIds = getSummonersByIds;
-module.exports.getSummonerNamesByIds = getSummonerNamesByIds;
+module.exports.getSummonerById = getSummonerById;
+module.exports.getSummonerByAccountIds = getSummonerByAccountIds;

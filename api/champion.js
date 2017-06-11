@@ -4,20 +4,9 @@
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 
-"use strict";
+'use strict';
 
-var serverdata = require('../services/serverdata');
-/**
- * gets the URL for the champion api for the specified method
- * @param {string} callmethod method to generate URL for
- * @param {?object} options key/value options to pass to the riot api
- * @param {?number} [id] optional ID to pass
- * @returns {string} generated url
- * @private
- */
-function getChampionFlagUrl(callmethod, options, id){
-    return serverdata.generateAPIUrl("champion", callmethod, options, id);
-}
+const serverdata = require('../services/serverdata');
 
 /**
  * gets list of champions with their current flags set
@@ -26,26 +15,27 @@ function getChampionFlagUrl(callmethod, options, id){
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 function getChampionList(freeToPlay, region){
-    var options = {
-        freeToPlay: (freeToPlay &&  'boolean'==typeof freeToPlay? freeToPlay : false),
+    let options = {
+        freeToPlay: (freeToPlay &&  'boolean'===typeof freeToPlay? freeToPlay : false),
         region: region
     };
 
-    return serverdata.makeAsyncHttpsCall(getChampionFlagUrl("championList", options, null));
+    return serverdata.makeAsyncHttpsCall('champion','championList', options);
 }
+
 /**
  * gets a specific champion's flag state
- * @param {number} id
+ * @param {number} championId
  * @param {?module:serverdata.REGION} [region] if no region is specified the configured region will be used
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
-function getChampionsById(id, region){
-    var options = {region: region};
+function getChampionsById(championId, region){
+    let options = {region: region,championId: championId};
 
-    if(id)
-        return serverdata.makeAsyncHttpsCall(getChampionFlagUrl("championById",options,id));
+    if(championId)
+        return serverdata.makeAsyncHttpsCall('champion','championById',options);
     else
-        return Promise.reject(new Error("No champion ID specified"));
+        return Promise.reject(new Error('No champion ID specified'));
 }
 
 module.exports.getChampionList = getChampionList;

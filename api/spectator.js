@@ -6,19 +6,7 @@
 
 'use strict';
 
-var serverdata = require('../services/serverdata');
-
-/**
- * gets the URL for the spectator api for the specified method
- * @param {string} callmethod method to generate URL for
- * @param {?object}  options options to pass to the riot server
- * @param {?number} id optional ID to pass
- * @returns {string} generated url
- * @private
- */
-function getSpectatorUrl(callmethod, options, id){
-  return serverdata.generateAPIUrl("spectator", callmethod, options);
-}
+let serverdata = require('../services/serverdata');
 
 /**
  * gets game summoner is in
@@ -28,12 +16,10 @@ function getSpectatorUrl(callmethod, options, id){
  */
 function getActiveGameBySummonerId(summonerId, region){
   if(summonerId){
-    var url = getSpectatorUrl("bySummonerId", {region: region}, summonerId);
-
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('spectator','bySummonerId', {region: region,summonerId:summonerId});
   }else
     return Promise.reject(new Error('No summoner ID specified'));
-};
+}
 
 
 /**
@@ -42,10 +28,7 @@ function getActiveGameBySummonerId(summonerId, region){
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 function getFeaturedGames(region){
-  var options = {region: region};
-  var url = getSpectatorUrl("featuredGames", options);
-
-  return serverdata.makeAsyncHttpsCall(url);
+  return serverdata.makeAsyncHttpsCall('spectator','featuredGames', {region: region});
 }
 
 module.exports.getActiveGameBySummonerId = getActiveGameBySummonerId;

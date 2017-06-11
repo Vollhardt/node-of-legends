@@ -3,24 +3,20 @@
  * @module serverdata
  */
 
-"use strict";
+'use strict';
 
-var https = require('https');
-var http = require('http');
-var _assign = require('lodash.assign');
-var log = require('log4node');
-log.setLogLevel(process.env.LOG_LEVEL || 'error');
+const https = require('https');
+const _assign = require('lodash.assign');
 
-var config = {
-    region: "NA",
+let config = {
+    region: 'NA',
     apikey: null
 };
 
 function setConfig(update){
     _assign(config, update);
-    log.debug('configuring: ' + JSON.stringify(config));
     return config;
-};
+}
 
 /**
  * hosts by region code
@@ -29,19 +25,19 @@ function setConfig(update){
  * @static
  */
 const HOST_BY_REGION= {
-  BR: "https://br1.api.riotgames.com",
-  EUNE: "https://eun1.api.riotgames.com",
-  EUW: "https://euw1.api.riotgames.com",
-  JP: "https://jp1.api.riotgames.com",
-  KR: "https://kr.api.riotgames.com",
-  LAN: "https://la1.api.riotgames.com",
-  LAS: "https://la2.api.riotgames.com",
-  NA: "https://na1.api.riotgames.com",
-  OCE: "https://oc1.api.riotgames.com",
-  PBE: "https://pbe1.api.riotgames.com",
-  TR: "https://tr1.api.riotgames.com",
-  RU: "https://ru.api.riotgames.com",
-  GLOBAL: "https://global.api.riotgames.com"
+  BR: 'br1.api.riotgames.com',
+  EUNE: 'eun1.api.riotgames.com',
+  EUW: 'euw1.api.riotgames.com',
+  JP: 'jp1.api.riotgames.com',
+  KR: 'kr.api.riotgames.com',
+  LAN: 'la1.api.riotgames.com',
+  LAS: 'la2.api.riotgames.com',
+  NA: 'na1.api.riotgames.com',
+  OCE: 'oc1.api.riotgames.com',
+  PBE: 'pbe1.api.riotgames.com',
+  TR: 'tr1.api.riotgames.com',
+  RU: 'ru.api.riotgames.com',
+  GLOBAL: 'americas.api.riotgames.com'
 };
 
 /**
@@ -52,29 +48,29 @@ const HOST_BY_REGION= {
  */
 const REGION = {
   /** Brazil*/
-  BRAZIL: "br",
+  BRAZIL: 'br',
   /**EU North and East **/
-  EU_NORTH_EAST: "eune",
+  EU_NORTH_EAST: 'eune',
   /**EU West*/
-  EU_WEST: "euw",
+  EU_WEST: 'euw',
   /**Japan*/
-  JAPAN: "jp",
+  JAPAN: 'jp',
   /**Korea*/
-  KOREA: "kr",
+  KOREA: 'kr',
   /**Latin America North*/
-  LATIN_AMERICA_NORTH: "lan",
+  LATIN_AMERICA_NORTH: 'lan',
   /**Latin America South*/
-  LATIN_AMERICA_SOUTH: "las",
+  LATIN_AMERICA_SOUTH: 'las',
   /**North America (DEFAULT)*/
-  NORTH_AMERICA: "na",
+  NORTH_AMERICA: 'na',
   /**Oceania*/
-  OCEANIA: "oce",
+  OCEANIA: 'oce',
   /**Public Beta Environment*/
-  PBE: "pbe",
+  PBE: 'pbe',
   /**Turkey*/
-  TURKEY: "tr",
+  TURKEY: 'tr',
   /**Russia*/
-  RUSSIA: "ru"
+  RUSSIA: 'ru'
 };
 
 /**
@@ -87,220 +83,138 @@ const URLS = {
     /** champion api */
     champion: {
         championList: '/lol/platform/v3/champions',
-        championById: '/lol/platform/v3/champions/{id}'
+        championById: '/lol/platform/v3/champions/{championId}'
     },
     /** champion mastery api */
-    championmasteryv3:{
-        masteryById: '/lol/champion-mastery/v3/champion-masteries/by-summoner/{id}',
-        masteryByIdByChampionId: '/lol/champion-mastery/v3/champion-masteries/by-summoner/{id}/by-champion/{championId}',
-        scoreById: '/lol/champion-mastery/v3/scores/by-summoner/{id}'
-    },
-    /** current game api */
-    currentgame: {
-        spectator: '/observer-mode/rest/consumer/getSpectatorGameInfo/{region}/{id}'
-    },
-    featuredgame: {
-        featured: '/observer-mode/rest/featured'
-    },
-    /** game api */
-    game: {
-        recentGames: '/api/lol/{region}/v1.3/game/by-summoner/{id}/recent'
+    championmastery:{
+        masteryById: '/lol/champion-mastery/v3/champion-masteries/by-summoner/{summonerId}',
+        masteryByIdByChampionId: '/lol/champion-mastery/v3/champion-masteries/by-summoner/{summonerId}/by-champion/{championId}',
+        scoreById: '/lol/champion-mastery/v3/scores/by-summoner/{summonerId}'
     },
     /** league api */
     league: {
-        bySummonerIds: '/api/lol/{region}/v2.5/league/by-summoner/{id}',
-        entryBySummonerIds: '/api/lol/{region}/v2.5/league/by-summoner/{id}/entry',
-        masterLeagues: '/api/lol/{region}/v2.5/league/master',
-        challengerLeagues: '/api/lol/{region}/v2.5/league/challenger'
+        bySummonerId: '/lol/league/v3/leagues/by-summoner/{summonerId}',
+        positionsBySummonerId:'/lol/league/v3/positions/by-summoner/{summonerId}',
+        masterLeaguesByQueue: '/lol/league/v3/masterleagues/by-queue/{queue}',
+        challengerLeaguesByQueue: '/lol/league/v3/challengerleagues/by-queue/{queue}'
     },
   /** masteries v3 api*/
     masteries: {
-        masteriesById: '/lol/platform/v3/masteries/by-summoner/{id}'
+        masteriesById: '/lol/platform/v3/masteries/by-summoner/{summonerId}'
     },
     /** match api*/
     match: {
-        byId: '/api/lol/{region}/v2.2/match/{id}'
-    },
-    /** match list api */
-    matchlist: {
-        bySummonerId: '/api/lol/{region}/v2.2/matchlist/by-summoner/{id}'
+        byId: '/lol/match/v3/matches/{matchId}',
+        byAccountId: '/lol/match/v3/matchlists/by-account/{accountId}',
+        recent: '/lol/match/v3/matchlists/by-account/{accountId}/recent',
+        timelines: '/lol/match/v3/timelines/by-match/{matchId}',
+        byTournamentCode: '/lol/match/v3/matches/by-tournament-code/{tournamentCode}/ids',
+        byMatchIdByTournamentCode: '/lol/match/v3/matches/{matchId}/by-tournament-code/{tournamentCode}'
     },
     /** runes api*/
     runes: {
-      bySummonerId: '/lol/platform/v3/runes/by-summoner/{id}'
+      bySummonerId: '/lol/platform/v3/runes/by-summoner/{summonerId}'
     },
     /** spectator api*/
     spectator: {
-      bySummonerId:'/lol/spectator/v3/active-games/by-summoner/{id}',
+      bySummonerId:'/lol/spectator/v3/active-games/by-summoner/{summonerId}',
       featuredGames: '/lol/spectator/v3/featured-games'
     },
-    /** static api */
-    staticdata: {
-        championList: '/api/lol/static-data/{region}/v1.2/champion',
-        championById: '/api/lol/static-data/{region}/v1.2/champion/{id}',
-        itemList: '/api/lol/static-data/{region}/v1.2/item',
-        itemById: '/api/lol/static-data/{region}/v1.2/item/{id}',
-        languages: '/api/lol/static-data/{region}/v1.2/languages',
-        languagestrings: '/api/lol/static-data/{region}/v1.2/language-strings',
-        maps: '/api/lol/static-data/{region}/v1.2/map',
-        masteryList: '/api/lol/static-data/{region}/v1.2/mastery',
-        masteryById: '/api/lol/static-data/{region}/v1.2/mastery/{id}',
-        realm: '/api/lol/static-data/{region}/v1.2/realm',
-        runeList: '/api/lol/static-data/{region}/v1.2/rune',
-        runeById: '/api/lol/static-data/{region}/v1.2/rune/{id}',
-        summonerSpellList: '/api/lol/static-data/{region}/v1.2/summoner-spell',
-        summonerSpellById: '/api/lol/static-data/{region}/v1.2/summoner-spell/{id}',
-        versions: '/api/lol/static-data/{region}/v1.2/versions'
-    },
     /** static v3 api */
-    staticdatav3: {
+    staticdata: {
         championList: '/lol/static-data/v3/champions',
-        championById: '/lol/static-data/v3/champions/{id}',
+        championById: '/lol/static-data/v3/champions/{championId}',
         itemList: '/lol/static-data/v3/items',
-        itemById: '/lol/static-data/v3/items/{id}',
+        itemById: '/lol/static-data/v3/items/{itemId}',
         languages: '/lol/static-data/v3/languages',
         languagestrings: '/lol/static-data/v3/language-strings',
         maps: '/lol/static-data/v3/maps',
         masteryList: '/lol/static-data/v3/masteries',
-        masteryById: '/lol/static-data/v3/masteries/{id}',
+        masteryById: '/lol/static-data/v3/masteries/{masteryId}',
         profileIcons: '/lol/static-data/v3/profile-icons',
         realm: '/lol/static-data/v3/realms',
         runeList: '/lol/static-data/v3/runes',
-        runeById: '/lol/static-data/v3/runes/{id}',
+        runeById: '/lol/static-data/v3/runes/{runeId}',
         summonerSpellList: '/lol/static-data/v3/summoner-spells',
-        summonerSpellById: '/lol/static-data/v3/summoner-spells/{id}',
+        summonerSpellById: '/lol/static-data/v3/summoner-spells/{summonerSpellId}',
         versions: '/lol/static-data/v3/versions'
     },
-    /** statistics api */
-    stats: {
-        ranked: '/api/lol/{region}/v1.3/stats/by-summoner/{id}/ranked',
-        summary: '/api/lol/{region}/v1.3/stats/by-summoner/{id}/summary'
-    },
-    /** status api */
-    status: {
-        list:'/lol/status/v1/shards',
-        status: '/lol/status/v1/shard'
-    },
     /** status v3 api */
-    statusv3:{
+    status:{
         status: '/lol/status/v3/shard-data'
     },
-    /** summoner api */
-    summoner: {
-        name: '/api/lol/{region}/v1.4/summoner/by-name/{id}',
-        byIds: '/api/lol/{region}/v1.4/summoner/{id}', //can supply list of ids
-        namesByIds: '/api/lol/{region}/v1.4/summoner/{id}/name', //can supply list of ids
-    },
     /** summoner v3 api */
-    summonerv3: {
-        name: '/lol/summoner/v3/summoners/by-name/{id}',
-        byId: '/lol/summoner/v3/summoners/{id}', //can supply list of ids
-        byAccountId: '/lol/summoner/v3/summoners/by-account/{id}', //can supply list of ids
+    summoner: {
+        name: '/lol/summoner/v3/summoners/by-name/{summonerName}',
+        byId: '/lol/summoner/v3/summoners/{summonerId}', //can supply list of ids
+        byAccountId: '/lol/summoner/v3/summoners/by-account/{accountId}', //can supply list of ids
     }
 };
 
 /**
- * Generates a URL based on paramters passed in
+ * returns a Promise to perform asynchronous https call to the specified objects.
  * @param {string} calltype the type of call to make
  * @param {string} callmethod the method to call
  * @param {options!} options to encode in the url
- * @param {number} [id] the id to use
- * @returns {string} url representing the call specified
  * @static
  */
-function generateUrl(calltype, callmethod, options, id){
-    var url = null;
-    
-    //set region
-    var region = (options && options.region ? options.region : config.region).toUpperCase();
-    
-    //remove region so we do not encode extra params in the URL
-    if(options) delete options['region'];
-    
-    var apikey = config.apikey;
-    log.debug('\ncalltype: ' + calltype + '\ncallmethod: ' + callmethod + '\noptions: ' + JSON.stringify(options) + '\nid: ' + (id?id:'null') + '\nregion: ' + region + '\napikey: ' + apikey);
+function makeAsyncHttpsCall(calltype, callmethod, options){
+  //setup options block
+  let httpsOpts = {
+    method: 'GET',
+    port: 443,
+    protocol: 'https:',
+    headers: {'X-Riot-Token':config.apikey}
+  };
 
-    //check for required parameters
-    if(region && calltype && callmethod && apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && 0 < apikey.length){
-        //make sure id is present if necessary
-        if(-1 == callmethod.indexOf("ById") || id){
-            //verify nec. variables are defined
-            if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod]){
-                let host = HOST_BY_REGION['staticdata' === calltype ? 'GLOBAL' : region];
-                // featureg games cannot be called on the new 'NA1' urls
-              if('featuredgame'==calltype || 'league'==calltype || 'status'==calltype || 'currentgame' == calltype){
-                host = host.replace(/1|2/,'');
-              }
-                url = host + URLS[calltype][callmethod].replace("{region}",region.toLowerCase()).replace("{id}", (id?id:'')) + "?api_key=" + apikey;
-            }
+  //set region
+  let region = (options && options.region ? options.region : config.region).toUpperCase();
+
+  //remove region so we do not encode extra params in the URL
+  if(options) delete options['region'];
+
+  if(region && calltype && callmethod && config.apikey && 0 < region.length && 0 < calltype.length && 0 < callmethod.length && 0 < config.apikey.length){
+      //verify nec. variables are defined
+      if(HOST_BY_REGION[region] && URLS[calltype] && URLS[calltype][callmethod]){
+        // httpsOpts.hostname = HOST_BY_REGION['staticdata' === calltype ? 'GLOBAL' : region];
+        httpsOpts.hostname = HOST_BY_REGION[region];
+        httpsOpts.path = URLS[calltype][callmethod] +'?';
+        //add options to the URL
+        if(options && 0 < Object.keys(options).length){
+          for(let key in options){
+            if(-1===httpsOpts.path.indexOf('{' + key +'}')) //if not in URL then add to query string
+              httpsOpts.path += key + '=' + (Array.isArray(options[key]) ? options[key].join('%2C') : options[key]) + '\&';
+            else //if in URL replace
+              httpsOpts.path = httpsOpts.path.replace('{' + key +'}', options[key])
+          }
         }
-    }
+      }//end if(HOST_BY_REGION[region]...
+  }//end if(region && calltype && callmethod...
 
-    //add options to the URL
-    if(url && options && 0 < Object.keys(options).length){
-        for(var key in options){
-            url += "\&" + key + "=" + (Array.isArray(options[key]) ? options[key].join("%2C") : options[key]);
-        }
-    }
-    
-    log.debug('final url: ' + JSON.stringify(url));
-    return url;
-};
-
-/**
- * returns a Promise to perform asynchronous https call to the specified URL.  
- * @param (string) url url to call
- * @static
- */
-function makeAsyncHttpsCall(url){
-    return makeCallToApi(url, https);
-}
-
-/**
- * returns a Promise to perform asynchronous http call to the specified URL.  
- * @param (string) url url to call
- * @static
- */
-function makeAsyncHttpCall(url){
-    return makeCallToApi(url, http);
-}
-
-/**
- * returns a Promise to perform the call to the url using the specified module (http/https)
- * @param (string) url url to call
- * @param (object) module http/https module
- * @static
- */
-function makeCallToApi(url, module){
-    return new Promise(function(resolve,reject){
-        
-        module.get(url, function(res){
-            log.debug('in get callback for: ' + url + '\nres: ' + res.statusCode + ' | ' + res.statusMessage);
-            if(200 !== res.statusCode){
-                reject({msg:res.statusMessage,status:res.statusCode});
-            }else{
-                var body = '';
-                res
-                    .on('data', function(chunk){
-                        body += chunk;
-                        }
-                    )
-                    .on('end', function(){
-                        log.debug('body data: ' + body);
-                            resolve(JSON.parse(body));
-                        }
-                    );
+  //make call
+  return new Promise(function(resolve,reject){
+    https.request(httpsOpts, function(res){
+      if(200 !== res.statusCode){
+        reject({msg:res.statusMessage,status:res.statusCode});
+      }else{
+        let body = '';
+        res
+          .on('data', function(chunk){
+              body += chunk;
             }
-        }).on('error', function(error){
-            log.error(error);
-            reject(new Error('error making API call: ' + error));//TODO: check if JSON
-        });
-    });
+          )
+          .on('end', function(){
+              resolve(JSON.parse(body));
+            }
+          );
+      }
+    }).on('error', function(error){
+      reject(new Error('error making API call: ' + error));//TODO: check if JSON
+    }).end();
+  });
 }
 
-module.exports.generateAPIUrl = generateUrl;
 module.exports.makeAsyncHttpsCall = makeAsyncHttpsCall;
-module.exports.makeAsyncHttpCall = makeAsyncHttpCall;
 module.exports.REGION = REGION;
 module.exports.setConfig = setConfig;
 module.exports.configuredRegion = config.region;

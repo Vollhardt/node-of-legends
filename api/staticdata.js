@@ -1,32 +1,17 @@
 /**
  * @module staticdata
- * @deprecated
- * @desc Wrapper for Riot's static data api <br/>
+ * @desc Wrapper for Riot's static data v3 api <br/>
  * **NOTE**: calls to this API will **NOT** count towards your rate limit <br/>
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 
-"use strict";
+'use strict';
 
-var serverdata = require('../services/serverdata');
-var log = require('log4node');
-log.setLogLevel(process.env.LOG_LEVEL || 'error');
-
-/**
- * gets the URL for the static api for the specified method
- * @param {string} callmethod method to generate URL for
- * @param {object?}  options options to pass to the riot server
- * @param {number?} id optional ID to pass
- * @returns {string} generated url
- * @private
- */
-function getStaticUrl(callmethod, options, id){
-    return serverdata.generateAPIUrl("staticdata",callmethod, options, id);//.replace('api_key', 'tacos');
-}
+let serverdata = require('../services/serverdata');
 
 /**
  * gets a list of champions
- * @param {?module:constants.CHAMPION_DATA_TO_RETRIVE|module:constants.CHAMPION_DATA_TO_RETRIVE[]}dataType
+ * @param {?string|string[]}dataType
  * @param {boolean?} byId=false if true, keys will be champ ids and not champ names
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
@@ -35,24 +20,23 @@ function getStaticUrl(callmethod, options, id){
  * @static
  */
 function getChampionList(dataType, byId, locale, version, region){
-    var options = {region: region};
+    let options = {region: region};
 
     if(dataType) options.champData = [].concat(dataType).join(',');
     if(locale) options.locale = locale;
     if(version) options.version = version;
     options.dataById = byId || false;
 
-    var url = getStaticUrl("championList", options, null);
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('staticdata','championList', options);
 }
 
 /**
  * Gets all data for all champions
- * @param {number?} [id=null] ID of champion to get (null or do not supply for all champs)
+ * @param {number?} [championId=null] ID of champion to get (null or do not supply for all champs)
  */
-function getAllChampData(id){
-    if(id)
-        return getChampionById(id,'all', false, null, null, null);
+function getAllChampData(championId){
+    if(championId)
+        return getChampionById(championId,'all', false, null, null, null);
     else
         return getChampionList('all', false, null, null, null);
 }
@@ -60,7 +44,7 @@ function getAllChampData(id){
 /**
  * gets a champion specific information from a specified champion's id
  * @param {number} champId ID of the champion to retrieve data for
- * @param {?module:constants.ITEM_DATA_TO_RETRIEVE|module:constants.ITEM_DATA_TO_RETRIEVE[]} dataType
+ * @param {?string|string[]} dataType
  * @param {boolean?} byId=false if true, keys will be champ ids and not champ names
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
@@ -69,17 +53,15 @@ function getAllChampData(id){
  * @static
  */
 function getChampionById(champId, dataType, byId, locale, version, region){
-    log.debug('getChampionById: ' + champId);
     if(champId){
-        var options = {region: region};
+        let options = {region: region,championId:champId};
 
         if(dataType) options.champData = [].concat(dataType).join(',');
         if(locale) options.locale = locale;
         if(version) options.version = version;
         options.dataById = byId || false;
 
-        var url = getStaticUrl("championById", options, champId);
-        return serverdata.makeAsyncHttpsCall(url);
+        return serverdata.makeAsyncHttpsCall('staticdata','championById', options);
     }
     else
         return Promise.reject(new Error('No champion ID specified'));
@@ -87,7 +69,7 @@ function getChampionById(champId, dataType, byId, locale, version, region){
 
 /**
  * gets a full list of items
- * @param {?module:constants.ITEM_DATA_TO_RETRIEVE|module:constants.ITEM_DATA_TO_RETRIEVE[]} dataType
+ * @param {?string|string[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
@@ -95,55 +77,52 @@ function getChampionById(champId, dataType, byId, locale, version, region){
  * @static
  */
 function getItemList(dataType, locale, version, region){
-    var options = {region: region};
+    let options = {region: region};
 
     if(dataType) options.itemListData = [].concat(dataType).join(',');
     if(locale) options.locale = locale;
     if(version) options.version = version;
 
-    var url = getStaticUrl("itemList", options, null);
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('staticdata','itemList', options);
 }
 
 /**
  * gets item specific information from a specified item's id
- * @param {number} id the item's ID which to retrieve
- * @param {?module:constants.ITEM_DATA_TO_RETRIEVE|module:constants.ITEM_DATA_TO_RETRIEVE[]} dataType
+ * @param {number} itemId the item's ID which to retrieve
+ * @param {?string|string[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
-function getItemById(id, dataType, locale, version, region){
-    if(id){
-        var options = {region: region};
+function getItemById(itemId, dataType, locale, version, region){
+    if(itemId){
+        let options = {region: region,itemId:itemId};
 
         if(dataType) options.itemListData = [].concat(dataType).join(',');
         if(locale) options.locale = locale;
         if(version) options.version = version;
 
-        var url = getStaticUrl("itemById", options, id);
-    
-        return serverdata.makeAsyncHttpsCall(url);
+        return serverdata.makeAsyncHttpsCall('staticdata','itemById', options);
     }else
         return Promise.reject(new Error('No item ID specified'));
 }
 
 /**
  * Gets all data for all items
- * @param {number?} [id=null] ID of item to get (null or do not supply for all items)
+ * @param {number?} [itemId=null] ID of item to get (null or do not supply for all items)
  */
-function getAllItemData(id){
-    if(id)
-        return getItemById(id,'all', false, null, null, null);
+function getAllItemData(itemId){
+    if(itemId)
+        return getItemById(itemId,'all', false, null, null, null);
     else
         return getItemList('all', false, null, null, null);
 }
 
 /**
  * gets a list of all the masteries available
- * @param {?module:constants.MASTERY_DATA_TO_RETRIEVE|module:constants.MASTERY_DATA_TO_RETRIEVE[]} dataType
+ * @param {?string|string[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
@@ -151,55 +130,69 @@ function getAllItemData(id){
  * @static
  */
 function getMasteryList(dataType, locale, version, region){
-    var options = {region: region};
+    let options = {region: region};
 
     if(dataType) options.masteryListData = [].concat(dataType).join(',');
     if(locale) options.locale = locale;
     if(version) options.version = version;
 
-    var url = getStaticUrl("masteryList", options, null);
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('staticdata','masteryList', options);
 }
 
 /**
  * gets a specific mastery object pertaining to the supplied id
- * @param {number} id ID of mastery to get data for
- * @param {?module:constants.MASTERY_DATA_TO_RETRIEVE|module:constants.MASTERY_DATA_TO_RETRIEVE[]} dataType
+ * @param {number} masteryId ID of mastery to get data for
+ * @param {?string|string[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
-function getMasteryById(id, dataType, locale, version, region){
-    if(id){
-        var options = {region: region};
+function getMasteryById(masteryId, dataType, locale, version, region){
+    if(masteryId){
+        let options = {region: region,masteryId:masteryId};
 
         if(dataType) options.masteryListData = [].concat(dataType).join(',');
         if(locale) options.locale = locale;
         if(version) options.version = version;
 
-        var url = getStaticUrl("masteryById", options, id);
-    
-        return serverdata.makeAsyncHttpsCall(url);
+        return serverdata.makeAsyncHttpsCall('staticdata','masteryById', options);
     }else
         return Promise.reject(new Error('No mastery ID specified'));
 }
 
 /**
  * Gets all data for all masteries
- * @param {number?} [id=null] ID of item to get (null or do not supply for all masteries)
+ * @param {number?} [masteryId=null] ID of item to get (null or do not supply for all masteries)
  */
-function getAllMasteryData(id){
-    if(id)
-        return getMasteryById(id, 'all', null, null, null);
+function getAllMasteryData(masteryId){
+    if(masteryId)
+        return getMasteryById(masteryId, 'all', null, null, null);
     else
         return getMasteryList('all', null, null, null);
 }
 
 /**
+ * gets a list of all profile icons
+ * @param {string?} locale local code to use for returned data
+ * @param {string?} version data version
+ * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
+ * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
+ * @static
+ */
+function getProfileIcons(locale, version, region){
+    let options = {region: region};
+
+    if(locale) options.locale = locale;
+    if(version) options.version = version;
+
+    return serverdata.makeAsyncHttpsCall('staticdata','profileIcons', options);
+}
+
+/**
  * gets a list of all available runes
- * @param {?module:constants.RUNE_DATA_TO_RETRIEVE|module:constants.RUNE_DATA_TO_RETRIEVE[]} dataType
+ * @param {?string|string[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
@@ -207,55 +200,52 @@ function getAllMasteryData(id){
  * @static
  */
 function getRuneList(dataType, locale, version, region){
-    var options = {region: region};
+    let options = {region: region};
 
     if(dataType) options.runeListData = [].concat(dataType).join(',');
     if(locale) options.locale = locale;
     if(version) options.version = version;
 
-    var url = getStaticUrl("runeList", options, null);
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('staticdata','runeList', options);
 }
 
 /**
  * gets a rune object from a supplied rune id
- * @param {number} id ID of the rune to retrieve
- * @param {?module:constants.RUNE_DATA_TO_RETRIEVE|module:constants.RUNE_DATA_TO_RETRIEVE[]} dataType
+ * @param {number} runeId ID of the rune to retrieve
+ * @param {?string|string[]} dataType
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
  * @param {module:serverdata.REGION?} [region] if no region is specified the configured region will be used
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
-function getRuneById(id, dataType, locale, version, region){
-    if(id){
-        var options = {region: region};
+function getRuneById(runeId, dataType, locale, version, region){
+    if(runeId){
+        let options = {region: region,runeId:runeId};
 
         if(dataType) options.runeListData = [].concat(dataType).join(',');
         if(locale) options.locale = locale;
         if(version) options.version = version;
 
-        var url = getStaticUrl("runeById", options, id);
-
-        return serverdata.makeAsyncHttpsCall(url);
+        return serverdata.makeAsyncHttpsCall('staticdata','runeById', options);
     }else
         return Promise.reject(new Error('No rune ID specified'));
 }
 
 /**
  * Gets all data for all runes
- * @param {number?} [id=null] ID of item to get (null or do not supply for all runes)
+ * @param {number?} [runeId=null] ID of item to get (null or do not supply for all runes)
  */
-function getAllRuneData(id){
-    if(id)
-        return getRuneById(id, 'all', null, null, null);
+function getAllRuneData(runeId){
+    if(runeId)
+        return getRuneById(runeId, 'all', null, null, null);
     else
         return getRuneList('all', null, null, null);
 }
 
 /**
  * gets all summoner spell objects
- * @param {?module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE|module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE[]} dataType
+ * @param {?string|string[]} dataType
  * @param {boolean} byId=false if true, keys will be spell ids and not spell names
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
@@ -264,21 +254,20 @@ function getAllRuneData(id){
  * @static
  */
 function getSummonerSpellList(dataType, byId, locale, version, region){
-    var options = {region: region};
+    let options = {region: region};
 
     if(dataType) options.champData = [].concat(dataType).join(',');
     if(locale) options.locale = locale;
     if(version) options.version = version;
     options.dataById = byId || false;
 
-    var url = getStaticUrl("summonerSpellList", options, null);
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('staticdata','summonerSpellList', options, null);
 }
 
 /**
  * gets a summoner spell object from a supplied summoner spell id
- * @param {number} id
- * @param {?module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE|module:constants.SUMMONER_SPELL_INFO_TO_RETRIEVE[]} dataType
+ * @param {number} summonerSpellId
+ * @param {?string|string[]} dataType
  * @param {boolean} byId=false if true, keys will be spell ids and not spell names
  * @param {string?} locale local code to use for returned data
  * @param {string?} version data version
@@ -286,28 +275,27 @@ function getSummonerSpellList(dataType, byId, locale, version, region){
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for output}
  * @static
  */
-function getSummonerSpellById(id, dataType, byId, locale, version, region){
-    if(id){
-        var options = {region: region};
+function getSummonerSpellById(summonerSpellId, dataType, byId, locale, version, region){
+    if(summonerSpellId){
+        let options = {region: region,summonerSpellId:summonerSpellId};
 
         if(dataType) options.champData = [].concat(dataType).join(',');
         if(locale) options.locale = locale;
         if(version) options.version = version;
         options.dataById = byId || false;
-        var url = getStaticUrl("summonerSpellById", options, id);
 
-        return serverdata.makeAsyncHttpsCall(url);
+        return serverdata.makeAsyncHttpsCall('staticdata','summonerSpellById', options);
     }else
         return Promise.reject(new Error('No spell ID specified'));
 }
 
 /**
  * Gets all data for all summoner spells
- * @param {number?} [id=null] ID of item to get (null or do not supply for all summoner spells)
+ * @param {number?} [summonerSpellId=null] ID of item to get (null or do not supply for all summoner spells)
  */
-function getAllSummonerSpellData(id){
-    if(id)
-        return getSummonerSpellById(id, 'all', false, null, null, null);
+function getAllSummonerSpellData(summonerSpellId){
+    if(summonerSpellId)
+        return getSummonerSpellById(summonerSpellId, 'all', false, null, null, null);
     else
         return getSummonerSpellList('all', false, null, null, null);
 }
@@ -319,10 +307,7 @@ function getAllSummonerSpellData(id){
  * @static
  */
 function getRealmData(region){
-    var options = {region: region};
-
-    var url = getStaticUrl("realm", options, null);
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('staticdata','realm', {region: region});
 }
 
 /**
@@ -332,9 +317,7 @@ function getRealmData(region){
  * @static
  */
 function getVersions(region){
-    var options = {region: region};
-    var url = getStaticUrl("versions", options, null);
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('staticdata','versions', {region: region});
 }
 
 /**
@@ -344,9 +327,7 @@ function getVersions(region){
  * @static
  */
 function getLanguages(region){
-    var options = {region: region};
-    var url = getStaticUrl("languages", options, null);
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('staticdata','languages', {region: region});
 }
 
 /**
@@ -358,11 +339,10 @@ function getLanguages(region){
  * @static
  */
 function getLanguageStrings(locale, version, region){
-    var options = {region: region};
+    let options = {region: region};
     if(locale) options.locale=locale;
     if(version) options.version=version;
-    var url = getStaticUrl("languagestrings", options, null);
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('staticdata','languagestrings', options);
 }
 
 /**
@@ -374,11 +354,10 @@ function getLanguageStrings(locale, version, region){
  * @static
  */
 function getMaps(locale, version, region){
-    var options = {region: region};
+    let options = {region: region};
     if(locale) options.locale=locale;
     if(version) options.version=version;
-    var url = getStaticUrl("maps", options, null);
-    return serverdata.makeAsyncHttpsCall(url);
+    return serverdata.makeAsyncHttpsCall('staticdata','maps', options);
 }
 
 module.exports.getChampionList = getChampionList;
@@ -393,6 +372,7 @@ module.exports.getMaps = getMaps;
 module.exports.getMasteryList = getMasteryList;
 module.exports.getAllMasteryData = getAllMasteryData;
 module.exports.getMasteryById = getMasteryById;
+module.exports.getProfileIcons = getProfileIcons;
 module.exports.getRuneList = getRuneList;
 module.exports.getAllRuneData = getAllRuneData;
 module.exports.getRuneById = getRuneById;

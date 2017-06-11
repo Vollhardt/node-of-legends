@@ -6,19 +6,7 @@
 
 'use strict';
 
-var serverdata = require('../services/serverdata');
-
-/**
- * gets the URL for the runes api for the specified method
- * @param {string} callmethod method to generate URL for
- * @param {?object}  options options to pass to the riot server
- * @param {?number} id optional ID to pass
- * @returns {string} generated url
- * @private
- */
-function getRunesUrl(callmethod, options, id){
-    return serverdata.generateAPIUrl("runes", callmethod, options, id);
-};
+let serverdata = require('../services/serverdata');
 
 /**
  * gets list of rune pages for summoner ID specified
@@ -29,10 +17,9 @@ function getRunesUrl(callmethod, options, id){
  */
 function getRunesBySummonerId(summonerId, region){
     if(summonerId){
-    	var url = getRunesUrl("bySummonerId", {region:region}, summonerId);
-    	return serverdata.makeAsyncHttpsCall(url);
+    	return serverdata.makeAsyncHttpsCall('runes', 'bySummonerId', {region:region,summonerId:summonerId});
 	}else
 		return Promise.reject(new Error('No summoner ID specified'));
-};
+}
 
 module.exports.getRunesBySummonerId = getRunesBySummonerId;

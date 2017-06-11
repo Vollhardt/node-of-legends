@@ -1,98 +1,75 @@
 /**
- * @module league
+ * @module league v3
  * @desc Wrapper for Riot's league data api
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 
  'use strict';
  
-var serverdata = require('../services/serverdata');
+let serverdata = require('../services/serverdata');
 
 /**
- * gets the URL for the league api for the specified method
- * @param {string} callmethod method to generate URL for
- * @param {object?}  options options to pass to the riot server
- * @param {number?} id optional ID to pass
- * @returns {string} generated url
- * @private
- */
-function getLeagueUrl(callmethod, options, id){
-    return serverdata.generateAPIUrl("league", callmethod, options, id);
-}
-
-/**
-* gets all leagues for which the specified summoner or summoners are members
-* @param {number|number[]} summonerIds ids of the summoner or summoners to get league information for, **MAXIMUM 10**
+* gets all leagues for which the specified summoner is a member
+* @param {number} summonerId id of the summoner to get league information for
 * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
 * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
 * @static
 */
-function getLeaguesBySummonerIds(summonerIds, region){
-    if(summonerIds){
-        var options = {region: region};
-
-        var url = getLeagueUrl("bySummonerIds", options, [].concat(summonerIds).slice(0,10).join(','));
-
-        return serverdata.makeAsyncHttpsCall(url);
+function getLeaguesBySummonerId(summonerId, region){
+    if(summonerId){
+      let options = {region: region, summonerId:summonerId};
+        return serverdata.makeAsyncHttpsCall('league','bySummonerId', options);
     }else
-        return Promise.reject(new Error('No summoner ID(s) specified'));
+        return Promise.reject(new Error('No summoner ID specified'));
 }
 
 /**
- * gets all entries for which the specified summoner or summoners are members
- * @param {number|number[]} summonerIds id of the summoner or summoners to get entry information for, **MAXIMUM 10**
+ * gets all positions in all leagues for which the specified summoner is a member
+ * @param {number} summonerId id of the summoner to get position information for
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
-function getEntryBySummonerIds(summonerIds, region){
-    if(summonerIds){
-        var options = {region: region};
-        var url = getLeagueUrl("entryBySummonerIds", options, [].concat(summonerIds).slice(0,10).join(','));
-
-        return serverdata.makeAsyncHttpsCall(url);
+function getPositionsBySummonerId(summonerId, region){
+    if(summonerId){
+        let options = {region: region, summonerId:summonerId};
+        return serverdata.makeAsyncHttpsCall('league','positionsBySummonerId', options);
     }else
-        return Promise.reject(new Error('No summoner ID(s) specified'));
+        return Promise.reject(new Error('No summoner ID specified'));
 }
 
 
 /**
  * gets all master league information for the specified region
- * @param {module:constants.RANKED_QUEUE_TYPE} queueType Ranked Queue type
+ * @param {string} queueType Ranked Queue type (RANKED_SOLO_5x5, RANKED_FLEX_SR, RANKED_FLEX_TT)
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
 function getMasterLeagues(queueType, region){
     if(queueType){
-        var options = {type: queueType, region: region};
-
-        var url = getLeagueUrl('masterLeagues', options, null);
-
-        return serverdata.makeAsyncHttpsCall(url);
+        let options = {queue: queueType, region: region};
+        return serverdata.makeAsyncHttpsCall('league','masterLeaguesByQueue', options);
     }else
         return Promise.reject(new Error('No queue type specified'));
 }
 
 /**
  * gets all challenger league information for the specified region
- * @param {module:constants.RANKED_QUEUE_TYPE} queueType Ranked Queue type
+ * @param {string} queueType Ranked Queue type (RANKED_SOLO_5x5, RANKED_FLEX_SR, RANKED_FLEX_TT)
  * @param {module:serverdata.REGION} [region] if no region is specified the configured region will be used
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  * @static
  */
 function getChallengerLeagues(queueType, region){
     if(queueType){
-        var options = {type: queueType, region: region};
-
-        var url = getLeagueUrl("challengerLeagues", options, null);
-
-        return serverdata.makeAsyncHttpsCall(url);
+        let options = {queue: queueType, region: region};
+        return serverdata.makeAsyncHttpsCall('league','challengerLeaguesByQueue', options);
     }else
         return Promise.reject(new Error('No queue type specified'));
 }
 
-module.exports.getLeaguesBySummonerIds = getLeaguesBySummonerIds;
-module.exports.getEntryBySummonerIds = getEntryBySummonerIds;
+module.exports.getLeaguesBySummonerId = getLeaguesBySummonerId;
+module.exports.getPositionsBySummonerId = getPositionsBySummonerId;
 module.exports.getMasterLeagues = getMasterLeagues;
 module.exports.getChallengerLeagues = getChallengerLeagues;
