@@ -15,10 +15,10 @@ let serverdata = require('../services/serverdata');
  * @see {@link https://developer.riotgames.com/api/methods|See Riot API for method output}
  */
 function getChampionMasteryBySummonerId(summonerId, region){
-  let options = {region: region};
+  let options = {region: region, summonerId: summonerId};
 
   if(summonerId)
-    return serverdata.makeAsyncHttpsCall('championmastery','masteryById', options, summonerId);
+    return serverdata.makeAsyncHttpsCall('championmastery','masteryById', options);
   else
     return Promise.reject(new Error('No summoner ID specified'));
 }
