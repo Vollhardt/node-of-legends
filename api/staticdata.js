@@ -20,14 +20,14 @@ let serverdata = require('../services/serverdata');
  * @static
  */
 function getChampionList(dataType, byId, locale, version, region){
-    let options = {region: region};
+  let options = {region: region};
 
-    if(dataType) options.champData = [].concat(dataType).join(',');
-    if(locale) options.locale = locale;
-    if(version) options.version = version;
-    options.dataById = byId || false;
+  if(dataType) options.tags = [].concat(dataType);
+  if(locale) options.locale = locale;
+  if(version) options.version = version;
+  options.dataById = byId || false;
 
-    return serverdata.makeAsyncHttpsCall('staticdata','championList', options);
+  return serverdata.makeAsyncHttpsCall('staticdata','championList', options);
 }
 
 /**
@@ -35,10 +35,10 @@ function getChampionList(dataType, byId, locale, version, region){
  * @param {number?} [championId=null] ID of champion to get (null or do not supply for all champs)
  */
 function getAllChampData(championId){
-    if(championId)
-        return getChampionById(championId,'all', false, null, null, null);
-    else
-        return getChampionList('all', false, null, null, null);
+  if(championId)
+    return getChampionById(championId,'all', false, null, null, null);
+  else
+    return getChampionList('all', false, null, null, null);
 }
 
 /**
@@ -53,18 +53,18 @@ function getAllChampData(championId){
  * @static
  */
 function getChampionById(champId, dataType, byId, locale, version, region){
-    if(champId){
-        let options = {region: region,championId:champId};
+  if(champId){
+    let options = {region: region,championId:champId};
 
-        if(dataType) options.champData = [].concat(dataType).join(',');
-        if(locale) options.locale = locale;
-        if(version) options.version = version;
-        options.dataById = byId || false;
+    if(dataType) options.tags = [].concat(dataType);
+    if(locale) options.locale = locale;
+    if(version) options.version = version;
+    options.dataById = byId || false;
 
-        return serverdata.makeAsyncHttpsCall('staticdata','championById', options);
-    }
-    else
-        return Promise.reject(new Error('No champion ID specified'));
+    return serverdata.makeAsyncHttpsCall('staticdata','championById', options);
+  }
+  else
+    return Promise.reject(new Error('No champion ID specified'));
 }
 
 /**
@@ -77,13 +77,13 @@ function getChampionById(champId, dataType, byId, locale, version, region){
  * @static
  */
 function getItemList(dataType, locale, version, region){
-    let options = {region: region};
+  let options = {region: region};
 
-    if(dataType) options.itemListData = [].concat(dataType).join(',');
-    if(locale) options.locale = locale;
-    if(version) options.version = version;
+  if(dataType) options.tags = [].concat(dataType);
+  if(locale) options.locale = locale;
+  if(version) options.version = version;
 
-    return serverdata.makeAsyncHttpsCall('staticdata','itemList', options);
+  return serverdata.makeAsyncHttpsCall('staticdata','itemList', options);
 }
 
 /**
@@ -97,16 +97,16 @@ function getItemList(dataType, locale, version, region){
  * @static
  */
 function getItemById(itemId, dataType, locale, version, region){
-    if(itemId){
-        let options = {region: region,itemId:itemId};
+  if(itemId){
+    let options = {region: region,itemId:itemId};
 
-        if(dataType) options.itemListData = [].concat(dataType).join(',');
-        if(locale) options.locale = locale;
-        if(version) options.version = version;
+    if(dataType) options.tags = [].concat(dataType);
+    if(locale) options.locale = locale;
+    if(version) options.version = version;
 
-        return serverdata.makeAsyncHttpsCall('staticdata','itemById', options);
-    }else
-        return Promise.reject(new Error('No item ID specified'));
+    return serverdata.makeAsyncHttpsCall('staticdata','itemById', options);
+  }else
+    return Promise.reject(new Error('No item ID specified'));
 }
 
 /**
@@ -114,10 +114,10 @@ function getItemById(itemId, dataType, locale, version, region){
  * @param {number?} [itemId=null] ID of item to get (null or do not supply for all items)
  */
 function getAllItemData(itemId){
-    if(itemId)
-        return getItemById(itemId,'all', false, null, null, null);
-    else
-        return getItemList('all', false, null, null, null);
+  if(itemId)
+    return getItemById(itemId,'all', false, null, null, null);
+  else
+    return getItemList('all', false, null, null, null);
 }
 
 /**
@@ -130,13 +130,13 @@ function getAllItemData(itemId){
  * @static
  */
 function getMasteryList(dataType, locale, version, region){
-    let options = {region: region};
+  let options = {region: region};
 
-    if(dataType) options.masteryListData = [].concat(dataType).join(',');
-    if(locale) options.locale = locale;
-    if(version) options.version = version;
+  if(dataType) options.tags = [].concat(dataType).join(',');
+  if(locale) options.locale = locale;
+  if(version) options.version = version;
 
-    return serverdata.makeAsyncHttpsCall('staticdata','masteryList', options);
+  return serverdata.makeAsyncHttpsCall('staticdata','masteryList', options);
 }
 
 /**
@@ -150,16 +150,16 @@ function getMasteryList(dataType, locale, version, region){
  * @static
  */
 function getMasteryById(masteryId, dataType, locale, version, region){
-    if(masteryId){
-        let options = {region: region,masteryId:masteryId};
+  if(masteryId){
+    let options = {region: region,masteryId:masteryId};
 
-        if(dataType) options.masteryListData = [].concat(dataType).join(',');
-        if(locale) options.locale = locale;
-        if(version) options.version = version;
+    if(dataType) options.tags = [].concat(dataType).join(',');
+    if(locale) options.locale = locale;
+    if(version) options.version = version;
 
-        return serverdata.makeAsyncHttpsCall('staticdata','masteryById', options);
-    }else
-        return Promise.reject(new Error('No mastery ID specified'));
+    return serverdata.makeAsyncHttpsCall('staticdata','masteryById', options);
+  }else
+    return Promise.reject(new Error('No mastery ID specified'));
 }
 
 /**
@@ -167,10 +167,10 @@ function getMasteryById(masteryId, dataType, locale, version, region){
  * @param {number?} [masteryId=null] ID of item to get (null or do not supply for all masteries)
  */
 function getAllMasteryData(masteryId){
-    if(masteryId)
-        return getMasteryById(masteryId, 'all', null, null, null);
-    else
-        return getMasteryList('all', null, null, null);
+  if(masteryId)
+    return getMasteryById(masteryId, 'all', null, null, null);
+  else
+    return getMasteryList('all', null, null, null);
 }
 
 /**
@@ -182,12 +182,12 @@ function getAllMasteryData(masteryId){
  * @static
  */
 function getProfileIcons(locale, version, region){
-    let options = {region: region};
+  let options = {region: region};
 
-    if(locale) options.locale = locale;
-    if(version) options.version = version;
+  if(locale) options.locale = locale;
+  if(version) options.version = version;
 
-    return serverdata.makeAsyncHttpsCall('staticdata','profileIcons', options);
+  return serverdata.makeAsyncHttpsCall('staticdata','profileIcons', options);
 }
 
 /**
@@ -200,13 +200,13 @@ function getProfileIcons(locale, version, region){
  * @static
  */
 function getRuneList(dataType, locale, version, region){
-    let options = {region: region};
+  let options = {region: region};
 
-    if(dataType) options.runeListData = [].concat(dataType).join(',');
-    if(locale) options.locale = locale;
-    if(version) options.version = version;
+  if(dataType) options.tags = [].concat(dataType).join(',');
+  if(locale) options.locale = locale;
+  if(version) options.version = version;
 
-    return serverdata.makeAsyncHttpsCall('staticdata','runeList', options);
+  return serverdata.makeAsyncHttpsCall('staticdata','runeList', options);
 }
 
 /**
@@ -220,16 +220,16 @@ function getRuneList(dataType, locale, version, region){
  * @static
  */
 function getRuneById(runeId, dataType, locale, version, region){
-    if(runeId){
-        let options = {region: region,runeId:runeId};
+  if(runeId){
+    let options = {region: region,runeId:runeId};
 
-        if(dataType) options.runeListData = [].concat(dataType).join(',');
-        if(locale) options.locale = locale;
-        if(version) options.version = version;
+    if(dataType) options.tags = [].concat(dataType).join(',');
+    if(locale) options.locale = locale;
+    if(version) options.version = version;
 
-        return serverdata.makeAsyncHttpsCall('staticdata','runeById', options);
-    }else
-        return Promise.reject(new Error('No rune ID specified'));
+    return serverdata.makeAsyncHttpsCall('staticdata','runeById', options);
+  }else
+    return Promise.reject(new Error('No rune ID specified'));
 }
 
 /**
@@ -237,10 +237,10 @@ function getRuneById(runeId, dataType, locale, version, region){
  * @param {number?} [runeId=null] ID of item to get (null or do not supply for all runes)
  */
 function getAllRuneData(runeId){
-    if(runeId)
-        return getRuneById(runeId, 'all', null, null, null);
-    else
-        return getRuneList('all', null, null, null);
+  if(runeId)
+    return getRuneById(runeId, 'all', null, null, null);
+  else
+    return getRuneList('all', null, null, null);
 }
 
 /**
@@ -254,14 +254,14 @@ function getAllRuneData(runeId){
  * @static
  */
 function getSummonerSpellList(dataType, byId, locale, version, region){
-    let options = {region: region};
+  let options = {region: region};
 
-    if(dataType) options.champData = [].concat(dataType).join(',');
-    if(locale) options.locale = locale;
-    if(version) options.version = version;
-    options.dataById = byId || false;
+  if(dataType) options.tags = [].concat(dataType).join(',');
+  if(locale) options.locale = locale;
+  if(version) options.version = version;
+  options.dataById = byId || false;
 
-    return serverdata.makeAsyncHttpsCall('staticdata','summonerSpellList', options, null);
+  return serverdata.makeAsyncHttpsCall('staticdata','summonerSpellList', options, null);
 }
 
 /**
@@ -276,17 +276,17 @@ function getSummonerSpellList(dataType, byId, locale, version, region){
  * @static
  */
 function getSummonerSpellById(summonerSpellId, dataType, byId, locale, version, region){
-    if(summonerSpellId){
-        let options = {region: region,summonerSpellId:summonerSpellId};
+  if(summonerSpellId){
+    let options = {region: region,summonerSpellId:summonerSpellId};
 
-        if(dataType) options.champData = [].concat(dataType).join(',');
-        if(locale) options.locale = locale;
-        if(version) options.version = version;
-        options.dataById = byId || false;
+    if(dataType) options.tags = [].concat(dataType).join(',');
+    if(locale) options.locale = locale;
+    if(version) options.version = version;
+    options.dataById = byId || false;
 
-        return serverdata.makeAsyncHttpsCall('staticdata','summonerSpellById', options);
-    }else
-        return Promise.reject(new Error('No spell ID specified'));
+    return serverdata.makeAsyncHttpsCall('staticdata','summonerSpellById', options);
+  }else
+    return Promise.reject(new Error('No spell ID specified'));
 }
 
 /**
@@ -294,10 +294,10 @@ function getSummonerSpellById(summonerSpellId, dataType, byId, locale, version, 
  * @param {number?} [summonerSpellId=null] ID of item to get (null or do not supply for all summoner spells)
  */
 function getAllSummonerSpellData(summonerSpellId){
-    if(summonerSpellId)
-        return getSummonerSpellById(summonerSpellId, 'all', false, null, null, null);
-    else
-        return getSummonerSpellList('all', false, null, null, null);
+  if(summonerSpellId)
+    return getSummonerSpellById(summonerSpellId, 'all', false, null, null, null);
+  else
+    return getSummonerSpellList('all', false, null, null, null);
 }
 
 /**
@@ -307,7 +307,7 @@ function getAllSummonerSpellData(summonerSpellId){
  * @static
  */
 function getRealmData(region){
-    return serverdata.makeAsyncHttpsCall('staticdata','realm', {region: region});
+  return serverdata.makeAsyncHttpsCall('staticdata','realm', {region: region});
 }
 
 /**
@@ -317,7 +317,7 @@ function getRealmData(region){
  * @static
  */
 function getVersions(region){
-    return serverdata.makeAsyncHttpsCall('staticdata','versions', {region: region});
+  return serverdata.makeAsyncHttpsCall('staticdata','versions', {region: region});
 }
 
 /**
@@ -327,7 +327,7 @@ function getVersions(region){
  * @static
  */
 function getLanguages(region){
-    return serverdata.makeAsyncHttpsCall('staticdata','languages', {region: region});
+  return serverdata.makeAsyncHttpsCall('staticdata','languages', {region: region});
 }
 
 /**
@@ -339,10 +339,10 @@ function getLanguages(region){
  * @static
  */
 function getLanguageStrings(locale, version, region){
-    let options = {region: region};
-    if(locale) options.locale=locale;
-    if(version) options.version=version;
-    return serverdata.makeAsyncHttpsCall('staticdata','languagestrings', options);
+  let options = {region: region};
+  if(locale) options.locale=locale;
+  if(version) options.version=version;
+  return serverdata.makeAsyncHttpsCall('staticdata','languagestrings', options);
 }
 
 /**
@@ -354,10 +354,10 @@ function getLanguageStrings(locale, version, region){
  * @static
  */
 function getMaps(locale, version, region){
-    let options = {region: region};
-    if(locale) options.locale=locale;
-    if(version) options.version=version;
-    return serverdata.makeAsyncHttpsCall('staticdata','maps', options);
+  let options = {region: region};
+  if(locale) options.locale=locale;
+  if(version) options.version=version;
+  return serverdata.makeAsyncHttpsCall('staticdata','maps', options);
 }
 
 module.exports.getChampionList = getChampionList;

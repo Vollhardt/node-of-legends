@@ -183,7 +183,7 @@ function makeAsyncHttpsCall(calltype, callmethod, options){
         if(options && 0 < Object.keys(options).length){
           for(let key in options){
             if(-1===httpsOpts.path.indexOf('{' + key +'}')) //if not in URL then add to query string
-              httpsOpts.path += key + '=' + (Array.isArray(options[key]) ? options[key].join('%2C') : options[key]) + '\&';
+              httpsOpts.path +=  key+'='+(Array.isArray(options[key]) ?options[key].join('\&'+key+'=') : options[key]) + '\&';
             else //if in URL replace
               httpsOpts.path = httpsOpts.path.replace('{' + key +'}', options[key])
           }
